@@ -4,7 +4,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import VueMaterial from 'vue-material';
-import 'assets/css/grid/simple-grid.css';
+import 'assets/css/simplegrid.css';
 import 'vue-material/dist/vue-material.css';
 
 import App from './App';
@@ -14,6 +14,10 @@ import createRoutes from './routes';
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMaterial);
+Vue.material.theme.register('default', {
+  primary: 'cyan',
+  accent: 'pink',
+});
 
 /* eslint-disable no-new */
 new Vue({

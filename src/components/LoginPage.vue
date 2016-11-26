@@ -1,24 +1,35 @@
 <template>
   <main>
-    <div class="container"></div>
+    <div class="container">
       <div class="row">
         <div class="col-offset-4"></div>
         <div class="col-4">
-          <form novalidate @submit.stop.prevent="submit" class="login-card">
-            <md-card-header>
-              <div class="md-title">Login</div>
-            </md-card-header>
+          <md-card class="login-card" v-md-theme="'default'">
 
-            <md-card-content>
-              <md-input-container v-md-theme="'default'">
-                <md-input type="email" placeholder="Email Address" required></md-input>
-                <span class="md-error">Validation message</span>
-              </md-input-container>
-              <md-input-container>
-                <md-input type="password" placeholder="Password" required></md-input>
-                <span class="md-error">Validation message</span>
-              </md-input-container>
-            </md-card-content>
+            <md-card-area md-inset>
+            <form novalidate @submit.stop.prevent="submit">
+              <md-card-header>
+                <div class="md-title">Login</div>
+              </md-card-header>
+
+              <md-card-content>
+                <md-input-container>
+                  <md-input type="email" placeholder="Email Address" required></md-input>
+                  <span class="md-error">Validation message</span>
+                </md-input-container>
+                <md-input-container>
+                  <md-input type="password" placeholder="Password" required></md-input>
+                  <span class="md-error">Validation message</span>
+                </md-input-container>
+              </md-card-content>
+
+            </form>
+            </md-card-area>
+
+            <md-card-actions>
+              <md-button>Log In</md-button>
+            </md-card-actions>
+
           </md-card>
         </div>
       </div>

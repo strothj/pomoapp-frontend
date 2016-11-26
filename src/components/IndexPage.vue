@@ -6,7 +6,7 @@
           <md-toolbar v-md-theme="'default'">
             <span class="page-title md-title" style="flex: 1">Pomoapp</span>
 
-            <md-button class="md-raised">Log in</md-button>
+            <md-button @click="login" class="md-raised">Log in</md-button>
           </md-toolbar>
         </nav>
       </div>
@@ -23,8 +23,14 @@
 </template>
 
 <script>
-export default {
+import { NAVIGATE_LOGIN_PAGE } from 'src/store/action-types';
 
+export default {
+  methods: {
+    login() {
+      this.$store.dispatch(NAVIGATE_LOGIN_PAGE);
+    },
+  },
 };
 </script>
 

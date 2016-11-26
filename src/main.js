@@ -9,7 +9,7 @@ import 'vue-material/dist/vue-material.css';
 
 import App from './App';
 import createStore from './store';
-import createRoutes from './routes';
+import createRouter from './router';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
@@ -19,10 +19,13 @@ Vue.material.theme.register('default', {
   accent: 'pink',
 });
 
+const router = createRouter();
+const store = createStore({ router });
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  store: createStore(),
-  router: createRoutes(),
+  store,
+  router,
   render: h => h(App),
 });

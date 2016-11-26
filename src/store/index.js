@@ -1,7 +1,12 @@
 import Vuex from 'vuex';
-import { state, getters } from './state';
+import { getters, state } from './state';
+import actions from './actions';
 
-export default () => new Vuex.Store({
-  state,
-  getters,
-});
+export default ({ router }) => {
+  state.router = router;
+  return new Vuex.Store({
+    actions,
+    getters,
+    state,
+  });
+};

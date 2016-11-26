@@ -3,8 +3,8 @@ import IndexPage from 'components/IndexPage';
 import LoginPage from 'components/LoginPage';
 
 const routes = [
-  { path: '/', component: IndexPage },
-  { path: '/login', component: LoginPage },
+  { path: '/', name: 'Root', component: IndexPage },
+  { path: '/login', name: 'LoginPage', component: LoginPage },
 ];
 
 const routerFactory = () => new VueRouter({

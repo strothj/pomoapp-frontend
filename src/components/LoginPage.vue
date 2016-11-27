@@ -6,8 +6,7 @@
         <div class="col-4">
           <md-card class="login-card" v-md-theme="'default'">
 
-            <md-card-area md-inset>
-            <form novalidate @submit.stop.prevent="submit">
+            <form @submit.prevent="submit">
               <md-card-header>
                 <div class="md-title">Login</div>
               </md-card-header>
@@ -23,12 +22,11 @@
                 </md-input-container>
               </md-card-content>
 
-            </form>
-            </md-card-area>
+              <md-card-actions>
+                <md-button type="submit">Log In</md-button>
+              </md-card-actions>
 
-            <md-card-actions>
-              <md-button>Log In</md-button>
-            </md-card-actions>
+            </form>
 
           </md-card>
         </div>

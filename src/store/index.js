@@ -1,6 +1,7 @@
 import Vuex from 'vuex';
-import { getters, state } from './state';
 import actions from './actions';
+import getters from './getters';
+import state from './state';
 
 export default ({ router }) => {
   state.router = router;

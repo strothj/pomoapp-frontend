@@ -3,9 +3,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import VueMaterial from 'vue-material';
-import 'assets/css/simplegrid.css';
-import 'vue-material/dist/vue-material.css';
+import 'materialize-css/dist/css/materialize.css';
+import 'materialize-css/dist/js/materialize';
 
 import App from './App';
 import createStore from './store';
@@ -13,11 +12,6 @@ import createRouter from './router';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
-Vue.use(VueMaterial);
-Vue.material.theme.register('default', {
-  primary: 'cyan',
-  accent: 'pink',
-});
 
 const router = createRouter();
 const store = createStore({ router });

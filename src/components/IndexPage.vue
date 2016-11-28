@@ -1,15 +1,20 @@
 <template lang="pug">
-div(class="index")
+div(class='index')
+  login-modal(ref='loginModal')
+
   nav(:class='themeColor')
     div(class='container')
       div(class='row')
         div(class='col s12')
           span(class='brand-logo') Pomoapp
+          ul(class='right hide-on-small-and-down')
+            li
+              a(class="waves-effect waves-light btn" href='#' ':class'='themeColorLighten2') Sign In
 
   main
     div(class='index-contents container')
       div(class='row')
-        div(class='col s12')
+        div(class='col s12 center-align')
           img(class='responsive-img' src='https://placehold.it/1000x300?text=Main+Logo')
 
       div(class='index-feature row')
@@ -45,16 +50,19 @@ div(class="index")
 
 <script>
 import { mapGetters } from 'vuex';
-import { NAVIGATE_LOGIN_PAGE } from 'src/store/action-types';
+// import { NAVIGATE_LOGIN_PAGE } from 'src/store/action-types';
 
 export default {
   methods: {
     login() {
-      this.$store.dispatch(NAVIGATE_LOGIN_PAGE);
+      // this.$store.dispatch(NAVIGATE_LOGIN_PAGE);
+
     },
   },
   computed: {
-    ...mapGetters(['themeColor']),
+    ...mapGetters(['themeColor', 'themeColorLighten2']),
+  },
+  components: {
   },
 };
 </script>

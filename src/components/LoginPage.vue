@@ -1,7 +1,7 @@
 <template lang="pug">
 div(class='sign-in-box container')
   div(class='row')
-    div(class='col s12 l5 offset-l4')
+    div(class='col s12 l4 offset-l4')
       div(class='card small')
         div(class='card-content')
           span(class='card-title') Sign In

@@ -1,0 +1,40 @@
+@theme-50:  #E8EAF6;
+@theme-100: #C5CAE9;
+@theme-200: #9FA8DA;
+@theme-300: #7986CB;
+@theme-400: #5C6BC0;
+@theme-500: #3F51B5;
+@theme-600: #3949AB;
+@theme-700: #303F9F;
+@theme-800: #283593;
+@theme-900: #1A237E;
+@theme-base: @theme-500;
+
+@bullet-color-0: #B6B6B6;
+@bullet-color-1: #E42527;
+@bullet-color-2: #F68D2A;
+@bullet-color-3: #76BF43;
+@bullet-color-4: #00B3E4;
+@bullet-color-5: #714B9F;
+
+a {
+  &.btn {
+    background-color: @theme-300;
+    &:hover {
+      background-color: @theme-200;
+    }
+  }
+}
+
+nav {
+  background-color: @theme-base;
+}
+
+.bullet {
+  &-color-0 { color: @bullet-color-0; }
+  &-color-1 { color: @bullet-color-1; }
+  &-color-2 { color: @bullet-color-2; }
+  &-color-3 { color: @bullet-color-3; }
+  &-color-4 { color: @bullet-color-4; }
+  &-color-5 { color: @bullet-color-5; }
+}

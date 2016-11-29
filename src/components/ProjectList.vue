@@ -1,15 +1,22 @@
 <template lang="pug">
-ul(class='collection with-header')
-  li(class='collection-header') Projects
-  a(':class'='{ active: project.id === selectedProject }' v-for='project in projects' class='collection-item' href='#') {{ project.name }}
+ul(class='collection')
+  li(class='collection-item') Projects
+  project-list-item(v-for='project in projects' ':projectId'='project.id')
+
 </template>
 
 <script>
+// a(':class'='{ active: project.id === selectedProject }' v-for='project in
+// projects' class='collection-item' href='#') {{ project.name }}
 import { mapState } from 'vuex';
+import ProjectListItem from './ProjectListItem';
 
 export default {
   computed: {
-    ...mapState(['projects', 'selectedProject']),
+    ...mapState(['projects']),
+  },
+  components: {
+    ProjectListItem,
   },
 };
 </script>

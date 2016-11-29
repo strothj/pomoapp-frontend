@@ -1,16 +1,9 @@
 export default {
-  themeColorLighten5: state => `${state.themeColorBase} lighten-5`,
-  themeColorLighten4: state => `${state.themeColorBase} lighten-4`,
-  themeColorLighten3: state => `${state.themeColorBase} lighten-3`,
-  themeColorLighten2: state => `${state.themeColorBase} lighten-2`,
-  themeColorLighten1: state => `${state.themeColorBase} lighten-1`,
-  themeColor: state => state.themeColorBase,
-  themeColorDarken1: state => `${state.themeColorBase} darken-1`,
-  themeColorDarken2: state => `${state.themeColorBase} darken-2`,
-  themeColorDarken3: state => `${state.themeColorBase} darken-3`,
-  themeColorDarken4: state => `${state.themeColorBase} darken-4`,
-  themeColorAccent1: state => `${state.themeColorBase} accent-1`,
-  themeColorAccent2: state => `${state.themeColorBase} accent-2`,
-  themeColorAccent3: state => `${state.themeColorBase} accent-3`,
-  themeColorAccent4: state => `${state.themeColorBase} accent-4`,
+  projectsById: (state) => {
+    const projects = {};
+    for (let i = 0; i < state.projects.length; i += 1) {
+      projects[state.projects[i].id] = state.projects[i];
+    }
+    return projects;
+  },
 };

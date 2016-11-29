@@ -3,8 +3,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import 'materialize-css/dist/css/materialize.css';
-import 'materialize-css/dist/js/materialize';
+import 'materialize-css/bin/materialize.css';
+import 'materialize-css/bin/materialize';
 
 import App from './App';
 import createStore from './store';

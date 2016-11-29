@@ -2,6 +2,7 @@ var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
+var webpack = require('webpack')
 
 var env = process.env.NODE_ENV
 // check env & config/index.js to decide weither to enable CSS Sourcemaps for the
@@ -58,6 +59,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: 'materialize-css/node_modules/jquery/dist/jquery.js',
+        loader: 'expose?$!expose?jQuery',
+      },
+      {
         test: /\.json$/,
         loader: 'json'
       },
@@ -89,5 +94,12 @@ module.exports = {
         browsers: ['last 2 versions']
       })
     ]
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+    }),
+  ],
 }

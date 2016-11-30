@@ -3,9 +3,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import 'materialize-css/bin/materialize.css';
-import 'materialize-css/bin/materialize';
-import 'assets/css/pomoapp/index.less';
 
 import App from './App';
 import createStore from './store';

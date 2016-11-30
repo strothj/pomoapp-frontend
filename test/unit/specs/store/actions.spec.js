@@ -1,6 +1,6 @@
 import actions from 'src/store/actions';
 import { NAVIGATE_LOGIN_PAGE } from 'src/store/action-types';
-import { LOGIN_PAGE } from 'src/router/route-types';
+import { LOGIN_PAGE } from 'src/router';
 
 describe('actions', () => {
 

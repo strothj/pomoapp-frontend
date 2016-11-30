@@ -59,10 +59,6 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: 'materialize-css/node_modules/jquery/dist/jquery.js',
-        loader: 'expose?$!expose?jQuery',
-      },
-      {
         test: /\.json$/,
         loader: 'json'
       },
@@ -95,11 +91,4 @@ module.exports = {
       })
     ]
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-    }),
-  ],
 }

@@ -1,4 +1,4 @@
-import { LOGIN_PAGE } from 'src/router/route-types';
+import { LOGIN_PAGE } from 'src/router';
 import { NAVIGATE_LOGIN_PAGE } from './action-types';
 
 export default {

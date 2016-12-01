@@ -3,13 +3,15 @@ export default {
     {
       id: '123',
       name: 'Tic Tac Toe',
-      bulletColor: '0',
     },
     {
       id: '124',
       name: 'Battleship Game',
-      bulletColor: '3',
+    },
+    {
+      id: '125',
+      name: 'Work',
     },
   ],
-  selectedProject: '123',
+  projectsListSortOrder: null,
 };

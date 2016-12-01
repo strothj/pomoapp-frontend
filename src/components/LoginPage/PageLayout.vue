@@ -1,6 +1,6 @@
 <template lang="pug">
 main
-  login-card(class="login-card")
+  login-card.login-card
 </template>
 
 <script>

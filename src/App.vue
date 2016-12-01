@@ -5,13 +5,8 @@
 </template>
 
 <script>
-import IndexPage from 'components/IndexPage';
-
 export default {
   name: 'app',
-  components: {
-    IndexPage,
-  },
 };
 </script>
 

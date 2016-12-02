@@ -1,14 +1,20 @@
 <template lang="pug">
 main
-  login-card.login-card
+  login-card('@submit'="submitLogin")
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import LoginCard from './LoginCard';
 
 export default {
   components: {
     LoginCard,
+  },
+  methods: {
+    ...mapActions({
+      submitLogin: 'loginUsingPassword',
+    }),
   },
 };
 </script>

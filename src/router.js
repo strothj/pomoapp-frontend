@@ -1,12 +1,12 @@
 import VueRouter from 'vue-router';
 import RootPage from 'components/RootPage/Page';
 import ProjectsPage from 'components/ProjectsPage/Page';
-import LoginPage from 'components/LoginPage/Page';
+import LoginView from 'components/LoginView';
 
 const routes = [
   { path: '/', name: 'Root', component: RootPage },
-  { path: '/projects', name: 'ProjectsPage', component: ProjectsPage },
-  { path: '/login', name: 'LoginPage', component: LoginPage },
+  { path: '/projects', name: 'ProjectsView', component: ProjectsPage },
+  { path: '/login', name: 'LoginView', component: LoginView },
 ];
 
 const routerFactory = () => new VueRouter({

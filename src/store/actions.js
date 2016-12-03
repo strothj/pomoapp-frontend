@@ -5,9 +5,12 @@ export default {
     commit('updateProjectsListSortOrder', sortOrder.join('|'));
   },
 
-  loginUsingPassword: async ({ state }, { username, password }) => {
+  loginUsingPassword: async ({ commit, state }, { username, password }) => {
+    /* eslint-disable no-console */
+    let token;
     try {
-      await api.loginUsingPassword(state.authClient, username, password);
+      token = await api.loginUsingPassword(state.authClient, username, password);
+      commit('authToken', token);
     } catch (e) {
       console.error(e); // eslint-disable-line
     }

@@ -8,4 +8,8 @@ export default {
   authToken: (state, authToken) => {
     state.authToken = authToken;
   },
+
+  loginError: (state, loginError) => {
+    state.loginError = loginError;
+  },
 };

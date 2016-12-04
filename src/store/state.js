@@ -8,6 +8,7 @@ const authClient = new ClientOAuth2({
 export default {
   authClient,
   authToken: null,
+  loginError: '',
   projects: [
     {
       id: '123',

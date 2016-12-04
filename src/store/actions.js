@@ -13,12 +13,14 @@ export default {
       if (remember && token.refreshToken) {
         api.storeRefreshToken(token.refreshToken);
       }
+      commit('loginError', '');
       dispatch('loadProgramState');
     } catch (e) {
       if (e.code === 'EAUTH') {
-        // Authentication failed
-        console.log('Wrong username/password.'); // eslint-disable-line
+        commit('loginError', 'Email or password is incorrect');
+        return;
       }
+      commit('loginError', 'Unable to log in due to a server error.');
     }
   },
 

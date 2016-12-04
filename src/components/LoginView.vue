@@ -14,6 +14,7 @@
       <div class="login-card-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input v-model="password" type="password" id="login-password" class="mdl-textfield__input">
         <label for="login-password" class="mdl-textfield__label">Password</label>
+        <span :style="{ visibility: errorVisibility }" class="mdl-textfield__error">{{ loginError }}</span>
       </div><!-- login-card-textfield -->
 
       <label for="login-remember" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   data: () => ({
@@ -41,6 +42,12 @@ export default {
     password: '123',
     remember: true,
   }),
+  computed: {
+    ...mapState(['loginError']),
+    errorVisibility: function errorVisibility() {
+      return this.loginError ? 'visible' : 'hidden';
+    },
+  },
   methods: {
     ...mapActions(['loginUsingPassword']),
     submitForm: function submitForm() {

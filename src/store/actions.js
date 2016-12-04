@@ -1,18 +1,46 @@
 import * as api from 'src/api';
 
 export default {
-  updateProjectsListSortOrder: ({ commit }, sortOrder) => {
+  updateProjectsListSortOrder: ({ commit, state }, sortOrder) => {
     commit('updateProjectsListSortOrder', sortOrder.join('|'));
   },
 
-  loginUsingPassword: async ({ commit, state }, { username, password }) => {
-    /* eslint-disable no-console */
-    let token;
+  loginUsingPassword: async ({ commit, dispatch, state }, { username, password, remember }) => {
     try {
-      token = await api.loginUsingPassword(state.authClient, username, password);
+      const token = await api.loginUsingPassword(state.authClient, username, password);
       commit('authToken', token);
+      // Save the refreshToken to a cookie if the user selected 'Remember me'.
+      if (remember && token.refreshToken) {
+        api.storeRefreshToken(token.refreshToken);
+      }
+      dispatch('loadProgramState');
     } catch (e) {
-      console.error(e); // eslint-disable-line
+      if (e.code === 'EAUTH') {
+        // Authentication failed
+        console.log('Wrong username/password.'); // eslint-disable-line
+      }
+    }
+  },
+
+  loginUsingSavedToken: async ({ commit, dispatch, state }) => {
+    try {
+      const refreshToken = await api.loadRefreshToken();
+      const token = await api.loginUsingRefreshToken(state.authClient, refreshToken);
+      commit('authToken', token);
+      dispatch('loadProgramState');
+    } catch (e) {
+      api.deleteRefreshToken();
+      if (state.router.currentRoute.name === 'ProjectsView') {
+        state.router.push({ name: 'LoginView' });
+      }
+      return;
+    }
+  },
+
+  loadProgramState: async ({ state }) => {
+    if (state.router.currentRoute.name === 'Root' ||
+      state.router.currentRoute.name === 'LoginView') {
+      state.router.push({ name: 'ProjectsView' });
     }
   },
 };

@@ -1,7 +1,35 @@
-/* eslint-disable import/prefer-default-export */
 import { mockRequestWrapper } from './development-mock-data';
 
-export async function loginUsingPassword(authClient, username, password) {
+export function loginUsingPassword(authClient, username, password) {
   mockRequestWrapper(authClient);
   return authClient.owner.getToken(username, password);
+}
+
+export function loginUsingRefreshToken(authClient, refreshToken) {
+  mockRequestWrapper(authClient);
+  const token = authClient.createToken('', refreshToken);
+  return token.refresh();
+}
+
+export function deleteRefreshToken() {
+  document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+}
+
+export function loadRefreshToken() {
+  return new Promise((resolve, reject) => {
+    let refreshToken = document.cookie.replace(/(?:(?:^|.*;\s*)authToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
+    refreshToken = decodeURIComponent(refreshToken);
+    if (!refreshToken) {
+      reject('no cookie');
+      return;
+    }
+    resolve(refreshToken);
+  });
+}
+
+export function storeRefreshToken(refreshToken) {
+  const security = process.env.NODE_ENV === 'development' ? '' : ';secure';
+  const encodedToken = encodeURIComponent(refreshToken);
+  const cookie = `authToken=${encodedToken};path=/;max-age=7776000${security}`;
+  document.cookie = cookie;
 }

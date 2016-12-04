@@ -18,10 +18,22 @@ const validUsernamePasswordResponse = {
   }),
 };
 
+function handlePasswordTokenRequest(body) {
+  if (body.username !== 'bob@example.com' ||
+    body.password !== '123') return invalidUsernamePasswordResponse;
+  return validUsernamePasswordResponse;
+}
+
+function handleRefreshTokenRequest(body) {
+  if (body.refresh_token !== '456') return invalidUsernamePasswordResponse;
+  return validUsernamePasswordResponse;
+}
+
 function handleTokenRequest(request) {
   const body = queryString.parse(request.body);
-  if (body.username !== 'bob@example.com' || body.password !== '123') return invalidUsernamePasswordResponse;
-  return validUsernamePasswordResponse;
+  if (body.grant_type === 'password') return handlePasswordTokenRequest(body);
+  if (body.grant_type === 'refresh_token') return handleRefreshTokenRequest(body);
+  return { status: 404 };
 }
 
 let mockRequestWrapperFunc;

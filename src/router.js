@@ -5,7 +5,7 @@ import LoginView from 'components/LoginView';
 
 const routes = [
   { path: '/', name: 'Root', component: RootPage },
-  { path: '/projects', name: 'ProjectsView', component: ProjectsPage },
+  { path: '/home', name: 'ProjectsView', component: ProjectsPage },
   { path: '/login', name: 'LoginView', component: LoginView },
 ];
 

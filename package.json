@@ -12,7 +12,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
-    "materialize-css": "^0.97.8",
+    "client-oauth2": "^3.2.0",
+    "lodash.uniqueid": "^4.0.1",
+    "query-string": "^4.2.3",
+    "sortablejs": "^1.5.0-rc1",
     "vue": "^2.1.0",
     "vue-router": "^2.0.3",
     "vuex": "^2.0.0"

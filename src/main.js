@@ -3,8 +3,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
-import 'materialize-css/dist/css/materialize.css';
-import 'materialize-css/dist/js/materialize';
 
 import App from './App';
 import createStore from './store';
@@ -23,3 +21,5 @@ new Vue({
   router,
   render: h => h(App),
 });
+
+store.dispatch('loginUsingSavedToken');

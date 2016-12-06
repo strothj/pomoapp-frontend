@@ -11,6 +11,28 @@ export function loginUsingRefreshToken(authClient, refreshToken) {
   return token.refresh();
 }
 
+/* eslint-disable no-unused-vars */
+export function getUser(token) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        name: 'Bob Doe',
+        email: 'bob@example.com',
+      });
+    }, 100);
+  });
+}
+
+export function getProjects(token) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+
+      });
+    }, 100);
+  });
+}
+
 export function deleteRefreshToken() {
   document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
 }

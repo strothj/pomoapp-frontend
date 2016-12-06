@@ -39,7 +39,19 @@ export default {
     }
   },
 
-  loadProgramState: async ({ state }) => {
+  loadProgramState: async ({ commit, state }) => {
+  /* eslint-disable no-console */
+    try {
+      const user = await api.getUser(state.authToken);
+      commit('user', user);
+      const projects = await api.getProjects(state.authToken);
+      commit('projects', projects);
+      console.log(user);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
     if (state.router.currentRoute.name === 'Root' ||
       state.router.currentRoute.name === 'LoginView') {
       state.router.push({ name: 'ProjectsView' });

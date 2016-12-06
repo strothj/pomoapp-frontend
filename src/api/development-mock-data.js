@@ -51,7 +51,7 @@ export function mockRequestWrapper(authClient) {
     let response;
 
     switch (url) {
-      case 'https://pomoapp.site/api/v1/oauth/access_token': response = handleTokenRequest(request); break;
+      case 'https://pomoapp.site/api/v1/oauth/token': response = handleTokenRequest(request); break;
       default: response = { status: 404 }; break;
     }
 

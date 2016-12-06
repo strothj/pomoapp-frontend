@@ -12,4 +12,8 @@ export default {
   loginError: (state, loginError) => {
     state.loginError = loginError;
   },
+
+  user: (state, user) => {
+    state.user = user;
+  },
 };

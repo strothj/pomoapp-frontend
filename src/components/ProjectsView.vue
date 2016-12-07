@@ -14,21 +14,15 @@
 
   <main>
     <div class="container-fluid">
-      <div class="row vertical-padding"></div>
+      <div class="vertical-padding"></div>
       <div class="row">
         <div class="col-xs-12">
 
           <!-- Favorites List -->
           <div class="box">
-            <span class="md-title">Favorites</span>
-            <md-list class="list md-transparent">
-              <md-list-item v-for="item in favoritedItems">
-                <span>{{ item.name }}</span>
-                <md-button class="md-icon-button md-list-action">
-                  <md-icon class="list__icon">favorite</md-icon>
-                </md-button>
-              </md-list-item>
-            </md-list>
+            <list-control title="Favorites" category="favorites"></list-control>
+            <div class="vertical-padding"></div>
+            <list-control title="Projects" category="projects" editable="true"></list-control>
           </div>
 
         </div>
@@ -45,12 +39,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import ListControl from './ListControl';
 import SideNav from './SideNav';
 
 export default {
-  components: {
-    SideNav,
-  },
   computed: {
     ...mapGetters([
       'favoritedItems',
@@ -71,6 +63,10 @@ export default {
     toggleEditMode: function toggleEditMode() {
       this.editMode = !this.editMode;
     },
+  },
+  components: {
+    ListControl,
+    SideNav,
   },
 };
 </script>

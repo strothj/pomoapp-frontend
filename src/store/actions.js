@@ -42,11 +42,12 @@ export default {
   loadProgramState: async ({ commit, state }) => {
   /* eslint-disable no-console */
     try {
+      // TODO: Make both requests at the same time.
       const user = await api.getUser(state.authToken);
+      const { favorites, projects } = await api.getProjects(state.authToken);
       commit('user', user);
-      // const projects = await api.getProjects(state.authToken);
-      // commit('projects', projects);
-      // console.log(user);
+      commit('favorites', favorites);
+      commit('projects', projects);
     } catch (e) {
       console.error(e);
       return;

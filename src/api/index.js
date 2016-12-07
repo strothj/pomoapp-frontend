@@ -28,7 +28,17 @@ export function getProjects(token) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-
+        projects: [
+          { id: '123', name: 'Capstone Project', favorited: true, href: '/projects/123' },
+          { id: '124', name: 'Portfolio Website', favorited: true, href: '/projects/124' },
+          { id: '125', name: 'Emails', favorited: false, href: '/projects/125' },
+        ],
+        projectsListOrder: null,
+        favorites: [
+          { id: '123', name: 'Capstone Project', favorited: true, href: '/projects/123' },
+          { id: '124', name: 'Portfolio Website', favorited: true, href: '/projects/124' },
+        ],
+        favoritesListOrder: null,
       });
     }, 100);
   });

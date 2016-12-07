@@ -17,6 +17,14 @@ export default {
     state.user = user;
   },
 
+  projects: (state, projects) => {
+    state.projects = projects;
+  },
+
+  favorites: (state, favorites) => {
+    state.favorites = favorites;
+  },
+
   editMode: (state, editMode) => {
     state.editMode = editMode;
   },

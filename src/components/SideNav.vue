@@ -1,29 +1,10 @@
 <template>
 <md-sidenav class="sidenav md-left" ref="sideNav">
-  <md-toolbar class="md-account-header">
-    <md-list class="md-transparent">
-      <md-list-item class="md-avatar-list" disabled>
-        <md-avatar class="md-large"><img :src="userAvatar" alt="Profile Icon"></md-avatar>
-      </md-list-item>
-
-      <profile-menu>
-        <md-list-item>
-          <div class="md-list-text-container">
-            <span>{{ userFullName }}</span>
-            <span>{{ userEmailAddress }}</span>
-          </div>
-
-          <md-button class="md-icon-button md-list-action">
-            <md-icon>arrow_drop_down</md-icon>
-          </md-button>
-        </md-list-item>
-      </profile-menu>
-
-    </md-list>
-  </md-toolbar>
+  <profile-toolbar></profile-toolbar>
 
   <!-- Links to Projects View and Tasks View -->
   <md-list class="md-transparent">
+    <md-subheader>Navigation</md-subheader>
     <md-list-item href="/projects">
       <md-icon class="md-accent">view_list</md-icon><span>Projects</span>
     </md-list-item>
@@ -36,6 +17,7 @@
   <md-list class="md-transparent">
 
     <!-- Favorited Items -->
+    <!--
     <md-list-item v-if="favoritedItems.length > 0">
       <md-icon>bookmark_border</md-icon>
       <span>Favorites</span>
@@ -46,8 +28,10 @@
         </md-list>
       </md-list-expand>
     </md-list-item>
+    -->
 
     <!-- Project List -->
+    <!--
     <md-list-item v-if="projects.length > 0">
       <md-icon>view_list</md-icon>
       <span>Projects</span>
@@ -58,8 +42,10 @@
         </md-list>
       </md-list-expand>
     </md-list-item>
+    -->
 
     <!-- Tasks List -->
+    <!--
     <md-list-item v-if="selectedProjectTasks.length > 0">
       <md-icon>list</md-icon>
       <span>Tasks</span>
@@ -70,6 +56,7 @@
         </md-list>
       </md-list-expand>
     </md-list-item>
+    -->
 
   </md-list>
 
@@ -77,21 +64,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import ProfileMenu from './ProfileMenu';
+// import { mapGetters } from 'vuex';
+import { mapState } from 'vuex';
+import ProfileToolbar from './ProfileToolbar';
 
 export default {
   computed: {
-    ...mapGetters([
-      'userFullName',
-      'userEmailAddress',
-      'userAvatar',
-      'selectedProjectId',
-      'selectedProjectHref',
-      'favoritedItems',
-      'projects',
-      'selectedProjectTasks',
+    ...mapState([
+      'user',
     ]),
+
+    // ...mapGetters([
+    //   'userFullName',
+    //   'userEmailAddress',
+    //   'userAvatar',
+    //   'selectedProjectId',
+    //   'selectedProjectHref',
+    //   'favoritedItems',
+    //   'projects',
+    //   'selectedProjectTasks',
+    // ]),
   },
   methods: {
     toggle() {
@@ -99,7 +91,7 @@ export default {
     },
   },
   components: {
-    ProfileMenu,
+    ProfileToolbar,
   },
 };
 </script>

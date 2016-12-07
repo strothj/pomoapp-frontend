@@ -1,11 +1,11 @@
 import VueRouter from 'vue-router';
 import RootPage from 'components/RootPage/Page';
-import ProjectsPage from 'components/ProjectsPage/Page';
+import ProjectsView from 'components/ProjectsView';
 import LoginView from 'components/LoginView';
 
 const routes = [
   { path: '/', name: 'Root', component: RootPage },
-  { path: '/home', name: 'ProjectsView', component: ProjectsPage },
+  { path: '/projects', name: 'ProjectsView', component: ProjectsView },
   { path: '/login', name: 'LoginView', component: LoginView },
 ];
 

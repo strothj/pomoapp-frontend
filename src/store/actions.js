@@ -44,9 +44,9 @@ export default {
     try {
       const user = await api.getUser(state.authToken);
       commit('user', user);
-      const projects = await api.getProjects(state.authToken);
-      commit('projects', projects);
-      console.log(user);
+      // const projects = await api.getProjects(state.authToken);
+      // commit('projects', projects);
+      // console.log(user);
     } catch (e) {
       console.error(e);
       return;

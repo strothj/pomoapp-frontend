@@ -16,8 +16,9 @@ export function getUser(token) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        name: 'Bob Doe',
-        email: 'bob@example.com',
+        fullName: 'Bob Doe',
+        emailAddress: 'bob@example.com',
+        avatar: 'https://placeimg.com/64/64/people/8',
       });
     }, 100);
   });

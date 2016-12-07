@@ -53,6 +53,10 @@ function setSortOrder(token, order, path) {
   });
 }
 
+export function setProjectsSortOrder(token, order) {
+  return setSortOrder(token, order, 'projects');
+}
+
 export function setFavoritesSortOrder(token, order) {
   return setSortOrder(token, order, 'favorites');
 }

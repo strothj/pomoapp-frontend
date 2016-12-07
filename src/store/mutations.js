@@ -21,6 +21,10 @@ export default {
     state.projects = projects;
   },
 
+  projectsSortOrder: (state, order) => {
+    state.projectsSortOrder = order;
+  },
+
   favorites: (state, favorites) => {
     state.favorites = favorites;
   },

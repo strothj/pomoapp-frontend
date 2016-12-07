@@ -2,7 +2,7 @@
 <div>
   <!--  Using a manually created list to work around vue-material
         capturing the events needed for sortablejs. -->
-  <span class="md-title" @click="test">{{ title }}</span>
+  <span class="md-title">{{ title }}</span>
   <ul class="list md-list md-dense md-transparent" :id="sortableId">
     <li class="md-list-item" v-for="item in items">
       <button type="button" class="md-button md-list-item-container">
@@ -49,10 +49,6 @@ export default {
   methods: {
     setSortOrder: function setSortOrder(order) {
       this.$store.dispatch(`${this.category}UpdateSortOrder`, order.join('|'));
-    },
-    test: function test() {
-      alert('test'); // eslint-disable-line
-      this.sortable.sort(['4qx', '4ng']);
     },
   },
   mounted: function mounted() {

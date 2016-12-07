@@ -60,6 +60,11 @@ export default {
     }
   },
 
+  projectsUpdateSortOrder: async ({ commit, state }, order) => {
+    commit('projectsSortOrder', order);
+    api.setProjectsSortOrder(state.token, order);
+  },
+
   favoritesUpdateSortOrder: async ({ commit, state }, order) => {
     commit('favoritesSortOrder', order);
     api.setFavoritesSortOrder(state.token, order);

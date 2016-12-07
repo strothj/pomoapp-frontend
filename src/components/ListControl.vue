@@ -1,28 +1,32 @@
 <template>
 <div>
   <span class="md-title">{{ title }}</span>
-  <md-list class="list md-dense md-transparent" :id="sortId" ref="list">
-    <md-list-item v-for="item in items">
-      <md-icon class="list__icon" v-if="editMode && editable">edit</md-icon>
-      <span>{{ item.name }}</span>
-      <md-button class="md-icon-button md-list-action">
-        <md-icon class="list__icon" v-if="!editMode">{{ item | favoriteIcon }}</md-icon>
-        <md-icon class="list__icon" v-else :class="sortId + '-handle'">drag_handle</md-icon>
-      </md-button>
-    </md-list-item>
-  </md-list>
+  <ul class="list md-list md-dense md-transparent" :id="sortableId">
+    <li class="md-list-item" v-for="item in items">
+      <button type="button" class="md-button md-list-item-container">
+        <div class="md-list-item-holder">
+          <i class="list__icon md-icon material-icons" v-if="editMode && editable">edit</i>
+          <span>{{ item.name }}</span>
+          <button type="button" class="md-button md-icon-button md-list-action">
+            <i class="list__icon md-icon material-icons" v-if="!editMode">{{ item | favoriteIcon }}</i>
+            <i class="list__icon md-icon material-icons" v-else :class="sortId + '-handle'">drag_handle</i>
+          </button>
+        </div>
+      </button>
+    </li>
+  </ul>
 </div>
 </template>
 
 <script>
-// import Sortable from 'sortablejs';
+import Sortable from 'sortablejs';
 import uniqueId from 'lodash.uniqueid';
 
 export default {
   props: ['title', 'category', 'editable'],
   data: () => ({
     sortable: null,
-    sortId: uniqueId('sortable-list-'),
+    sortableId: uniqueId('sortable-list-'),
   }),
   filters: {
     favoriteIcon: function favoriteIcon(item) {
@@ -34,17 +38,26 @@ export default {
     items: function items() {
       return this.$store.getters[this.category];
     },
+    sortableOrder: function sortableOrder() {
+      console.log(`${this.category}SortOrder`); // eslint-disble-line
+      console.log(this.$store.getters[`${this.category}SortOrder`]); // eslint-disble-line
+      return this.$store.getters[`${this.category}SortOrder`];
+    },
   },
-  updated: function mounted() {
-    /* eslint-disable no-console */
-    // const list = document.getElementById(this.sortId);
-    // console.log(list);
-    // this.sortable = Sortable.create(list, {
-    //   handle: `.${this.sortId}-handle`,
-    //   onStart: function onStart(evt) {
-    //     console.log(evt);
-    //   },
-    // });
+  methods: {
+    setSortOrder: function setSortOrder(order) {
+      console.log(order); // eslint-disable-line
+    },
+  },
+  mounted: function mounted() {
+    const list = document.getElementById(this.sortableId);
+    this.sortable = new Sortable(list, {
+      handle: `.${this.sortId}-handle`,
+      store: {
+        get: () => (this.sortableOrder),
+        set: (sortable) => { this.setSortOrder(sortable.toArray()); },
+      },
+    });
   },
 };
 </script>

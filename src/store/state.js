@@ -38,4 +38,5 @@ export default {
     { id: '124', name: 'Battleship Game', href: '/projects/124' },
     { id: '445', name: 'Create landing page', href: '/projects/123/pomodoro' },
   ],
+  editMode: false,
 };

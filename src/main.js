@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import VueMaterial from 'vue-material';
 import 'flexboxgrid/dist/flexboxgrid.css';
 import 'vue-material/dist/vue-material.css';
+import 'assets/css/styles.less';
 
 import App from './App';
 import createStore from './store';

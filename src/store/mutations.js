@@ -16,4 +16,8 @@ export default {
   user: (state, user) => {
     state.user = user;
   },
+
+  editMode: (state, editMode) => {
+    state.editMode = editMode;
+  },
 };

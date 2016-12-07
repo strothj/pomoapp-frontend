@@ -1,0 +1,23 @@
+@dark_theme_background: #303030;
+@text_primary: #FFF;
+
+body {
+  background-color: @dark_theme_background;
+  color: @text_primary;
+}
+
+.vertical-padding {
+  padding-top: 20px;
+}
+
+.list {
+  & &__icon {
+    color: @text_primary;
+  }
+}
+
+.fab {
+  & &__icon {
+    color: @text_primary;
+  }
+}

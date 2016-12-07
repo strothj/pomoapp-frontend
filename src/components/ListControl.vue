@@ -1,6 +1,8 @@
 <template>
 <div>
-  <span class="md-title">{{ title }}</span>
+  <!--  Using a manually created list to work around vue-material
+        capturing the events needed for sortablejs. -->
+  <span class="md-title" @click="test">{{ title }}</span>
   <ul class="list md-list md-dense md-transparent" :id="sortableId">
     <li class="md-list-item" v-for="item in items">
       <button type="button" class="md-button md-list-item-container">
@@ -38,26 +40,34 @@ export default {
     items: function items() {
       return this.$store.getters[this.category];
     },
-    sortableOrder: function sortableOrder() {
-      console.log(`${this.category}SortOrder`); // eslint-disble-line
-      console.log(this.$store.getters[`${this.category}SortOrder`]); // eslint-disble-line
-      return this.$store.getters[`${this.category}SortOrder`];
+    sortOrder: function sortOrder() {
+      let order = this.$store.getters[`${this.category}SortOrder`];
+      order = order ? order.split('|') : [];
+      return order;
     },
   },
   methods: {
     setSortOrder: function setSortOrder(order) {
-      console.log(order); // eslint-disable-line
+      this.$store.dispatch(`${this.category}UpdateSortOrder`, order.join('|'));
+    },
+    test: function test() {
+      alert('test'); // eslint-disable-line
+      this.sortable.sort(['4qx', '4ng']);
     },
   },
   mounted: function mounted() {
     const list = document.getElementById(this.sortableId);
     this.sortable = new Sortable(list, {
       handle: `.${this.sortId}-handle`,
+      dataIdAddr: `${this.sortId}-data`,
       store: {
-        get: () => (this.sortableOrder),
+        get: () => (this.sortOrder),
         set: (sortable) => { this.setSortOrder(sortable.toArray()); },
       },
     });
+  },
+  updated: function updated() {
+    this.sortable.sort(this.sortOrder);
   },
 };
 </script>

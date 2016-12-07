@@ -1,16 +1,16 @@
 /* eslint-disable no-param-reassign */
 
 export default {
-  updateProjectsListSortOrder: (state, sortOrder) => {
-    state.projectsListSortOrder = sortOrder;
-  },
-
   authToken: (state, authToken) => {
     state.authToken = authToken;
   },
 
   loginError: (state, loginError) => {
     state.loginError = loginError;
+  },
+
+  editMode: (state, editMode) => {
+    state.editMode = editMode;
   },
 
   user: (state, user) => {
@@ -25,7 +25,7 @@ export default {
     state.favorites = favorites;
   },
 
-  editMode: (state, editMode) => {
-    state.editMode = editMode;
+  favoritesSortOrder: (state, order) => {
+    state.favoritesSortOrder = order;
   },
 };

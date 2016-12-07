@@ -9,10 +9,11 @@ export default {
   authClient,
   authToken: null,
   loginError: '',
+  editMode: false,
+  selectedProject: null,
   user: null,
   projects: null,
   projectsListSortOrder: null,
-  selectedProject: null,
   favorites: null,
-  editMode: false,
+  favoritesSortOrder: null,
 };

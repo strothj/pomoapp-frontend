@@ -33,15 +33,28 @@ export function getProjects(token) {
           { id: '124', name: 'Portfolio Website', favorited: true, href: '/projects/124' },
           { id: '125', name: 'Emails', favorited: false, href: '/projects/125' },
         ],
-        projectsListOrder: null,
+        projectsSortOrder: null,
         favorites: [
           { id: '123', name: 'Capstone Project', favorited: true, href: '/projects/123' },
           { id: '124', name: 'Portfolio Website', favorited: true, href: '/projects/124' },
         ],
-        favoritesListOrder: null,
+        favoritesSortOrder: '4jk|4g3',
       });
     }, 100);
   });
+}
+
+function setSortOrder(token, order, path) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log('sortOrderUpdate:', path, order); // eslint-disable-line
+      resolve();
+    }, 100);
+  });
+}
+
+export function setFavoritesSortOrder(token, order) {
+  return setSortOrder(token, order, 'favorites');
 }
 
 export function deleteRefreshToken() {

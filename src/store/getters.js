@@ -1,8 +1,4 @@
 export default {
-  projectsAsListItems: ({ projects }) => projects.map(project => ({
-    text: project.name,
-  })),
-
   projectsListSortOrder: ({ projectsListSortOrder }) =>
     (projectsListSortOrder ? projectsListSortOrder.split('|') : []),
 
@@ -21,5 +17,6 @@ export default {
   },
 
   favorites: state => state.favorites || [],
+  favoritesSortOrder: state => state.favoritesSortOrder,
   projects: state => state.projects || [],
 };

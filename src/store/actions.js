@@ -1,10 +1,6 @@
 import * as api from 'src/api';
 
 export default {
-  updateProjectsListSortOrder: ({ commit, state }, sortOrder) => {
-    commit('updateProjectsListSortOrder', sortOrder.join('|'));
-  },
-
   loginUsingPassword: async ({ commit, dispatch, state }, { username, password, remember }) => {
     try {
       const token = await api.loginUsingPassword(state.authClient, username, password);
@@ -44,9 +40,14 @@ export default {
     try {
       // TODO: Make both requests at the same time.
       const user = await api.getUser(state.authToken);
-      const { favorites, projects } = await api.getProjects(state.authToken);
+      const {
+        favorites,
+        favoritesSortOrder,
+        projects,
+      } = await api.getProjects(state.authToken);
       commit('user', user);
       commit('favorites', favorites);
+      commit('favoritesSortOrder', favoritesSortOrder);
       commit('projects', projects);
     } catch (e) {
       console.error(e);
@@ -57,5 +58,10 @@ export default {
       state.router.currentRoute.name === 'LoginView') {
       state.router.push({ name: 'ProjectsView' });
     }
+  },
+
+  favoritesUpdateSortOrder: async ({ commit, state }, order) => {
+    commit('favoritesSortOrder', order);
+    api.setFavoritesSortOrder(state.token, order);
   },
 };

@@ -11,7 +11,7 @@
           <span>{{ item.name }}</span>
           <button type="button" class="md-button md-icon-button md-list-action">
             <i class="list__icon md-icon material-icons" v-if="!editMode">{{ item | favoriteIcon }}</i>
-            <i class="list__icon md-icon material-icons" v-else :class="sortId + '-handle'">drag_handle</i>
+            <i class="list__icon md-icon material-icons" v-else :class="sortableId + '-handle'">drag_handle</i>
           </button>
         </div>
       </button>
@@ -54,8 +54,8 @@ export default {
   mounted: function mounted() {
     const list = document.getElementById(this.sortableId);
     this.sortable = new Sortable(list, {
-      handle: `.${this.sortId}-handle`,
-      dataIdAddr: `${this.sortId}-data`,
+      handle: `.${this.sortableId}-handle`,
+      dataIdAddr: `${this.sortableId}-data`,
       store: {
         get: () => (this.sortOrder),
         set: (sortable) => { this.setSortOrder(sortable.toArray()); },

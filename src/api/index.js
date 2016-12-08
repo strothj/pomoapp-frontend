@@ -4,9 +4,9 @@ export function getProjects(token) {
     setTimeout(() => {
       resolve({
         projects: [
-          { id: '123', name: 'Capstone Project', favorited: true, href: '/projects/123' },
-          { id: '124', name: 'Portfolio Website', favorited: true, href: '/projects/124' },
-          { id: '125', name: 'Emails', favorited: false, href: '/projects/125' },
+          { name: 'CCapstone Project', favorited: true, href: '/projects/123' },
+          { name: 'Portfolio Website', favorited: true, href: '/projects/124' },
+          { name: 'Emails', favorited: false, href: '/projects/125' },
         ],
         projectsSortOrder: null,
         favorites: [

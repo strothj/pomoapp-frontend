@@ -19,7 +19,9 @@
         <div class="col-xs-12">
 
           <div class="box">
+            <!--
             <list-control title="Favorites" category="favorites"></list-control>
+            -->
             <div class="vertical-padding"></div>
             <list-control title="Projects" category="projects" editable="true"></list-control>
           </div>

@@ -4,6 +4,7 @@ import getters from './getters';
 import mutations from './mutations';
 import state from './state';
 import user from './modules/user';
+import projects from './modules/projects';
 
 export default ({ router }) => {
   state.router = router;
@@ -14,6 +15,7 @@ export default ({ router }) => {
     state,
     modules: {
       user,
+      projects,
     },
   });
 };

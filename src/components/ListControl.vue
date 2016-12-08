@@ -4,7 +4,7 @@
         capturing the events needed for sortablejs. -->
   <span class="md-title">{{ title }}</span>
   <ul class="list md-list md-dense md-transparent" :id="sortableId">
-    <li class="md-list-item" v-for="item in items">
+    <li class="md-list-item" v-for="item in items" :data-id="item.id">
       <button type="button" class="md-button md-list-item-container">
         <div class="md-list-item-holder">
           <i class="list__icon md-icon material-icons" v-if="editMode && editable">edit</i>
@@ -58,7 +58,6 @@ export default {
     const list = document.getElementById(this.sortableId);
     this.sortable = new Sortable(list, {
       handle: `.${this.sortableId}-handle`,
-      dataIdAddr: `${this.sortableId}-data`,
       store: {
         get: () => (this.sortOrder),
         set: (sortable) => { this.setSortOrder(sortable.toArray()); },

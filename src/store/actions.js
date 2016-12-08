@@ -9,11 +9,11 @@ export default {
       const {
         favorites,
         favoritesSortOrder,
-        projects,
+        // projects,
       } = await api.getProjects(state.authToken);
       commit('favorites', favorites);
       commit('favoritesSortOrder', favoritesSortOrder);
-      commit('projects', projects);
+      // commit('projects', projects);
     } catch (e) {
       console.error(e);
       return;

@@ -49,7 +49,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['loginUsingPassword']),
+    ...mapActions({
+      loginUsingPassword: 'LOGIN_WITH_PASSWORD',
+    }),
     submitForm: function submitForm() {
       this.loginUsingPassword({
         username: this.username,

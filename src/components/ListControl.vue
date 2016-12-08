@@ -10,7 +10,7 @@
           <i class="list__icon md-icon material-icons" v-if="editMode && editable">edit</i>
           <span>{{ item.name }}</span>
           <button type="button" class="md-button md-icon-button md-list-action">
-            <i class="list__icon md-icon material-icons" v-if="!editMode">{{ item | favoriteIcon }}</i>
+            <i class="list__icon md-icon material-icons" v-if="!editMode" @click="toggleFavorite(item)">{{ item | favoriteIcon }}</i>
             <i class="list__icon md-icon material-icons" v-else :class="sortableId + '-handle'">drag_handle</i>
           </button>
         </div>
@@ -49,6 +49,9 @@ export default {
   methods: {
     setSortOrder: function setSortOrder(order) {
       this.$store.dispatch(`${this.category}UpdateSortOrder`, order.join('|'));
+    },
+    toggleFavorite: function toggleFavorite(item) {
+      this.$store.dispatch(`${this.category}ToggleFavorite`, item);
     },
   },
   mounted: function mounted() {

@@ -19,4 +19,6 @@ export default {
   favorites: state => state.favorites || [],
   favoritesSortOrder: state => state.favoritesSortOrder,
   projects: state => state.projects || [],
+
+  router: state => state.router,
 };

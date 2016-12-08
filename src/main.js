@@ -42,4 +42,4 @@ new Vue({
   render: h => h(App),
 });
 
-store.dispatch('loginUsingSavedToken');
+store.dispatch('LOGIN_WITH_TOKEN');

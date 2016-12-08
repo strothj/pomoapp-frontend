@@ -2,14 +2,14 @@
 <md-toolbar class="md-account-header">
   <md-list class="md-transparent">
     <md-list-item class="md-avatar-list" disabled>
-      <md-avatar class="md-large"><img :src="avatar" alt="Profile Icon"></md-avatar>
+      <md-avatar class="md-large"><img :src="userAvatar" alt="Profile Icon"></md-avatar>
     </md-list-item>
 
     <profile-menu>
       <md-list-item>
         <div class="md-list-text-container">
-          <span>{{ fullName }}</span>
-          <span>{{ emailAddress }}</span>
+          <span>{{ userFullName }}</span>
+          <span>{{ userEmailAddress }}</span>
         </div>
 
         <md-button class="md-icon-button md-list-action">
@@ -23,16 +23,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ProfileMenu from './ProfileMenu';
 
 export default {
   computed: {
-    user: function user() {
-      return this.$store.state.user || { avatar: '', fullName: '', emailAddress: '' };
-    },
-    avatar: function avatar() { return this.user.avatar; },
-    fullName: function fullName() { return this.user.fullName; },
-    emailAddress: function emailAddress() { return this.user.emailAddress; },
+    ...mapGetters(['userFullName', 'userEmailAddress', 'userAvatar']),
   },
   components: {
     ProfileMenu,

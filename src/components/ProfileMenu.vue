@@ -12,7 +12,7 @@
       <md-icon>settings</md-icon>
     </md-menu-item>
 
-    <md-menu-item>
+    <md-menu-item @click="logOff">
       <span>Sign out</span>
       <md-icon>power_settings_new</md-icon>
     </md-menu-item>
@@ -21,11 +21,16 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   methods: {
     open: function open() {
       this.$refs.profileMenu.open();
     },
+    ...mapActions({
+      logOff: 'LOG_OFF',
+    }),
   },
 };
 </script>

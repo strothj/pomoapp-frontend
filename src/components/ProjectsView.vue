@@ -14,14 +14,12 @@
 
   <main>
     <div class="container-fluid">
-      <div class="vertical-padding"></div>
       <div class="row">
         <div class="col-xs-12">
 
           <div class="box">
-            <!--
+            <div class="vertical-padding"></div>
             <list-control title="Favorites" category="favorites"></list-control>
-            -->
             <div class="vertical-padding"></div>
             <list-control title="Projects" category="projects" editable="true"></list-control>
           </div>

@@ -14,6 +14,19 @@ export default {
         { id: '125', name: 'Emails', favorited: false, href: '/projects/125' },
       ]);
     },
+
+    ITEM_EDITED: async ({ commit, state }, { category, item }) => {
+      if (category !== 'projects') return;
+      await latency();
+      let projects = state.projects;
+      projects = projects.slice(0, projects.length);
+      const itemIndex = projects.findIndex((element) => {
+        if (element.id === item.id) return true;
+        return false;
+      });
+      projects[itemIndex] = item;
+      commit('PROJECTS', projects);
+    },
   },
 
   getters: {

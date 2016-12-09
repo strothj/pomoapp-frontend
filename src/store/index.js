@@ -4,6 +4,7 @@ import getters from './getters';
 import mutations from './mutations';
 import state from './state';
 
+import favorites from './modules/favorites';
 import projects from './modules/projects';
 import sorts from './modules/sorts';
 import user from './modules/user';
@@ -16,6 +17,7 @@ export default ({ router }) => {
     mutations,
     state,
     modules: {
+      favorites,
       projects,
       sorts,
       user,

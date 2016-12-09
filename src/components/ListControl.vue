@@ -15,7 +15,7 @@
           <span>{{ item.name }}</span>
 
           <!-- Secondary action button -->
-          <button type="button" class="md-button md-icon-button md-list-action">
+          <button type="button" class="md-button md-icon-button md-list-action" @click="toggleFavorite(item)">
             <!-- Show favorite toggle button in normal mode -->
             <i class="list__icon md-icon material-icons" v-if="!editMode">{{ item | favoriteIcon }}</i>
             <!-- Show sorting grip button in edit mode -->
@@ -63,6 +63,18 @@ export default {
           order: order.join('|'),
         });
       },
+    },
+  },
+
+  methods: {
+    toggleFavorite(item) {
+      if (this.editMode) return;
+      const newItem = Object.assign({}, item);
+      newItem.favorited = !newItem.favorited;
+      this.$store.dispatch('ITEM_EDITED', {
+        category: this.category,
+        item: newItem,
+      });
     },
   },
 

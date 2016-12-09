@@ -6,7 +6,7 @@
   <ul class="list md-list md-dense md-transparent" ref="list">
 
     <li class="md-list-item" v-for="item in items" :sorting-id="item.id">
-      <button type="button" class="md-button md-list-item-container"
+      <button class="md-button md-list-item-container"
         @click="primaryAction($event, item)">
         <div class="md-list-item-holder">
 
@@ -36,6 +36,12 @@
     </li>
 
   </ul>
+
+  <!-- Show new item input in edit mode -->
+  <md-button class="md-icon-button" v-if="editMode && editable && !editTarget"
+    @click="addItem">
+    <md-icon>add</md-icon>
+  </md-button>
 
 </div>
 </template>
@@ -88,6 +94,15 @@ export default {
       });
     },
 
+    addItem() {
+      const name = prompt('Enter name of item'); // eslint-disable-line no-alert
+      if (!name || name.trim() === '') return;
+      this.$store.dispatch('ITEM_ADDED', {
+        category: this.category,
+        name,
+      });
+    },
+
     editItem(item) {
       if (item.id === this.editTarget) return;
       this.editTarget = item.id;
@@ -112,10 +127,11 @@ export default {
     },
 
     primaryAction(event, item) {
-      if (this.editMode) {
+      if (this.editMode && this.editable) {
         this.editItem(item);
         return;
       }
+      this.$router.push(item.href);
     },
 
     secondaryAction(event, item) {

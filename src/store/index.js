@@ -7,6 +7,7 @@ import state from './state';
 import favorites from './modules/favorites';
 import projects from './modules/projects';
 import sorts from './modules/sorts';
+import tasks from './modules/tasks';
 import user from './modules/user';
 
 export default ({ router }) => {
@@ -20,6 +21,7 @@ export default ({ router }) => {
       favorites,
       projects,
       sorts,
+      tasks,
       user,
     },
   });

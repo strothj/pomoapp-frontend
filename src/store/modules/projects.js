@@ -1,5 +1,7 @@
 import latency from '../latency';
 
+let nextId = 126;
+
 export default {
   actions: {
     LOGGED_IN: ({ dispatch }) => {
@@ -13,6 +15,21 @@ export default {
         { id: '124', name: 'Portfolio Website', favorited: true, href: '/projects/124' },
         { id: '125', name: 'Emails', favorited: false, href: '/projects/125' },
       ]);
+    },
+
+    ITEM_ADDED: async ({ commit, state }, { category, name }) => {
+      if (category !== 'projects') return;
+      await latency();
+      const item = {
+        id: nextId,
+        name,
+        favorited: false,
+        href: `/projects/${nextId}`,
+      };
+      nextId += 1;
+      const projects = state.projects.slice(0, state.projects.length);
+      projects.push(item);
+      commit('PROJECTS', projects);
     },
 
     ITEM_EDITED: async ({ commit, state }, { category, item }) => {

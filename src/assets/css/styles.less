@@ -1,13 +1,36 @@
 @dark_theme_background: #303030;
 @text_primary: #FFF;
 
+@breakpoint_phone: 959px;
+@breakpoint_tablet: 960px;
+
 body {
   background-color: @dark_theme_background;
   color: @text_primary;
 }
 
+.main-content {
+  &__view {
+    &--small-hide {
+      @media only screen and (max-width: @breakpoint_phone) {
+        display: none;
+      }
+    }
+
+    &--medium-hide {
+      @media only screen and (min-width: @breakpoint_tablet) {
+        display: none;
+      }
+    }
+  }
+}
+
 .vertical-padding {
   padding-top: 20px;
+}
+
+.vertical-padding-large {
+  padding-top: 72px;
 }
 
 .list {
@@ -27,6 +50,8 @@ body {
 }
 
 .fab {
+  position: fixed !important;
+
   & &__icon {
     color: @text_primary;
   }

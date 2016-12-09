@@ -5,7 +5,8 @@ export default {
     ITEM_EDITED: ({ dispatch, getters }, { category, item }) => {
       if (category !== 'favorites') return;
       const newItem = Object.assign({}, item);
-      switch (newItem.id.charAt(0)) {
+      const itemType = newItem.id.charAt(0);
+      switch (itemType) {
         case PREFIX_PROJECT:
           newItem.id = newItem.id.substring(1, newItem.id.length);
           dispatch('ITEM_EDITED', { category: 'projects', item: newItem });

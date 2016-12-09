@@ -28,8 +28,8 @@
       </div>
     </div>
 
-    <md-button class="fab md-fab md-fab-bottom-center">
-      <md-icon class="fab__icon" @click.native="toggleEditMode">{{ mainFabIcon }}</md-icon>
+    <md-button class="fab md-fab md-fab-bottom-center" @click.native="toggleEditMode">
+      <md-icon class="fab__icon">{{ mainFabIcon }}</md-icon>
     </md-button>
   </main>
 

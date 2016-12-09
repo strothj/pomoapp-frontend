@@ -39,32 +39,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import ListControl from './ListControl';
 import SideNav from './SideNav';
 
 export default {
   computed: {
-    ...mapGetters([
-      'favoritedItems',
-    ]),
     editMode: {
-      get: function getEditMode() {
-        return this.$store.state.editMode;
-      },
-      set: function setEditMode(editMode) {
-        this.$store.commit('editMode', editMode);
-      },
+      get() { return this.$store.state.editMode; },
+      set(editMode) { this.$store.commit('EDIT_MODE', { editMode }); },
     },
-    mainFabIcon: function mainFabIcon() {
-      return this.editMode ? 'done' : 'edit';
-    },
+
+    mainFabIcon() { return this.editMode ? 'done' : 'edit'; },
   },
+
   methods: {
-    toggleEditMode: function toggleEditMode() {
-      this.editMode = !this.editMode;
-    },
+    toggleEditMode() { this.editMode = !this.editMode; },
   },
+
   components: {
     ListControl,
     SideNav,

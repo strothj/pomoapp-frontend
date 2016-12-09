@@ -1,21 +1,31 @@
 <template>
 <div>
-  <!--  Using a manually created list to work around vue-material
+  <!--  Using a manually created list control to work around vue-material
         capturing the events needed for sortablejs. -->
   <span class="md-title">{{ title }}</span>
-  <ul class="list md-list md-dense md-transparent" :id="sortableId">
-    <li class="md-list-item" v-for="item in items" :data-id="item.id">
+  <ul class="list md-list md-dense md-transparent" ref="list">
+
+    <li class="md-list-item" v-for="item in items" :sorting-id="item.id">
       <button type="button" class="md-button md-list-item-container">
         <div class="md-list-item-holder">
+
+          <!-- Edit icon (shown in edit mode) -->
           <i class="list__icon md-icon material-icons" v-if="editMode && editable">edit</i>
+
           <span>{{ item.name }}</span>
+
+          <!-- Secondary action button -->
           <button type="button" class="md-button md-icon-button md-list-action">
-            <i class="list__icon md-icon material-icons" v-if="!editMode" @click="toggleFavorite(item)">{{ item | favoriteIcon }}</i>
+            <!-- Show favorite toggle button in normal mode -->
+            <i class="list__icon md-icon material-icons" v-if="!editMode">{{ item | favoriteIcon }}</i>
+            <!-- Show sorting grip button in edit mode -->
             <i class="list__icon md-icon material-icons" v-else :class="sortableId + '-handle'">drag_handle</i>
           </button>
+
         </div>
       </button>
     </li>
+
   </ul>
 </div>
 </template>
@@ -26,45 +36,48 @@ import uniqueId from 'lodash.uniqueid';
 
 export default {
   props: ['title', 'category', 'editable'],
+
   data: () => ({
+    // Sortable instance
     sortable: null,
     sortableId: uniqueId('sortable-list-'),
   }),
+
   filters: {
-    favoriteIcon: function favoriteIcon(item) {
-      return item.favorited ? 'favorite' : 'favorite_border';
-    },
+    favoriteIcon(item) { return item.favorited ? 'favorite' : 'favorite_border'; },
   },
+
   computed: {
-    editMode: function editMode() { return this.$store.state.editMode; },
-    items: function items() {
-      return this.$store.getters[this.category];
-    },
-    sortOrder: function sortOrder() {
-      let order = this.$store.getters[`${this.category}SortOrder`];
-      order = order ? order.split('|') : [];
-      return order;
+    editMode() { return this.$store.state.editMode; },
+    items() { return this.$store.getters[this.category]; },
+
+    sortOrder: {
+      get() {
+        let order = this.$store.getters[`${this.category}SortOrder`];
+        order = order ? order.split('|') : [];
+        return order;
+      },
+      set(order) {
+        this.$store.dispatch('UPDATE_SORT', {
+          category: this.category,
+          order: order.join('|'),
+        });
+      },
     },
   },
-  methods: {
-    setSortOrder: function setSortOrder(order) {
-      this.$store.dispatch(`${this.category}UpdateSortOrder`, order.join('|'));
-    },
-    toggleFavorite: function toggleFavorite(item) {
-      this.$store.dispatch(`${this.category}ToggleFavorite`, item);
-    },
-  },
-  mounted: function mounted() {
-    const list = document.getElementById(this.sortableId);
-    this.sortable = new Sortable(list, {
+
+  mounted() {
+    this.sortable = new Sortable(this.$refs.list, {
       handle: `.${this.sortableId}-handle`,
+      dataIdAttr: 'sorting-id',
       store: {
         get: () => (this.sortOrder),
-        set: (sortable) => { this.setSortOrder(sortable.toArray()); },
+        set: (sortable) => { this.sortOrder = sortable.toArray(); },
       },
     });
   },
-  updated: function updated() {
+
+  updated() {
     this.sortable.sort(this.sortOrder);
   },
 };

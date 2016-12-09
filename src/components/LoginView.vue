@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   data: () => ({
@@ -42,16 +42,19 @@ export default {
     password: '123',
     remember: true,
   }),
+
   computed: {
-    ...mapState(['loginError']),
+    ...mapGetters(['loginError']),
     errorVisibility: function errorVisibility() {
       return this.loginError ? 'visible' : 'hidden';
     },
   },
+
   methods: {
     ...mapActions({
       loginUsingPassword: 'LOGIN_WITH_PASSWORD',
     }),
+
     submitForm: function submitForm() {
       this.loginUsingPassword({
         username: this.username,

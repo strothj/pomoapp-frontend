@@ -3,8 +3,10 @@ import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 import state from './state';
-import user from './modules/user';
+
 import projects from './modules/projects';
+import sorts from './modules/sorts';
+import user from './modules/user';
 
 export default ({ router }) => {
   state.router = router;
@@ -14,8 +16,9 @@ export default ({ router }) => {
     mutations,
     state,
     modules: {
-      user,
       projects,
+      sorts,
+      user,
     },
   });
 };

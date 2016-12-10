@@ -1,5 +1,7 @@
 import latency from '../latency';
 
+let nextId = 128;
+
 export default {
   actions: {
     LOGGED_IN({ dispatch }) {
@@ -15,6 +17,37 @@ export default {
         { id: '126', projectId: '124', name: 'Choose frontend framework', favorited: true, href: '/projects/124/126' },
         { id: '127', projectId: '125', name: 'Respond to personal emails', favorited: true, href: '/projects/125/127' },
       ]);
+    },
+
+    async ITEM_ADDED({ commit, getters, state }, { category, name }) {
+      if (category !== 'tasks') return;
+      await latency();
+      const selectedProject = getters.selectedProject;
+      if (!selectedProject) return;
+      const item = {
+        id: String(nextId),
+        projectId: selectedProject,
+        name,
+        favorited: false,
+        href: `/projects/${String(selectedProject)}/${nextId}`,
+      };
+      nextId += 1;
+      const tasks = state.tasks.slice(0, state.tasks.length);
+      tasks.push(item);
+      commit('TASKS', tasks);
+    },
+
+    async ITEM_EDITED({ commit, getters, state }, { category, item }) {
+      if (category !== 'tasks') return;
+      await latency();
+      let tasks = state.tasks;
+      tasks = tasks.slice(0, tasks.length);
+      const itemIndex = tasks.findIndex((element) => {
+        if (element.id !== item.id) return false;
+        return true;
+      });
+      tasks[itemIndex] = item;
+      commit('TASKS', tasks);
     },
   },
 

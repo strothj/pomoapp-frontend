@@ -5,7 +5,6 @@
 
     <!-- Left side -->
     <div class="layout__col-left layout-sidebar layout-sidebar--theme-dark">
-      <div class="layout-sidebar__app-bar-gap"></div>
       <projects-view></projects-view>
     </div>
 

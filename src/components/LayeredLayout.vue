@@ -1,11 +1,17 @@
 <template>
 <!-- Layout wrapper -->
 <div class="layout">
-  <div class="layout__row row">
+  <div class="layout__row">
+
+    <!-- Left side -->
+    <div class="layout__col-left layout-sidebar layout-sidebar--theme-dark">
+      <div class="layout-sidebar__app-bar-gap"></div>
+      <projects-view></projects-view>
+    </div>
 
     <!-- Right side -->
-    <div class="layout__col col-xs-12 col-md-9 last-md">
-      <div class="box">
+    <div class="layout__col-right">
+      <div class="">
 
         <!-- App bar -->
         <header class="layout-appbar">
@@ -54,12 +60,6 @@
 
       </div><!-- Right side container -->
     </div><!-- Right side -->
-
-    <!-- Left side -->
-    <div class="layout__col layout-sidebar layout-sidebar--theme-dark col-md-3">
-      <div class="layout-sidebar__app-bar-gap"></div>
-      <projects-view></projects-view>
-    </div>
 
   </div><!-- Layout row -->
 </div><!-- Layout wrapper -->

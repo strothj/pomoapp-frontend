@@ -17,7 +17,7 @@ export default {
       ]);
     },
 
-    async ITEM_ADDED({ commit, state }, { category, name }) {
+    async ITEM_ADDED({ commit, getters, state }, { category, name }) {
       if (category !== 'projects') return;
       await latency();
       const item = {
@@ -30,6 +30,7 @@ export default {
       const projects = state.projects.slice(0, state.projects.length);
       projects.push(item);
       commit('PROJECTS', projects);
+      getters.router.push(item.href);
     },
 
     async ITEM_EDITED({ commit, state }, { category, item }) {

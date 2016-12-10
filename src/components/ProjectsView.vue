@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="vertical-padding"></div>
-  <list-control title="Favorites" category="favorites"></list-control>
+  <list-control title="Favorites" category="favorites" sortable="true"></list-control>
   <div class="vertical-padding"></div>
-  <list-control title="Projects" category="projects" editable="true"></list-control>
+  <list-control title="Projects" category="projects" sortable="true" editable="true"></list-control>
 
   <!-- Placeholder for future archived items list -->
   <img src="https://placehold.it/500x100?text=Archived+Items" alt="">

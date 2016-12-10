@@ -1,9 +1,9 @@
 <template>
-<div>
+<div class="list">
   <!--  Using a manually created list control to work around vue-material
         capturing the events needed for sortablejs and input box. -->
-  <span class="md-title">{{ title }}</span>
-  <ul class="list md-list md-dense md-transparent" ref="list">
+  <span class="list__title md-title">{{ title }}</span>
+  <ul class="md-list md-dense md-transparent" ref="list">
 
     <li class="md-list-item" v-for="item in items" :sorting-id="item.id">
       <button class="md-button md-list-item-container"
@@ -28,7 +28,7 @@
             <!-- Show favorite toggle button in normal mode -->
             <i class="list__icon md-icon material-icons" v-if="!editMode">{{ item | favoriteIcon }}</i>
             <!-- Show sorting grip button in edit mode -->
-            <i class="list__icon md-icon material-icons" v-if="editMode && item.id !== editTarget" :class="sortableId + '-handle'">drag_handle</i>
+            <i class="list__icon md-icon material-icons" v-if="sortable && editMode && item.id !== editTarget" :class="sortableId + '-handle'">drag_handle</i>
           </button>
 
         </div>
@@ -51,18 +51,18 @@ import Sortable from 'sortablejs';
 import uniqueId from 'lodash.uniqueid';
 
 export default {
-  props: ['title', 'category', 'editable'],
+  props: ['title', 'category', 'sortable', 'editable'],
 
   data: () => ({
     // Sortable instance
-    sortable: null,
+    sortableJs: null,
     sortableId: uniqueId('sortable-list-'),
     editTarget: null,
     editTargetValue: null,
   }),
 
   filters: {
-    favoriteIcon(item) { return item.favorited ? 'favorite' : 'favorite_border'; },
+    favoriteIcon(item) { return item.favorited ? 'bookmark' : 'bookmark_border'; },
   },
 
   computed: {
@@ -143,7 +143,7 @@ export default {
   },
 
   mounted() {
-    this.sortable = new Sortable(this.$refs.list, {
+    this.sortableJs = new Sortable(this.$refs.list, {
       handle: `.${this.sortableId}-handle`,
       dataIdAttr: 'sorting-id',
       store: {
@@ -166,7 +166,7 @@ export default {
      * loose focus.
      */
     if (this.editTarget) return;
-    this.sortable.sort(this.sortOrder);
+    this.sortableJs.sort(this.sortOrder);
   },
 };
 </script>

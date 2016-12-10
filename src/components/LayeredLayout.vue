@@ -1,48 +1,68 @@
 <template>
-<div>
-  <header>
-    <md-toolbar>
-      <md-button class="md-icon-button" @click="$refs.sideNav.toggle()">
-        <md-icon>menu</md-icon>
-      </md-button>
-    </md-toolbar>
-  </header>
+<!-- Layout wrapper -->
+<div class="layout">
+  <div class="layout__row row">
 
-  <nav>
-    <side-nav ref="sideNav"></side-nav>
-  </nav>
+    <!-- Right side -->
+    <div class="layout__col col-xs-12 col-md-9 last-md">
+      <div class="box">
 
-  <main>
+        <!-- App bar -->
+        <header class="layout-appbar">
+          <md-whiteframe md-elevation="3">
+            <md-toolbar>
+              <md-button class="layout-appbar__menu-button md-icon-button" @click="$refs.sideNav.toggle()">
+                <md-icon>menu</md-icon>
+              </md-button>
+              <div class="layout-appbar__title md-title">{{ selectedItemName }}</div>
+            </md-toolbar>
+          </md-whiteframe>
+        </header>
 
-    <section class="main-content container-fluid">
-      <div class="row">
+        <!-- Slide out sidenav -->
+        <nav>
+          <side-nav ref="sideNav"></side-nav>
+        </nav>
 
-        <!-- Projects View -->
-        <article class="col-xs-12" :class="classesProjectsView">
-          <div class="box">
-            <projects-view></projects-view>
-          </div>
-        </article>
+        <main class="main-content">
+          <section class="container-fluid">
 
-        <!-- Tasks View -->
-        <article class="col-xs-12" :class="classesTasksView">
-          <div class="box">
-            <tasks-view></tasks-view>
-          </div>
-        </article>
+            <!-- Projects View -->
+            <article class="col-xs-12 col-md-5" :class="classesProjectsView">
+              <div class="box">
+                <projects-view></projects-view>
+              </div>
+            </article>
 
-      </div>
-    </section>
+            <!-- Tasks View -->
+            <article class="col-xs-12 col-md-5" :class="classesTasksView" v-if="selectedProject">
+              <div class="box">
+                <tasks-view></tasks-view>
+              </div>
+            </article>
 
-    <md-button class="fab md-fab md-fab-bottom-center" @click.native="toggleEditMode">
-      <md-icon class="fab__icon">{{ mainFabIcon }}</md-icon>
-    </md-button>
+          </section>
 
-    <!-- Add a gap so floating action button does not cover input box on mobile -->
-    <div class="vertical-padding-large"></div>
-  </main>
+          <md-button class="fab md-fab md-fab-bottom-center" @click.native="toggleEditMode">
+            <md-icon class="fab__icon">{{ mainFabIcon }}</md-icon>
+          </md-button>
 
-</div>
+          <!-- Add a gap so floating action button does not cover input box on mobile -->
+          <div class="vertical-padding-large"></div>
+
+        </main>
+
+      </div><!-- Right side container -->
+    </div><!-- Right side -->
+
+    <!-- Left side -->
+    <div class="layout__col layout-sidebar layout-sidebar--theme-dark col-md-3">
+      <div class="layout-sidebar__app-bar-gap"></div>
+      <projects-view></projects-view>
+    </div>
+
+  </div><!-- Layout row -->
+</div><!-- Layout wrapper -->
 </template>
 
 <script>
@@ -53,18 +73,27 @@ import SideNav from './SideNav';
 export default {
   computed: {
     classesProjectsView() {
-      const base = 'main-content__view main-content__view--medium-hide';
-      return this.$route.name === 'ProjectsView' ? base : `${base} main-content__view--small-hide`;
+      const base = 'main-content main-content--medium-hide';
+      return this.$route.name === 'ProjectsView' ? base : `${base} main-content--small-hide`;
     },
 
     classesTasksView() {
-      const base = 'main-content__view';
-      return this.$route.name === 'TasksView' ? base : `${base} main-content__view--small-hide`;
+      const base = 'main-content';
+      return this.$route.name === 'TasksView' ? base : `${base} main-content--small-hide`;
     },
 
     editMode: {
       get() { return this.$store.state.editMode; },
       set(editMode) { this.$store.commit('EDIT_MODE', { editMode }); },
+    },
+
+    selectedProject() {
+      return this.$store.getters.selectedProject;
+    },
+
+    selectedItemName() {
+      // TODO: If there is a task selected, the task name should be returned.
+      return this.$store.getters.selectedProjectName;
     },
 
     mainFabIcon() { return this.editMode ? 'done' : 'edit'; },

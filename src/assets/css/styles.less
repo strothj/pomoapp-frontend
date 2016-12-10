@@ -1,29 +1,11 @@
 @dark_theme_background: #303030;
+@dark_theme_card_background: #424242;
+@dark_theme_dialog_background: @dark_theme_card_background;
+
 @text_primary: #FFF;
 
 @breakpoint_phone: 959px;
 @breakpoint_tablet: 960px;
-
-body {
-  background-color: @dark_theme_background;
-  color: @text_primary;
-}
-
-.main-content {
-  &__view {
-    &--small-hide {
-      @media only screen and (max-width: @breakpoint_phone) {
-        display: none;
-      }
-    }
-
-    &--medium-hide {
-      @media only screen and (min-width: @breakpoint_tablet) {
-        display: none;
-      }
-    }
-  }
-}
 
 .vertical-padding {
   padding-top: 20px;
@@ -31,6 +13,65 @@ body {
 
 .vertical-padding-large {
   padding-top: 72px;
+}
+
+body {
+  background-color: @dark_theme_background;
+  color: @text_primary;
+}
+
+.layout {
+  &__row {
+    margin: 0;
+  }
+
+  &__col {
+    padding: 0;
+    min-height: 100vh;
+  }
+}
+
+.layout-appbar {
+  @media only screen and (min-width: @breakpoint_tablet) {
+    &__menu-button {
+      display: none;
+    }
+
+    & &__title {
+      margin-left: 8px;
+    }
+  }
+}
+
+.layout-sidebar {
+  padding: 0 16px;
+  z-index: 1;
+
+  &__app-bar-gap {
+    height: 64px;
+  }
+
+  &--theme-dark {
+    background-color: @dark_theme_dialog_background;
+  }
+
+  @media only screen and (max-width: @breakpoint_tablet) {
+    display: none;
+  }
+}
+
+.main-content {
+  &--small-hide {
+    @media only screen and (max-width: @breakpoint_phone) {
+      display: none;
+    }
+  }
+
+  &--medium-hide {
+    @media only screen and (min-width: @breakpoint_tablet) {
+      display: none;
+    }
+  }
 }
 
 .list {
@@ -46,6 +87,23 @@ body {
 
   & &__input {
     width: 100%;
+  }
+
+  &--compact {
+    .list__title {
+      min-height: 48px;
+      padding: 0 16px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
+
+.sidenav {
+  &--theme-dark {
+    .md-sidenav-content {
+      background-color: @dark_theme_dialog_background !important;
+    }
   }
 }
 

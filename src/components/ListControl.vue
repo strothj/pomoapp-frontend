@@ -7,7 +7,7 @@
 
     <li class="md-list-item" v-for="item in items" :sorting-id="item.id">
       <button class="list__button md-button md-list-item-container"
-        @click.self="primaryAction($event, item)">
+        @click="primaryAction($event, item)">
 
         <!-- Hide list item contents while it is being edited -->
         <div class="md-list-item-holder" v-if="item.id !== editTarget">
@@ -22,7 +22,7 @@
           <span class="list__text md-body-1">{{ item.name }}</span>
 
           <!--- Edit drop down menu button, hidden in edit mode -->
-          <md-menu md-size="1" md-align-trigger v-if="!editMode">
+          <md-menu @click.native.stop md-size="1" md-align-trigger v-if="!editMode">
             <md-button md-menu-trigger class="md-icon-button">
               <i class="list__icon md-icon material-icons">more_vert</i>
             </md-button>
@@ -33,7 +33,7 @@
 
           <!-- Star button, hidden in edit mode -->
           <i class="list__icon md-icon material-icons"
-            v-if="!editMode" @click="secondaryAction($event, item)">
+            v-if="!editMode" @click="toggleFavorite($event, item)">
               {{ item | favoriteIcon }}
           </i>
 
@@ -49,7 +49,7 @@
            v-if="item.id === editTarget">
           <input class="md-input" v-model="editTargetValue" v-focus
             @blur="editItemDone($event, item)"
-            @keyup="editItemDone($event, item)">
+            @keyup.enter="editItemDone($event, item)">
         </div>
 
       </button>
@@ -105,15 +105,6 @@ export default {
   },
 
   methods: {
-    toggleFavorite(item) {
-      const newItem = Object.assign({}, item);
-      newItem.favorited = !newItem.favorited;
-      this.$store.dispatch('ITEM_EDITED', {
-        category: this.category,
-        item: newItem,
-      });
-    },
-
     addItem() {
       const name = prompt('Enter name of item'); // eslint-disable-line no-alert
       if (!name || name.trim() === '') return;
@@ -130,7 +121,6 @@ export default {
     },
 
     editItemDone(event, item) {
-      if (event.keyCode && event.keyCode !== 13) return;
       if (this.editTarget === null) return;
       if (this.editTarget === item.id) this.editTarget = null;
       if (this.editTargetValue === item.name) {
@@ -147,6 +137,7 @@ export default {
     },
 
     primaryAction(event, item) {
+      console.log(item); // eslint-disable-line
       if (this.editMode && this.editable) {
         this.editItem(item);
         return;
@@ -154,11 +145,16 @@ export default {
       this.$router.push(item.href);
     },
 
-    secondaryAction(event, item) {
+    toggleFavorite(event, item) {
       // Stop propagation to prevent primaryAction handler from firing.
       event.stopPropagation();
       if (this.editMode) return;
-      this.toggleFavorite(item);
+      const newItem = Object.assign({}, item);
+      newItem.favorited = !newItem.favorited;
+      this.$store.dispatch('ITEM_EDITED', {
+        category: this.category,
+        item: newItem,
+      });
     },
   },
 

@@ -49,6 +49,23 @@ export default {
       tasks[itemIndex] = item;
       commit('TASKS', tasks);
     },
+
+    async ITEM_DELETE({ commit, state }, { category, item }) {
+      if (category === 'tasks') {
+        await latency();
+        let { tasks } = state;
+        const itemIndex = tasks.findIndex((element) => {
+          if (element.id !== item.id) return false;
+          return true;
+        });
+        if (itemIndex < 0) return;
+        tasks = tasks.slice();
+        tasks.splice(itemIndex, 1);
+        commit('TASKS', tasks);
+      } else if (category === 'projects') {
+        // TODO: Remove tasks that used to belong to delete project
+      }
+    },
   },
 
   getters: {

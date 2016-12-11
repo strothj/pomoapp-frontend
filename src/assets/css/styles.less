@@ -3,6 +3,7 @@
 @dark_theme_dialog_background: @dark_theme_card_background;
 
 @text_primary: #FFF;
+@text_secondary: fadeout(@text_primary, 70%);
 
 @breakpoint_phone: 959px;
 @breakpoint_tablet: 960px;
@@ -94,7 +95,7 @@ body {
 
 .list {
   & &__icon {
-    color: fadeout(@text_primary, 70%);
+    color: @text_secondary;
     margin-right: 2px !important;
 
     &--grabbable {
@@ -113,6 +114,23 @@ body {
 
   & &__button {
     padding: 0;
+  }
+
+  // Remove padding from bottom of item list so list presses against the
+  // add-item button.
+  > .md-list {
+    padding-bottom: 0;
+  }
+
+  &__add-item-button {
+    color: @text_secondary;
+    margin: 0;
+    width: 100%;
+    text-align: left;
+    padding: 0;
+    > span {
+      text-transform: none;
+    }
   }
 
   &--compact {

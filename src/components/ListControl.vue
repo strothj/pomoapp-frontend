@@ -22,17 +22,30 @@
           <span class="list__text md-body-1">{{ item.name }}</span>
 
           <!--- Edit drop down menu button, hidden in edit mode -->
-          <md-menu @click.native.stop md-size="1" md-align-trigger v-if="!editMode">
+          <md-menu @click.native.stop md-size="4" md-align-trigger
+            v-if="!editMode && editable">
             <md-button md-menu-trigger class="md-icon-button">
               <i class="list__icon md-icon material-icons">more_vert</i>
             </md-button>
             <md-menu-content v-md-theme="'popupMenu'">
-              <md-menu-item>Item 1</md-menu-item>
+              <md-menu-item @click="archiveItem(item)">
+                <md-icon>archive</md-icon>
+                <span>Archive</span>
+              </md-menu-item>
+              <md-menu-item @click="editItem(item)">
+                <md-icon>edit</md-icon>
+                <span>Edit</span>
+              </md-menu-item>
+              <md-menu-item @click="deleteItem(item)">
+                <md-icon>delete_forever</md-icon>
+                <span>Delete</span>
+              </md-menu-item>
             </md-menu-content>
           </md-menu>
 
           <!-- Star button, hidden in edit mode -->
           <i class="list__icon md-icon material-icons"
+            :class="{ 'md-accent': item.favorited }"
             v-if="!editMode" @click="toggleFavorite($event, item)">
               {{ item | favoriteIcon }}
           </i>
@@ -58,10 +71,11 @@
   </ul>
 
   <!-- Show new item input in edit mode -->
-  <md-button class="md-icon-button" v-if="editMode && editable && !editTarget"
+  <button class="list__add-item-button md-button"
     @click="addItem">
-    <md-icon>add</md-icon>
-  </md-button>
+    <i class="md-icon material-icons">add</i>
+    <span class="md-body-1">{{ addNewItemLinkText }}</span>
+  </button>
 
 </div>
 </template>
@@ -73,13 +87,16 @@ import uniqueId from 'lodash.uniqueid';
 export default {
   props: ['title', 'category', 'sortable', 'editable'],
 
-  data: () => ({
-    // Sortable instance
-    sortableJs: null,
-    sortableId: uniqueId('sortable-list-'),
-    editTarget: null,
-    editTargetValue: null,
-  }),
+  data() {
+    return {
+      // Sortable instance
+      sortableJs: null,
+      sortableId: uniqueId('sortable-list-'),
+      editTarget: null,
+      editTargetValue: null,
+      addNewItemLinkText: `Add new ${this.category === 'projects' ? 'project' : 'task'}`,
+    };
+  },
 
   filters: {
     favoriteIcon(item) { return item.favorited ? 'star' : 'star_border'; },
@@ -136,8 +153,14 @@ export default {
       });
     },
 
+    deleteItem(item) {
+      this.$store.dispatch('ITEM_DELETE', {
+        category: this.category,
+        item,
+      });
+    },
+
     primaryAction(event, item) {
-      console.log(item); // eslint-disable-line
       if (this.editMode && this.editable) {
         this.editItem(item);
         return;

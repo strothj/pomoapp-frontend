@@ -45,6 +45,23 @@ export default {
       projects[itemIndex] = item;
       commit('PROJECTS', projects);
     },
+
+    async ITEM_DELETE({ commit, state }, { category, item }) {
+      /* eslint-disable no-console */
+      console.log('category', category, 'item', item);
+      if (category !== 'projects') return;
+      await latency();
+      let { projects } = state;
+      const itemIndex = projects.findIndex((element) => {
+        if (element.id !== item.id) return false;
+        return true;
+      });
+      if (itemIndex < 0) { return; }
+      console.log('itemIndex', itemIndex);
+      projects = projects.slice();
+      projects.splice(itemIndex, 1);
+      commit('PROJECTS', projects);
+    },
   },
 
   getters: {

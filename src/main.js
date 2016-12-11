@@ -29,6 +29,12 @@ Vue.material.theme.registerAll({
     warn: 'deep-orange',
     background: 'grey',
   },
+  archivedButton: {
+    primary: {
+      color: 'grey',
+      hue: '500',
+    },
+  },
 });
 
 const router = createRouter();

@@ -7,7 +7,8 @@
 
     <li class="md-list-item" v-for="item in items" :sorting-id="item.id">
       <button class="list__button md-button md-list-item-container"
-        @click="primaryAction($event, item)">
+        @click="primaryAction($event, item)"
+        v-if="Boolean(archiveView) === item.archived">
 
         <!-- Hide list item contents while it is being edited -->
         <div class="md-list-item-holder" v-if="item.id !== editTarget">
@@ -28,9 +29,10 @@
               <i class="list__icon md-icon material-icons">more_vert</i>
             </md-button>
             <md-menu-content v-md-theme="'popupMenu'">
-              <md-menu-item @click="archiveItem(item)">
+              <md-menu-item @click="toggleArchive(item)">
                 <md-icon>archive</md-icon>
-                <span>Archive</span>
+                <span v-if="!archiveView">Archive</span>
+                <span v-else="archiveView">Unarchive</span>
               </md-menu-item>
               <md-menu-item @click="editItem(item)">
                 <md-icon>edit</md-icon>
@@ -46,7 +48,7 @@
           <!-- Star button, hidden in edit mode -->
           <i class="list__icon md-icon material-icons"
             :class="{ 'md-accent': item.favorited }"
-            v-if="!editMode" @click="toggleFavorite($event, item)">
+            v-if="!editMode && !archiveView" @click="toggleFavorite($event, item)">
               {{ item | favoriteIcon }}
           </i>
 
@@ -70,9 +72,9 @@
 
   </ul>
 
-  <!-- Show new item input in edit mode -->
+  <!-- Show new item input when list is editable -->
   <button class="list__add-item-button md-button"
-    @click="addItem">
+    @click="addItem" v-if="editable && !archiveView">
     <i class="md-icon material-icons">add</i>
     <span class="md-body-1">{{ addNewItemLinkText }}</span>
   </button>
@@ -85,7 +87,7 @@ import Sortable from 'sortablejs';
 import uniqueId from 'lodash.uniqueid';
 
 export default {
-  props: ['title', 'category', 'sortable', 'editable'],
+  props: ['title', 'category', 'sortable', 'editable', 'archiveView'],
 
   data() {
     return {
@@ -128,6 +130,16 @@ export default {
       this.$store.dispatch('ITEM_ADDED', {
         category: this.category,
         name,
+      });
+    },
+
+    toggleArchive(item) {
+      const newItem = Object.assign({}, item);
+      newItem.archived = !newItem.archived;
+      if (newItem.archived && newItem.favorited) newItem.favorited = false;
+      this.$store.dispatch('ITEM_EDITED', {
+        category: this.category,
+        item: newItem,
       });
     },
 

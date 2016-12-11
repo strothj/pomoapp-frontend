@@ -11,9 +11,9 @@ export default {
     async FETCH_PROJECTS({ commit }) {
       await latency();
       commit('PROJECTS', [
-        { id: '123', name: 'Capstone Project', favorited: true, href: '/projects/123' },
-        { id: '124', name: 'Portfolio Website', favorited: true, href: '/projects/124' },
-        { id: '125', name: 'Emails', favorited: false, href: '/projects/125' },
+        { id: '123', name: 'Capstone Project', favorited: true, archived: false, href: '/projects/123' },
+        { id: '124', name: 'Portfolio Website', favorited: true, archived: false, href: '/projects/124' },
+        { id: '125', name: 'Emails', favorited: false, archived: true, href: '/projects/125' },
       ]);
     },
 
@@ -24,6 +24,7 @@ export default {
         id: String(nextId),
         name,
         favorited: false,
+        archived: false,
         href: `/projects/${String(nextId)}`,
       };
       nextId += 1;
@@ -47,8 +48,6 @@ export default {
     },
 
     async ITEM_DELETE({ commit, state }, { category, item }) {
-      /* eslint-disable no-console */
-      console.log('category', category, 'item', item);
       if (category !== 'projects') return;
       await latency();
       let { projects } = state;
@@ -57,7 +56,6 @@ export default {
         return true;
       });
       if (itemIndex < 0) { return; }
-      console.log('itemIndex', itemIndex);
       projects = projects.slice();
       projects.splice(itemIndex, 1);
       commit('PROJECTS', projects);

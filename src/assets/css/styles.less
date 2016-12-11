@@ -75,6 +75,10 @@ body {
 .main-content {
   padding-top: 34px;
 
+  @media only screen and (min-width: @breakpoint_phone) {
+    padding-left: 16px;
+  }
+
   &--small-hide {
     @media only screen and (max-width: @breakpoint_phone) {
       display: none;
@@ -90,8 +94,12 @@ body {
 
 .list {
   & &__icon {
-    color: @text_primary;
-    margin-right: 8px !important;
+    color: fadeout(@text_primary, 70%);
+    margin-right: 2px !important;
+
+    &--grabbable {
+      cursor: -webkit-grabbing;
+    }
   }
 
   & &__text {
@@ -101,6 +109,10 @@ body {
 
   & &__input {
     width: 100%;
+  }
+
+  & &__button {
+    padding: 0;
   }
 
   &--compact {
@@ -127,7 +139,7 @@ body {
 
   @media only screen and (min-width: @breakpoint_tablet) {
     transform: inherit !important;
-    top: 88px;
+    // top: 88px;
     left: 264px !important;
   }
 

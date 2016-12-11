@@ -2,36 +2,56 @@
 <div class="list">
   <!--  Using a manually created list control to work around vue-material
         capturing the events needed for sortablejs and input box. -->
-  <span class="list__title md-title">{{ title }}</span>
+  <span class="list__title md-display-1">{{ title }}</span>
   <ul class="md-list md-dense md-transparent" ref="list">
 
     <li class="md-list-item" v-for="item in items" :sorting-id="item.id">
-      <button class="md-button md-list-item-container"
-        @click="primaryAction($event, item)">
-        <div class="md-list-item-holder">
+      <button class="list__button md-button md-list-item-container"
+        @click.self="primaryAction($event, item)">
 
-          <!-- Edit icon (shown in edit mode) -->
-          <!-- Hide when item is being edited -->
-          <i class="list__icon md-icon material-icons" v-if="editMode && editable && item.id !== editTarget">edit</i>
+        <!-- Hide list item contents while it is being edited -->
+        <div class="md-list-item-holder" v-if="item.id !== editTarget">
 
-          <!-- Show span when item is not being edited -->
-          <span class="list__text" v-if="item.id !== editTarget">{{ item.name }}</span>
-          <!-- Show input when item is being edited -->
-          <div class="list__input md-input-container md-has-value md-input-focused" v-if="item.id === editTarget">
-            <input class="md-input" v-model="editTargetValue" v-focus
-              @blur="editItemDone($event, item)"
-              @keyup="editItemDone($event, item)"></md-input>
-          </div>
+          <!-- Drag handle icon -->
+          <img class="list__icon list__icon--grabbable md-icon"
+            :class="sortableId + '-handle'"
+            v-if="sortable"
+            @click.stop src="~assets/icons/drag-vertical.png"
+            style="color: white;">
 
-          <!-- Secondary action button -->
-          <button type="button" class="md-button md-icon-button md-list-action" @click="secondaryAction($event, item)">
-            <!-- Show favorite toggle button in normal mode -->
-            <i class="list__icon md-icon material-icons" v-if="!editMode">{{ item | favoriteIcon }}</i>
-            <!-- Show sorting grip button in edit mode -->
-            <i class="list__icon md-icon material-icons" v-if="sortable && editMode && item.id !== editTarget" :class="sortableId + '-handle'">drag_handle</i>
-          </button>
+          <span class="list__text md-body-1">{{ item.name }}</span>
+
+          <!--- Edit drop down menu button, hidden in edit mode -->
+          <md-menu md-size="1" md-align-trigger v-if="!editMode">
+            <md-button md-menu-trigger class="md-icon-button">
+              <i class="list__icon md-icon material-icons">more_vert</i>
+            </md-button>
+            <md-menu-content v-md-theme="'popupMenu'">
+              <md-menu-item>Item 1</md-menu-item>
+            </md-menu-content>
+          </md-menu>
+
+          <!-- Star button, hidden in edit mode -->
+          <i class="list__icon md-icon material-icons"
+            v-if="!editMode" @click="secondaryAction($event, item)">
+              {{ item | favoriteIcon }}
+          </i>
+
+          <!-- Show edit icon when in edit mode -->
+          <i class="list__icon md-icon material-icons"
+            v-if="editMode && editable">edit</i>
 
         </div>
+
+        <!-- Replace list item contents with edit form while it is being edited-->
+        <!-- Show input when item is being edited -->
+        <div class="list__input md-input-container md-has-value md-input-focused"
+           v-if="item.id === editTarget">
+          <input class="md-input" v-model="editTargetValue" v-focus
+            @blur="editItemDone($event, item)"
+            @keyup="editItemDone($event, item)">
+        </div>
+
       </button>
     </li>
 
@@ -62,7 +82,7 @@ export default {
   }),
 
   filters: {
-    favoriteIcon(item) { return item.favorited ? 'bookmark' : 'bookmark_border'; },
+    favoriteIcon(item) { return item.favorited ? 'star' : 'star_border'; },
   },
 
   computed: {

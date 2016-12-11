@@ -17,7 +17,7 @@
 
 
   <!-- Quick accesss links to favorited items, projects list, and tasks list -->
-  <list-control title="Favorites" category="favorites" class="list--compact"></list-control>
+  <list-control title="Starred" category="favorites" class="list--compact"></list-control>
 
 </md-sidenav>
 </template>

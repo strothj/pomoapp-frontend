@@ -30,23 +30,20 @@
         </nav>
 
         <main class="main-content">
-          <section class="container-fluid">
 
-            <!-- Projects View -->
-            <article class="col-xs-12 col-md-5" :class="classesProjectsView">
-              <div class="box">
-                <projects-view></projects-view>
-              </div>
-            </article>
+          <!-- Projects View -->
+          <article class="col-xs-12 col-md-5" :class="classesProjectsView">
+            <div class="box">
+              <projects-view></projects-view>
+            </div>
+          </article>
 
-            <!-- Tasks View -->
-            <article class="col-xs-12 col-md-5" :class="classesTasksView" v-if="selectedProject">
-              <div class="box">
-                <tasks-view></tasks-view>
-              </div>
-            </article>
-
-          </section>
+          <!-- Tasks View -->
+          <article class="col-xs-12 col-md-5" :class="classesTasksView" v-if="selectedProject">
+            <div class="box">
+              <tasks-view></tasks-view>
+            </div>
+          </article>
 
           <md-button class="fab md-fab md-fab-bottom-center" @click.native="toggleEditMode">
             <md-icon class="fab__icon">{{ mainFabIcon }}</md-icon>

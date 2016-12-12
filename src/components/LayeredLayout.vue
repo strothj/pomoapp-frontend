@@ -29,7 +29,7 @@
           <side-nav ref="sideNav"></side-nav>
         </nav>
 
-        <main class="main-content">
+        <main class="main-content row">
 
           <!-- Projects View -->
           <article class="col-xs-12 col-md-5" :class="classesProjectsView">
@@ -42,6 +42,13 @@
           <article class="col-xs-12 col-md-5" :class="classesTasksView" v-if="selectedProject">
             <div class="box">
               <tasks-view></tasks-view>
+            </div>
+          </article>
+
+          <!-- Pomodoro View -->
+          <article class="main-content__section col-xs-12 col-md-7" v-if="selectedTask">
+            <div class="box">
+              <pomodoro-view></pomodoro-view>
             </div>
           </article>
 
@@ -64,17 +71,18 @@
 <script>
 import ProjectsView from './ProjectsView';
 import TasksView from './TasksView';
+import PomodoroView from './PomodoroView';
 import SideNav from './SideNav';
 
 export default {
   computed: {
     classesProjectsView() {
-      const base = 'main-content main-content--medium-hide';
-      return this.$route.name === 'ProjectsView' ? base : `${base} main-content--small-hide`;
+      const base = 'main-content__section main-content__section--medium-hide';
+      return this.$route.name === 'ProjectsView' ? base : `${base} main-content__section--small-hide`;
     },
 
     classesTasksView() {
-      const base = 'main-content';
+      const base = 'main-content__section';
       return this.$route.name === 'TasksView' ? base : `${base} main-content--small-hide`;
     },
 
@@ -85,6 +93,10 @@ export default {
 
     selectedProject() {
       return this.$store.getters.selectedProject;
+    },
+
+    selectedTask() {
+      return this.$store.getters.selectedTask;
     },
 
     selectedItemName() {
@@ -102,6 +114,7 @@ export default {
   components: {
     ProjectsView,
     TasksView,
+    PomodoroView,
     SideNav,
   },
 };

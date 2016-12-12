@@ -7,6 +7,7 @@ const routes = [
   { path: '/', name: 'Root', component: RootPage },
   { path: '/projects', name: 'ProjectsView', component: LayeredLayout },
   { path: '/projects/:projectId', name: 'TasksView', component: LayeredLayout },
+  { path: '/projects/:projectId/:taskId', name: 'PomodoroView', component: LayeredLayout },
   { path: '/login', name: 'LoginView', component: LoginView },
 ];
 

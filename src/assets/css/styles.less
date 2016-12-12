@@ -74,21 +74,24 @@ body {
 }
 
 .main-content {
-  padding-top: 34px;
+  padding-top: 68px;
+  margin: 0;
 
-  @media only screen and (min-width: @breakpoint_phone) {
-    padding-left: 16px;
-  }
-
-  &--small-hide {
-    @media only screen and (max-width: @breakpoint_phone) {
-      display: none;
+  &__section {
+    @media only screen and (min-width: @breakpoint_phone) {
+      padding-left: 16px;
     }
-  }
 
-  &--medium-hide {
-    @media only screen and (min-width: @breakpoint_tablet) {
-      display: none;
+    &--small-hide {
+      @media only screen and (max-width: @breakpoint_phone) {
+        display: none;
+      }
+    }
+
+    &--medium-hide {
+      @media only screen and (min-width: @breakpoint_tablet) {
+        display: none;
+      }
     }
   }
 }
@@ -163,5 +166,24 @@ body {
 
   & &__icon {
     color: @text_primary;
+  }
+}
+
+.pomodoro-frame {
+  width: 95%;
+  height: 500px;
+  padding: 24px;
+  background-color: @dark_theme_card_background;
+
+  &__task {
+    height: 38px;
+    color: fadeout(@text_primary, 30%);;
+  }
+
+  &__clock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }

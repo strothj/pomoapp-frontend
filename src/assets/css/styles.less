@@ -1,3 +1,4 @@
+@appbar_background: #2196F3;
 @dark_theme_background: #303030;
 @dark_theme_card_background: #424242;
 @dark_theme_dialog_background: @dark_theme_card_background;
@@ -186,4 +187,50 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+.index-layout {
+  &__logo {
+    width: 100%;
+  }
+
+  &__feature-row {
+    padding-top: 20px;
+  }
+}
+
+.login-card {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  // background-color: @dark_theme_card_background !important;
+
+  @media only screen and (min-width: 750px) {
+    position: relative;
+    top: 50px;
+    width: 500px;
+    margin: 0 auto;
+
+    .login-card__actions {
+      padding-top: 50px;
+    }
+  }
+
+  .md-card-header {
+    height: 100px;
+    color: #FFF;
+    background-color: @appbar_background;
+  }
+
+  .md-checkbox-label {
+    color: black;
+  }
+
+  .md-card-content {
+    height: 100%;
+  }
+}
+
+.login-card-textfield {
+  width: 100%;
 }

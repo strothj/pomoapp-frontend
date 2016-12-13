@@ -35,6 +35,12 @@ Vue.material.theme.registerAll({
       hue: '500',
     },
   },
+  loginCard: {
+    primary: 'blue',
+    accent: 'light-blue',
+    warn: 'red',
+    // background: 'black',
+  },
 });
 
 const router = createRouter();

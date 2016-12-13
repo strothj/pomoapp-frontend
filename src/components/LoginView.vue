@@ -1,74 +1,57 @@
 <template>
-<main v-md-theme="'loginCard'">
-  <md-card class="login-card">
-    <form @submit.prevent="submitForm">
+<main class="login-main">
+  <div class="login-main__container login-container container">
+    <div class="row">
+      <div class="login-container__col col-4">
 
-    <md-card-header>
-      <md-card-header-text>
-        <div class="md-title">Welcome Back!</div>
-      </md-card-header-text>
-    </md-card-header>
+        <md-card class="login-card">
+          <form class="login-card__form" @submit.prevent="submitForm">
 
-    <md-card-content>
-      <md-input-container>
-        <label for="login-username">Email Address</label>
-        <md-input v-model="username" type="username" id="login-username">
-      </md-input-container>
+            <md-toolbar class="md-large">
+              <div class="md-toolbar-container"></div>
 
-      <md-input-container md-has-password>
-        <label for="login-password">Password</label>
-        <md-input v-model="password" type="password" id="login-password">
-      </md-input-container>
+              <div class="md-toolbar-container">
+                <h2 class="md-title">Welcome Back!</h2>
+              </div>
+            </md-toolbar>
 
-      <span :style="{ visibility: errorVisibility }" class="md-body-1 md-warn">{{ loginError }}</span>
+            <md-card-content>
+              <md-input-container>
+                <label for="login-username">Email Address</label>
+                <md-input v-model="username" type="username" id="login-username"></md-input>
+              </md-input-container>
 
-      <md-checkbox v-model="remember" class="md-primary">Remember me</md-checkbox>
-    </md-card-content>
+              <md-input-container md-has-password>
+                <label for="login-password">Password</label>
+                <md-input v-model="password" type="password" id="login-password"></md-input>
+              </md-input-container>
 
-    <md-card-actions class="login-card__actions">
-      <a href="#" style="flex: 1">Forgot Password?</a>
-      <md-button class="md-raised md-primary" type="submit">Sign in</md-button>
-    </md-card-actions>
+              <md-checkbox v-model="remember" class="md-primary">Remember me</md-checkbox>
+            </md-card-content>
 
-    </form>
-  </md-card>
+            <md-card-actions class="login-card__actions">
+              <a href="#" style="flex: 1">Forgot Password?</a>
+              <md-button class="md-raised md-primary" type="submit">Sign in</md-button>
+            </md-card-actions>
+
+          </form>
+        </md-card>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Error popup -->
+  <md-dialog-alert
+    :md-content="errorDialogContent"
+    md-ok-text="OK"
+    ref="errorDialog">
+  </md-dialog-alert>
+
 </main>
 </template>
 
 <script>
-/* eslint-disable */
-/*
-    <form @submit.prevent="submitForm" class="login-card mdl-card mdl-shadow--6dp">
-      <div class="login-card__title mdl-card__title">
-        <h2 class="mdl-card__title-text">Welcome Back!</h2>
-      </div><!-- login-card__title -->
-
-      <div class="mdl-card__supporting-text mdl-card--expand">
-        <div class="login-card-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input v-model="username" type="username" id="login-username" class="mdl-textfield__input">
-          <label for="login-username" class="mdl-textfield__label">Email Address</label>
-        </div><!-- login-card-textfield -->
-
-        <div class="login-card-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-          <input v-model="password" type="password" id="login-password" class="mdl-textfield__input">
-          <label for="login-password" class="mdl-textfield__label">Password</label>
-          <span :style="{ visibility: errorVisibility }" class="mdl-textfield__error">{{ loginError }}</span>
-        </div><!-- login-card-textfield -->
-
-        <label for="login-remember" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-          <input v-model="remember" type="checkbox" id="login-remember" class="mdl-checkbox__input">
-          <span class="mdl-checkbox__label">Remember me</span>
-        </label><!-- mdl-checkbox -->
-      </div><!-- mdl-card__supporting-text -->
-
-      <div class="login-card__actions mdl-card__actions">
-        <a class="mdl-button mdl-js-button mdl-button--colored">Forgot Password?</a>
-        <div class="mdl-layout-spacer"></div>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Login</button>
-      </div><!-- login-card__actions -->
-
-    </form>
-*/
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
@@ -76,22 +59,22 @@ export default {
     username: 'bob@example.com',
     password: '123',
     remember: true,
+    // Set to a space because an empty value causes vue-material to complain.
+    errorDialogContent: ' ',
   }),
 
   computed: {
     ...mapGetters(['loginError']),
-    errorVisibility: function errorVisibility() {
-      return this.loginError ? 'visible' : 'hidden';
-    },
   },
 
   methods: {
-    ...mapActions({
-      loginUsingPassword: 'LOGIN_WITH_PASSWORD',
-    }),
+    ...mapActions([
+      'LOGIN_WITH_PASSWORD',
+      'LOGIN_ERROR_HANDLED',
+    ]),
 
     submitForm: function submitForm() {
-      this.loginUsingPassword({
+      this.$store.dispatch('LOGIN_WITH_PASSWORD', {
         username: this.username,
         password: this.password,
         remember: this.remember,
@@ -99,5 +82,53 @@ export default {
       this.password = '';
     },
   },
+
+  watch: {
+    loginError(val) {
+      if (!val) return;
+      this.errorDialogContent = val;
+      this.$store.dispatch('LOGIN_ERROR_HANDLED');
+      this.$refs.errorDialog.open();
+    },
+  },
 };
 </script>
+
+<style lang="less">
+.login-main {
+  &__container {
+    // Remove padding so login box fills horizontal width on mobile.
+    padding: 0;
+  }
+}
+
+.login-container {
+  &__col {
+    // Remove padding so login box fills horizontal width on mobile.
+    padding: 0;
+    @media only screen and (min-width: 960px) {
+      margin-top: 100px;
+      margin-left: 33.3333333%;
+    }
+  }
+}
+
+.login-card {
+
+  &__form {
+    // Expand login card height to full screen height on mobile.
+    height: 100vh;
+    @media only screen and (min-width: 960px) {
+      height: inherit;
+    }
+  }
+
+  &__actions {
+    bottom: 0;
+    width: 100%;
+    @media only screen and (min-width: 960px) {
+      position: inherit;
+    }
+  }
+}
+</style>

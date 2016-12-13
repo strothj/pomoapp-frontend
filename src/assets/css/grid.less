@@ -1,0 +1,38 @@
+@breakpoint-large-screen: 960px;
+@padding-small-screen: 16px;
+@padding-large-screen: 24px;
+@max-width: 1400px;
+
+.container {
+  width: 100%;
+  max-width: @max-width;
+  margin: 0 auto;
+  padding: 0 @padding-small-screen;
+
+  @media only screen and (min-width: @breakpoint-large-screen) {
+    padding: 0 @padding-large-screen;
+  }
+}
+
+.row {
+  &::before, &::after {
+    display: table;
+    content: '';
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+.col {
+  &-4, &-6, &-12 {
+    width: 100%;
+    @media only screen and (min-width: @breakpoint-large-screen) { float: left; }
+  }
+
+  @media only screen and (min-width: @breakpoint-large-screen) {
+    &-4 { width: 33.3333333%; }
+    &-6 { width: 50%; }
+  }
+}

@@ -19,34 +19,32 @@
   <main class="index-container__main index-main container">
 
     <div class="index-main__logo row">
-      <div class="col-xs-12">
+      <div class="col-12">
         <img src="https://placehold.it/1000x300?text=Main+Logo" alt="Logo">
       </div>
     </div>
 
-    <div class="index-main__content-row row center-md">
+    <div class="index-main__content-row row">
 
-      <div class="col-xs-12 col-md-6" v-html="featureText"></div>
+      <div class="col-6" v-html="featureText"></div>
 
-      <div class="col-xs-12 col-md-6">
-        <div class="box">
-          <img src="https://placehold.it/400x400?text=Sign+up+Component" alt="Sign in box">
-        </div>
+      <div class="col-6">
+        <img src="https://placehold.it/400x400?text=Sign+up+Component" alt="Sign in box">
       </div>
 
     </div>
 
-    <div class="index-main__content-row row center-md">
+    <div class="index-main__content-row row">
 
-      <div class="col-xs-12 col-md-6" v-html="featureText"></div>
-      <div class="col-xs-12 col-md-6" v-html="featureLogo"></div>
+      <div class="col-6" v-html="featureText"></div>
+      <div class="col-6" v-html="featureLogo"></div>
 
     </div>
 
-    <div class="index-main__content-row row center-md">
+    <div class="index-main__content-row row">
 
-      <div class="col-xs-12 col-md-6" v-html="featureLogo"></div>
-      <div class="col-xs-12 col-md-6" v-html="featureText"></div>
+      <div class="col-6" v-html="featureLogo"></div>
+      <div class="col-6" v-html="featureText"></div>
 
     </div
 
@@ -62,16 +60,12 @@ export default {
   data() {
     return {
       featureText: `
-        <div class="box">
           <p class="md-headline">Et adipisicing officia consectetur excepteur.</p>
           <p class="md-body-1">Veniam velit in anim velit exercitation labore fugiat anim culpa.</p>
           <p class="md-body-1">Commodo est magna minim ipsum labore exercitation.</p>
-          <p class="md-body-1">Proident magna culpa cillum ea reprehenderit id velit laborum esse ut eu.</p>
-        </div>`,
+          <p class="md-body-1">Proident magna culpa cillum ea reprehenderit id velit laborum esse ut eu.</p>`,
       featureLogo: `
-        <div class="box">
-          <img src="https://placehold.it/400x400?text=Screenshot">
-        </div>`,
+          <img src="https://placehold.it/400x400?text=Screenshot">`,
     };
   },
 
@@ -93,7 +87,8 @@ export default {
   }
 
   &__main {
-    padding: @navbar-height 0;
+    padding-top: @navbar-height;
+    padding-bottom: @navbar-height;
   }
 }
 
@@ -104,6 +99,10 @@ export default {
 
   &__content-row {
     padding-top: @navbar-height;
+  }
+
+  &__content-row > .col-6 {
+    text-align: center;
   }
 }
 </style>

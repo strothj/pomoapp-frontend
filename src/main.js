@@ -17,29 +17,11 @@ Vue.use(VueRouter);
 Vue.use(VueMaterial);
 
 Vue.material.theme.registerAll({
-  app: {
-    primary: 'blue',
-    accent: 'light-blue',
-    warn: 'deep-orange',
-    background: 'black',
-  },
-  popupMenu: {
-    primary: 'blue',
-    accent: 'light-blue',
+  default: {
+    primary: 'indigo',
+    accent: 'pink',
     warn: 'deep-orange',
     background: 'grey',
-  },
-  archivedButton: {
-    primary: {
-      color: 'grey',
-      hue: '500',
-    },
-  },
-  loginCard: {
-    primary: 'blue',
-    accent: 'light-blue',
-    warn: 'red',
-    // background: 'black',
   },
 });
 

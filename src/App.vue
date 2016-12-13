@@ -1,11 +1,5 @@
 <template>
-  <div id="app">
-    <head>
-    </head>
-    <main>
-    </main>
-    <footer>
-    </footer>
+  <div id="app" v-md-theme="'app'">
     <router-view></router-view>
   </div>
 </template>

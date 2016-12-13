@@ -1,40 +1,75 @@
 <template>
-<main>
-  <form @submit.prevent="submitForm" class="login-card mdl-card mdl-shadow--6dp">
-    <div class="login-card__title mdl-card__title">
-      <h2 class="mdl-card__title-text">Welcome Back!</h2>
-    </div><!-- login-card__title -->
+<main v-md-theme="'loginCard'">
+  <md-card class="login-card">
+    <form @submit.prevent="submitForm">
 
-    <div class="mdl-card__supporting-text mdl-card--expand">
-      <div class="login-card-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input v-model="username" type="username" id="login-username" class="mdl-textfield__input">
-        <label for="login-username" class="mdl-textfield__label">Email Address</label>
-      </div><!-- login-card-textfield -->
+    <md-card-header>
+      <md-card-header-text>
+        <div class="md-title">Welcome Back!</div>
+      </md-card-header-text>
+    </md-card-header>
 
-      <div class="login-card-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input v-model="password" type="password" id="login-password" class="mdl-textfield__input">
-        <label for="login-password" class="mdl-textfield__label">Password</label>
-        <span :style="{ visibility: errorVisibility }" class="mdl-textfield__error">{{ loginError }}</span>
-      </div><!-- login-card-textfield -->
+    <md-card-content>
+      <md-input-container>
+        <label for="login-username">Email Address</label>
+        <md-input v-model="username" type="username" id="login-username">
+      </md-input-container>
 
-      <label for="login-remember" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
-        <input v-model="remember" type="checkbox" id="login-remember" class="mdl-checkbox__input">
-        <span class="mdl-checkbox__label">Remember me</span>
-      </label><!-- mdl-checkbox -->
-    </div><!-- mdl-card__supporting-text -->
+      <md-input-container md-has-password>
+        <label for="login-password">Password</label>
+        <md-input v-model="password" type="password" id="login-password">
+      </md-input-container>
 
-    <div class="login-card__actions mdl-card__actions">
-      <a class="mdl-button mdl-js-button mdl-button--colored">Forgot Password?</a>
-      <div class="mdl-layout-spacer"></div>
-      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Login</button>
-    </div><!-- login-card__actions -->
+      <span :style="{ visibility: errorVisibility }" class="md-body-1 md-warn">{{ loginError }}</span>
 
-  </form><!-- login-card -->
+      <md-checkbox v-model="remember" class="md-primary">Remember me</md-checkbox>
+    </md-card-content>
+
+    <md-card-actions class="login-card__actions">
+      <a href="#" style="flex: 1">Forgot Password?</a>
+      <md-button class="md-raised md-primary" type="submit">Sign in</md-button>
+    </md-card-actions>
+
+    </form>
+  </md-card>
 </main>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+/* eslint-disable */
+/*
+    <form @submit.prevent="submitForm" class="login-card mdl-card mdl-shadow--6dp">
+      <div class="login-card__title mdl-card__title">
+        <h2 class="mdl-card__title-text">Welcome Back!</h2>
+      </div><!-- login-card__title -->
+
+      <div class="mdl-card__supporting-text mdl-card--expand">
+        <div class="login-card-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input v-model="username" type="username" id="login-username" class="mdl-textfield__input">
+          <label for="login-username" class="mdl-textfield__label">Email Address</label>
+        </div><!-- login-card-textfield -->
+
+        <div class="login-card-textfield mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input v-model="password" type="password" id="login-password" class="mdl-textfield__input">
+          <label for="login-password" class="mdl-textfield__label">Password</label>
+          <span :style="{ visibility: errorVisibility }" class="mdl-textfield__error">{{ loginError }}</span>
+        </div><!-- login-card-textfield -->
+
+        <label for="login-remember" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+          <input v-model="remember" type="checkbox" id="login-remember" class="mdl-checkbox__input">
+          <span class="mdl-checkbox__label">Remember me</span>
+        </label><!-- mdl-checkbox -->
+      </div><!-- mdl-card__supporting-text -->
+
+      <div class="login-card__actions mdl-card__actions">
+        <a class="mdl-button mdl-js-button mdl-button--colored">Forgot Password?</a>
+        <div class="mdl-layout-spacer"></div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Login</button>
+      </div><!-- login-card__actions -->
+
+    </form>
+*/
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   data: () => ({
@@ -42,14 +77,19 @@ export default {
     password: '123',
     remember: true,
   }),
+
   computed: {
-    ...mapState(['loginError']),
+    ...mapGetters(['loginError']),
     errorVisibility: function errorVisibility() {
       return this.loginError ? 'visible' : 'hidden';
     },
   },
+
   methods: {
-    ...mapActions(['loginUsingPassword']),
+    ...mapActions({
+      loginUsingPassword: 'LOGIN_WITH_PASSWORD',
+    }),
+
     submitForm: function submitForm() {
       this.loginUsingPassword({
         username: this.username,
@@ -61,35 +101,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less">
-@indigo: #4051B5;
-
-.login-card {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-
-  @media only screen and (min-width: 750px) {
-    position: relative;
-    top: 50px;
-    width: 500px;
-    height: 400px;
-    margin: 0 auto;
-  }
-
-  &__title {
-    height: 100px;
-    color: #FFF;
-    background-color: @indigo;
-  }
-
-  &__actions {
-    display: flex;
-  }
-}
-
-.login-card-textfield {
-  width: 100%;
-}
-</style>

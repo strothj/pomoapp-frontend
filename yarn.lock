@@ -2279,6 +2279,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flexboxgrid:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/flexboxgrid/-/flexboxgrid-6.3.1.tgz#e99898afc07b7047722bb81a958a5fba4d4e20fd"
+
 for-in@^0.1.5:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/for-in/-/for-in-0.1.6.tgz#c9f96e89bfad18a545af5ec3ed352a1d9e5b4dc8"
@@ -4631,7 +4635,7 @@ qs@6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.0.tgz#3b7848c03c2dece69a9522b0fae8c4126d745f3b"
 
-query-string, query-string@^4.1.0:
+query-string@^4.1.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.2.3.tgz#9f27273d207a25a8ee4c7b8c74dcd45d556db822"
   dependencies:
@@ -5627,6 +5631,12 @@ vue-loader@^10.0.0:
     vue-style-loader "^1.0.0"
     vue-template-es2015-compiler "^1.2.2"
 
+vue-material:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-0.4.1.tgz#56f868f0f9dfd3edc8f73a9c610e4e3a6c06b584"
+  dependencies:
+    vue "^2.1.4"
+
 vue-router:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.0.3.tgz#444e246fd42d65a34dea6c3be8fde3315c4ba6f7"
@@ -5651,6 +5661,10 @@ vue-template-es2015-compiler@^1.2.2:
 vue@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.1.0.tgz#293ba3efaaca846aa6bcbfac45cf8524cc597e3d"
+
+vue@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.1.4.tgz#d490f8fcf696847d8cf7f8eb9168e9a5dd806bfc"
 
 vuex:
   version "2.0.0"

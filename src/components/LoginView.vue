@@ -95,7 +95,13 @@ export default {
 </script>
 
 <style lang="less">
+@import '../assets/css/colors.less';
+@import '../assets/css/keylines.less';
+
 .login-main {
+  background-color: @color-background;
+  height: 100vh;
+
   &__container {
     // Remove padding so login box fills horizontal width on mobile.
     padding: 0;
@@ -106,7 +112,7 @@ export default {
   &__col {
     // Remove padding so login box fills horizontal width on mobile.
     padding: 0;
-    @media only screen and (min-width: 960px) {
+    @media only screen and (min-width: @breakpoint-large-screen) {
       margin-top: 100px;
       margin-left: 33.3333333%;
     }
@@ -118,7 +124,7 @@ export default {
   &__form {
     // Expand login card height to full screen height on mobile.
     height: 100vh;
-    @media only screen and (min-width: 960px) {
+    @media only screen and (min-width: @breakpoint-large-screen) {
       height: inherit;
     }
   }
@@ -126,7 +132,7 @@ export default {
   &__actions {
     bottom: 0;
     width: 100%;
-    @media only screen and (min-width: 960px) {
+    @media only screen and (min-width: @breakpoint-large-screen) {
       position: inherit;
     }
   }

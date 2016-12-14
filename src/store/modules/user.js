@@ -38,7 +38,6 @@ export default {
       commit('USER', {
         fullName: 'Bob Doe',
         emailAddress: 'bob@example.com',
-        avatar: 'https://placeimg.com/64/64/people/8',
       });
       const currentRoute = getters.router.currentRoute.name;
       if (currentRoute === 'Root' || currentRoute === 'LoginView') {
@@ -70,7 +69,6 @@ export default {
     loginError: state => state.loginError,
     userFullName: state => state.user.fullName,
     userEmailAddress: state => state.user.emailAddress,
-    userAvatar: state => state.user.avatar,
   },
 
   mutations: {
@@ -84,6 +82,6 @@ export default {
   state: {
     authToken: null,
     loginError: '',
-    user: { fullName: '', emailAddress: '', avatar: '' },
+    user: { fullName: '', emailAddress: '' },
   },
 };

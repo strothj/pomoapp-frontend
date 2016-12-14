@@ -28,7 +28,7 @@
             <md-button md-menu-trigger class="md-icon-button">
               <i class="list__icon md-icon material-icons">more_vert</i>
             </md-button>
-            <md-menu-content v-md-theme="'popupMenu'">
+            <md-menu-content>
               <md-menu-item @click="toggleArchive(item)">
                 <md-icon>archive</md-icon>
                 <span v-if="!archiveView">Archive</span>
@@ -177,6 +177,7 @@ export default {
         this.editItem(item);
         return;
       }
+      this.$store.dispatch('NAVIGATED');
       this.$router.push(item.href);
     },
 

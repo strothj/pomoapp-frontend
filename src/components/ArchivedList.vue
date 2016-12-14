@@ -1,6 +1,6 @@
 <template>
 <div>
-  <md-button class="md-primary md-dense" v-md-theme="'popupMenu'"
+  <md-button class="md-primary md-dense"
     style="width: 90%" @click="showArchived = !showArchived">
     <span v-if="!showArchived">Show</span>
     <span v-else>Hide</span>

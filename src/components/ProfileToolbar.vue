@@ -1,13 +1,9 @@
 <template>
-<md-toolbar class="md-account-header">
+<md-toolbar class="profile-toolbar">
   <md-list class="md-transparent">
-    <md-list-item class="md-avatar-list" disabled>
-      <md-avatar class="md-large"><img :src="userAvatar" alt="Profile Icon"></md-avatar>
-    </md-list-item>
-
     <profile-menu>
       <md-list-item>
-        <div class="md-list-text-container">
+        <div class="profile-toolbar__user-info md-list-text-container">
           <span>{{ userFullName }}</span>
           <span>{{ userEmailAddress }}</span>
         </div>
@@ -28,10 +24,18 @@ import ProfileMenu from './ProfileMenu';
 
 export default {
   computed: {
-    ...mapGetters(['userFullName', 'userEmailAddress', 'userAvatar']),
+    ...mapGetters(['userFullName', 'userEmailAddress']),
   },
   components: {
     ProfileMenu,
   },
 };
 </script>
+
+<style lang="less">
+.profile-toolbar {
+  &__user-info > :nth-child(2) {
+    color: fadeout(white, 55%);
+  }
+}
+</style>

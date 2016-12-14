@@ -78,9 +78,12 @@ export default {
 </script>
 
 <style lang="less">
-@navbar-height: 64px;
+@import '../assets/css/colors.less';
+@import '../assets/css/keylines.less';
 
 .index-container {
+  background-color: @color-background;
+
   &__navbar {
     position: fixed;
     width: 100%;

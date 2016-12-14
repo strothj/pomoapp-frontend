@@ -1,11 +1,10 @@
-@screen-edge-horizontal-margin__mobile: 16px;
+@navbar-height: 64px;
+@breakpoint-large-screen: 960px;
+@padding-small-screen: 16px;
+@padding-large-screen: 24px;
+@sidenav-pinned-width: 320px;
+@divider-width: 1px;
 
-@horizontal-margin__mobile: 16px;
-
-@toolbar-height__mobile: 56px;
-
-@title-bar-height__mobile: 72px;
-
-@list-item-height__mobile: 72px;
-
-@content-vertical-spacing__mobile: 8px;
+.large-screen(@rules) {
+  @media only screen and (min-width: @breakpoint-large-screen) { @rules(); }
+}

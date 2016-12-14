@@ -1,8 +1,6 @@
 <template>
 <div>
-  <div class="vertical-padding"></div>
   <list-control title="Tasks" category="tasks" editable="true" sortable="true"></list-control>
-  <div class="vertical-padding"></div>
 
   <archived-list category="tasks"></archived-list>
 

@@ -1,44 +1,50 @@
 <template>
-<div>
+<div class="index-container">
   <header>
-    <nav>
-      <md-toolbar>
-        <h2 class="md-title" style="flex: 1">pomoapp</h2>
+    <nav class="index-container__navbar">
+      <md-whiteframe md-elevation="1">
 
-        <router-link tag="md-button" :to="{ name: 'LoginView' }">Sign in</router-link>
-        <!-- <router-link tag="md-button" :to="{ name: 'SignupView' }" >Sign in</router-link> -->
-        <md-button class="md-raised" disabled>Sign up</md-button>
-      </md-toolbar>
+        <md-toolbar>
+          <h2 class="md-title" style="flex: 1">pomoapp</h2>
+
+          <router-link tag="md-button" :to="{ name: 'LoginView' }">Sign in</router-link>
+          <!-- <router-link tag="md-button" :to="{ name: 'SignupView' }" >Sign in</router-link> -->
+          <md-button class="md-raised" disabled>Sign up</md-button>
+        </md-toolbar>
+
+      </md-whiteframe>
     </nav>
-
-    <img class="index-layout__logo" src="https://placehold.it/1000x300?text=Main+Logo" alt="Logo">
   </header>
 
-  <main class="container-fluid">
+  <main class="index-container__main index-main container">
 
-    <div class="index-layout__feature-row row center-md">
+    <div class="index-main__logo row">
+      <div class="col-12">
+        <img src="https://placehold.it/1000x300?text=Main+Logo" alt="Logo">
+      </div>
+    </div>
 
-      <div class="col-xs-12 col-md-6" v-html="featureText"></div>
+    <div class="index-main__content-row row">
 
-      <div class="col-xs-12 col-md-6">
-        <div class="box">
-          <img src="https://placehold.it/400x400?text=Sign+up+Component" alt="Sign in box">
-        </div>
+      <div class="col-6" v-html="featureText"></div>
+
+      <div class="col-6">
+        <img src="https://placehold.it/400x400?text=Sign+up+Component" alt="Sign in box">
       </div>
 
     </div>
 
-    <div class="index-layout__feature-row row center-md">
+    <div class="index-main__content-row row">
 
-      <div class="col-xs-12 col-md-6" v-html="featureText"></div>
-      <div class="col-xs-12 col-md-6" v-html="featureLogo"></div>
+      <div class="col-6" v-html="featureText"></div>
+      <div class="col-6" v-html="featureLogo"></div>
 
     </div>
 
-    <div class="index-layout__feature-row row center-md">
+    <div class="index-main__content-row row">
 
-      <div class="col-xs-12 col-md-6" v-html="featureLogo"></div>
-      <div class="col-xs-12 col-md-6" v-html="featureText"></div>
+      <div class="col-6" v-html="featureLogo"></div>
+      <div class="col-6" v-html="featureText"></div>
 
     </div
 
@@ -54,16 +60,12 @@ export default {
   data() {
     return {
       featureText: `
-        <div class="box">
           <p class="md-headline">Et adipisicing officia consectetur excepteur.</p>
           <p class="md-body-1">Veniam velit in anim velit exercitation labore fugiat anim culpa.</p>
           <p class="md-body-1">Commodo est magna minim ipsum labore exercitation.</p>
-          <p class="md-body-1">Proident magna culpa cillum ea reprehenderit id velit laborum esse ut eu.</p>
-        </div>`,
+          <p class="md-body-1">Proident magna culpa cillum ea reprehenderit id velit laborum esse ut eu.</p>`,
       featureLogo: `
-        <div class="box">
-          <img src="https://placehold.it/400x400?text=Screenshot">
-        </div>`,
+          <img src="https://placehold.it/400x400?text=Screenshot">`,
     };
   },
 
@@ -74,3 +76,36 @@ export default {
   },
 };
 </script>
+
+<style lang="less">
+@import '../assets/css/colors.less';
+@import '../assets/css/keylines.less';
+
+.index-container {
+  background-color: @color-background;
+
+  &__navbar {
+    position: fixed;
+    width: 100%;
+  }
+
+  &__main {
+    padding-top: @navbar-height;
+    padding-bottom: @navbar-height;
+  }
+}
+
+.index-main {
+  &__logo img {
+    width: 100%;
+  }
+
+  &__content-row {
+    padding-top: @navbar-height;
+  }
+
+  &__content-row > .col-6 {
+    text-align: center;
+  }
+}
+</style>

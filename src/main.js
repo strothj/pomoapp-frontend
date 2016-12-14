@@ -4,7 +4,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import VueMaterial from 'vue-material';
-import 'flexboxgrid/dist/flexboxgrid.css';
 import 'vue-material/dist/vue-material.css';
 import 'assets/css/styles.less';
 
@@ -17,29 +16,11 @@ Vue.use(VueRouter);
 Vue.use(VueMaterial);
 
 Vue.material.theme.registerAll({
-  app: {
-    primary: 'blue',
-    accent: 'light-blue',
-    warn: 'deep-orange',
-    background: 'black',
-  },
-  popupMenu: {
-    primary: 'blue',
-    accent: 'light-blue',
+  default: {
+    primary: 'indigo',
+    accent: 'pink',
     warn: 'deep-orange',
     background: 'grey',
-  },
-  archivedButton: {
-    primary: {
-      color: 'grey',
-      hue: '500',
-    },
-  },
-  loginCard: {
-    primary: 'blue',
-    accent: 'light-blue',
-    warn: 'red',
-    // background: 'black',
   },
 });
 

@@ -2,7 +2,7 @@ import latency from '../latency';
 
 export default {
   actions: {
-    LOGIN_WITH_PASSWORD: async ({ commit, dispatch }, cred) => {
+    async LOGIN_WITH_PASSWORD({ commit, dispatch }, cred) {
       await latency();
       if (cred.username !== 'bob@example.com' || cred.password !== '123') {
         commit('LOGIN_ERROR', 'Email or password is incorrect');
@@ -10,10 +10,14 @@ export default {
       }
       commit('AUTH_TOKEN', '123');
       dispatch('LOGGED_IN');
-      if (cred.remember) dispatch('STORE_REFRESH_TOKEN', '456');
+      if (cred.remember) dispatch('STORE_REFRESH_TOKEN', { refreshToken: '456' });
     },
 
-    LOGIN_WITH_TOKEN: async ({ commit, dispatch, getters }) => {
+    LOGIN_ERROR_HANDLED: ({ commit }) => {
+      commit('LOGIN_ERROR', null);
+    },
+
+    async LOGIN_WITH_TOKEN({ commit, dispatch, getters }) {
       let refreshToken = document.cookie.replace(/(?:(?:^|.*;\s*)authToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
       refreshToken = decodeURIComponent(refreshToken);
       await latency();
@@ -29,34 +33,34 @@ export default {
       dispatch('LOGGED_IN');
     },
 
-    LOGGED_IN: async ({ commit, getters }) => {
+    async LOGGED_IN({ commit, getters }) {
       await latency();
       commit('USER', {
         fullName: 'Bob Doe',
         emailAddress: 'bob@example.com',
-        avatar: 'https://placeimg.com/64/64/people/8',
       });
       const currentRoute = getters.router.currentRoute.name;
+      // FIX: Check if this is not being called due to action in root store
       if (currentRoute === 'Root' || currentRoute === 'LoginView') {
         getters.router.push({ name: 'ProjectsView' });
       }
     },
 
-    LOG_OFF: async ({ commit, dispatch, getters }) => {
+    async LOG_OFF({ commit, dispatch, getters }) {
       await latency();
       dispatch('REMOVE_REFRESH_TOKEN');
       commit('AUTH_TOKEN', null);
       getters.router.push({ name: 'LoginView' });
     },
 
-    STORE_REFRESH_TOKEN: (state, refreshToken) => {
+    STORE_REFRESH_TOKEN(state, { refreshToken }) {
       const security = process.env.NODE_ENV === 'development' ? '' : ';secure';
       const encodedToken = encodeURIComponent(refreshToken);
       const cookie = `authToken=${encodedToken};path=/;max-age=7776000${security}`;
       document.cookie = cookie;
     },
 
-    REMOVE_REFRESH_TOKEN: async () => {
+    async REMOVE_REFRESH_TOKEN() {
       document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
     },
   },
@@ -66,7 +70,6 @@ export default {
     loginError: state => state.loginError,
     userFullName: state => state.user.fullName,
     userEmailAddress: state => state.user.emailAddress,
-    userAvatar: state => state.user.avatar,
   },
 
   mutations: {
@@ -80,6 +83,6 @@ export default {
   state: {
     authToken: null,
     loginError: '',
-    user: { fullName: '', emailAddress: '', avatar: '' },
+    user: { fullName: '', emailAddress: '' },
   },
 };

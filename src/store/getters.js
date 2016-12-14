@@ -42,4 +42,6 @@ export default {
     if (!selectedTask) return null;
     return `${selectedProjectHref}/${selectedTask}`;
   },
+
+  sideNavOpen(state) { return state.sideNavOpen; },
 };

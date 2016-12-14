@@ -12,7 +12,7 @@ export default {
       await latency();
       commit('PROJECTS', [
         { id: '123', name: 'Capstone Project', favorited: true, archived: false, href: '/projects/123' },
-        { id: '124', name: 'Portfolio Website', favorited: true, archived: false, href: '/projects/124' },
+        { id: '124', name: 'Portfolio Website', favorited: false, archived: false, href: '/projects/124' },
         { id: '125', name: 'Emails', favorited: false, archived: true, href: '/projects/125' },
       ]);
     },

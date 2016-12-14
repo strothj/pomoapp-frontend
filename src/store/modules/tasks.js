@@ -14,8 +14,8 @@ export default {
         { id: '123', projectId: '123', name: 'Create README.md', favorited: true, archived: false, href: '/projects/123/123' },
         { id: '124', projectId: '123', name: 'Fix Fivbar', favorited: false, archived: true, href: '/projects/123/124' },
         { id: '125', projectId: '124', name: 'Create MVP', favorited: false, archived: false, href: '/projects/124/125' },
-        { id: '126', projectId: '124', name: 'Choose frontend framework', favorited: true, archived: false, href: '/projects/124/126' },
-        { id: '127', projectId: '125', name: 'Respond to personal emails', favorited: true, archived: false, href: '/projects/125/127' },
+        { id: '126', projectId: '124', name: 'Choose frontend framework', favorited: false, archived: false, href: '/projects/124/126' },
+        { id: '127', projectId: '125', name: 'Respond to personal emails', favorited: false, archived: false, href: '/projects/125/127' },
       ]);
     },
 
@@ -78,6 +78,10 @@ export default {
         if (element.projectId !== selectedProject) return false;
         return true;
       });
+    },
+
+    allTasks(state) {
+      return state.tasks;
     },
   },
 

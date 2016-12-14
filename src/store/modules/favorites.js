@@ -26,7 +26,7 @@ export default {
     favorites: (state, getters) => {
       const list = [];
       const projects = getters.projects;
-      const tasks = getters.tasks;
+      const tasks = getters.allTasks;
       projects.forEach((project) => {
         if (project.favorited) {
           const favoritedProject = Object.assign({}, project);

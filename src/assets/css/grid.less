@@ -1,5 +1,4 @@
 @import 'keylines.less';
-// @max-width: 1400px;
 @max-width: 1000px;
 
 .container {
@@ -7,6 +6,8 @@
   max-width: @max-width;
   margin: 0 auto;
   padding: 0 @padding-small-screen;
+
+  &--inner-container { max-width: @max-width - @sidenav-pinned-width}
 
   @media only screen and (min-width: @breakpoint-large-screen) {
     padding: 0 @padding-large-screen;

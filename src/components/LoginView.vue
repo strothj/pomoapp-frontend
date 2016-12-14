@@ -2,7 +2,7 @@
 <main class="login-main">
   <div class="login-main__container login-container container">
     <div class="row">
-      <div class="login-container__col col-4">
+      <div class="login-container__col col-6">
 
         <md-card class="login-card">
           <form class="login-card__form" @submit.prevent="submitForm">
@@ -114,7 +114,7 @@ export default {
     padding: 0;
     @media only screen and (min-width: @breakpoint-large-screen) {
       margin-top: 100px;
-      margin-left: 33.3333333%;
+      margin-left: 25%;
     }
   }
 }

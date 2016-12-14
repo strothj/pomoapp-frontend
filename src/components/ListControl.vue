@@ -18,7 +18,7 @@
       <md-icon class="drag-handle">drag_handle</md-icon>
       <div class="list-container__list-item md-list-text-container">
         <span>{{ item.name }}</span>
-        <span v-if="item.projectId">{{ projectName(item) }}</span>
+        <span v-if="item.projectId && category === 'favorites'">{{ projectName(item) }}</span>
       </div>
 
       <edit-menu
@@ -42,6 +42,21 @@
     </md-list-item>
 
   </sortable-list>
+
+  <md-list class="md-transparent md-dense" v-if="editable && !archiveView">
+    <md-list-item @click="onAddItemClicked">
+      <md-icon>add</md-icon>
+      <span>{{ addNewItemLinkText }}</span>
+    </md-list-item>
+    <md-list-item @click="showArchived = !showArchived">
+      <md-icon>archive</md-icon>
+      <span v-if="!showArchived">Show archived {{ category }}</span>
+      <span v-else>Hide archived {{ category }}</span>
+    </md-list-item>
+  </md-list>
+
+  <list-control v-if="!archiveView && showArchived" :category="category" editable="true" archiveView="true"></list-control>
+
 </div>
 </template>
 
@@ -50,10 +65,13 @@ import EditMenu from './EditMenu';
 import SortableList from './SortableList';
 
 export default {
+  name: 'list-control',
   props: ['editable', 'title', 'category', 'archiveView'],
 
   data() {
     return {
+      addNewItemLinkText: `Add new ${this.category === 'projects' ? 'project' : 'task'}`,
+      showArchived: false,
     };
   },
 
@@ -92,6 +110,16 @@ export default {
       this.$store.dispatch('ITEM_EDITED', {
         category: this.category,
         item: newItem,
+      });
+    },
+
+    onAddItemClicked() {
+      // TODO: Replace with popup modal
+      const name = prompt('Enter name of item'); // eslint-disable-line no-alert
+      if (!name || name.trim() === '') return;
+      this.$store.dispatch('ITEM_ADDED', {
+        category: this.category,
+        name,
       });
     },
 

@@ -40,6 +40,7 @@ export default {
         emailAddress: 'bob@example.com',
       });
       const currentRoute = getters.router.currentRoute.name;
+      // FIX: Check if this is not being called due to action in root store
       if (currentRoute === 'Root' || currentRoute === 'LoginView') {
         getters.router.push({ name: 'ProjectsView' });
       }

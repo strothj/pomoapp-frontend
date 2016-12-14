@@ -38,7 +38,7 @@
     </nav>
 
     <article class="main-container__content">
-      <div class="container">
+      <div class="container container--inner-container">
         <tasks-view v-if="selectedProjectName"></tasks-view>
       </div>
     </article>

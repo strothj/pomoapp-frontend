@@ -1,6 +1,6 @@
 {
   "name": "pomoapp-frontend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Frontend for pomoapp",
   "author": "strothj <jason@jasons.io>",
   "homepage": "https://pomoapp.site",
@@ -10,7 +10,7 @@
     "url": "https://github.com/strothj/pomoapp-frontend"
   },
   "files": [
-    "dist/*"
+    "dist/"
   ],
   "scripts": {
     "dev": "node build/dev-server.js",

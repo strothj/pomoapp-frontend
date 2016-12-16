@@ -27,6 +27,21 @@ Vue.material.theme.registerAll({
 const router = createRouter();
 const store = createStore({ router });
 
+// Redirect user from areas of the program which require authentication.
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.authenticated) {
+      next({
+        path: '/',
+        // query: { redirect: to.fullPath }
+      });
+    } else {
+      next();
+    }
+  } else next();
+});
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -35,4 +50,5 @@ new Vue({
   render: h => h(App),
 });
 
-store.dispatch('LOGIN_WITH_TOKEN');
+// Bootstrap auth0.com library in user store module.
+store.dispatch('BOOTSTRAP_LOGIN');

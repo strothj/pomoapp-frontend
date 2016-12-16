@@ -29,5 +29,9 @@ module.exports = {
   },
   'env': {
     'browser': true,
+  },
+  'globals': {
+    'Auth0Lock': true,
+    'Auth0': true,
   }
 }

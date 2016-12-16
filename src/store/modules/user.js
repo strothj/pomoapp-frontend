@@ -1,88 +1,128 @@
-import latency from '../latency';
+const clientID = 'HwPnluOgfWiaUSQ24lS41dUW0bdQDCD9';
+const rootURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://pomoapp.site/';
+
+function createAuth0Client() {
+  return new Auth0({
+    domain: 'strothj.auth0.com',
+    clientID,
+    callbackURL: rootURL,
+    responseType: 'token',
+  });
+}
+
+function storeCookie(name, data) {
+  const security = process.env.NODE_ENV === 'development' ? '' : ';secure';
+  const encodedData = encodeURIComponent(data);
+  const cookie = `${name}=${encodedData};path=/;max-age=7776000${security}`;
+  document.cookie = cookie;
+}
+
+function retrieveCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    const cookie = parts.pop().split(';').shift();
+    return decodeURIComponent(cookie);
+  }
+  return null;
+}
+
+function deleteCookie(name) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+}
+
+function setLoggedOutState(commit) {
+  const removeCookie = { remove: true };
+  commit('AUTH_TOKEN', removeCookie);
+  commit('PROFILE', removeCookie);
+  commit('AUTHENTICATED', { authenticated: false });
+}
 
 export default {
   actions: {
-    async LOGIN_WITH_PASSWORD({ commit, dispatch }, cred) {
-      await latency();
-      if (cred.username !== 'bob@example.com' || cred.password !== '123') {
-        commit('LOGIN_ERROR', 'Email or password is incorrect');
-        return;
+    BOOTSTRAP_LOGIN({ commit, dispatch, getters, state }) {
+      function setLoggedInState(authToken, profile) {
+        commit('AUTH_TOKEN', { authToken });
+        commit('PROFILE', { profile });
+        commit('AUTHENTICATED', { authenticated: true });
+        dispatch('LOGGED_IN');
       }
-      commit('AUTH_TOKEN', '123');
-      dispatch('LOGGED_IN');
-      if (cred.remember) dispatch('STORE_REFRESH_TOKEN', { refreshToken: '456' });
-    },
 
-    LOGIN_ERROR_HANDLED: ({ commit }) => {
-      commit('LOGIN_ERROR', null);
-    },
-
-    async LOGIN_WITH_TOKEN({ commit, dispatch, getters }) {
-      let refreshToken = document.cookie.replace(/(?:(?:^|.*;\s*)authToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
-      refreshToken = decodeURIComponent(refreshToken);
-      await latency();
-      if (refreshToken !== '456') {
-        await dispatch('REMOVE_REFRESH_TOKEN');
-        const currentRoute = getters.router.currentRoute.name;
-        if (currentRoute !== 'Root') {
-          getters.router.push({ name: 'LoginView' });
-        }
-        return;
+      function loadSavedSession() {
+        const authToken = retrieveCookie('authToken');
+        const profile = JSON.parse(retrieveCookie('profile'));
+        if (authToken && profile) setLoggedInState(authToken, profile);
       }
-      commit('AUTH_TOKEN', '123');
-      dispatch('LOGGED_IN');
-    },
 
-    async LOGGED_IN({ commit, getters }) {
-      await latency();
-      commit('USER', {
-        fullName: 'Bob Doe',
-        emailAddress: 'bob@example.com',
+      function handleAuthenticationError(err) {
+        console.log('authentication error', err); // eslint-disable-line
+        setLoggedOutState(commit);
+        commit('LOGIN_ERROR', { loginError: err.toString() });
+      }
+
+      loadSavedSession();
+      const lock = getters.lock;
+
+      lock.on('authenticated', (authResult) => {
+        state.auth0.getUserInfo(authResult.accessToken, (err, profile) => {
+          if (err) {
+            handleAuthenticationError(err);
+            return;
+          }
+          setLoggedInState(authResult.accessToken, profile);
+        });
       });
-      const currentRoute = getters.router.currentRoute.name;
-      // FIX: Check if this is not being called due to action in root store
-      if (currentRoute === 'Root' || currentRoute === 'LoginView') {
-        getters.router.push({ name: 'ProjectsView' });
-      }
+
+      lock.on('authorization_error', handleAuthenticationError);
     },
 
-    async LOG_OFF({ commit, dispatch, getters }) {
-      await latency();
-      dispatch('REMOVE_REFRESH_TOKEN');
-      commit('AUTH_TOKEN', null);
-      getters.router.push({ name: 'LoginView' });
-    },
-
-    STORE_REFRESH_TOKEN(state, { refreshToken }) {
-      const security = process.env.NODE_ENV === 'development' ? '' : ';secure';
-      const encodedToken = encodeURIComponent(refreshToken);
-      const cookie = `authToken=${encodedToken};path=/;max-age=7776000${security}`;
-      document.cookie = cookie;
-    },
-
-    async REMOVE_REFRESH_TOKEN() {
-      document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    LOG_OFF({ commit, state }) {
+      setLoggedOutState(commit);
+      state.auth0.logout({ returnTo: rootURL, client_id: clientID }, { version: 'v2' });
     },
   },
 
   getters: {
-    authToken: state => state.authToken,
-    loginError: state => state.loginError,
-    userFullName: state => state.user.fullName,
-    userEmailAddress: state => state.user.emailAddress,
+    authenticated(state) { return state.authenticated; },
+    authToken(state) { return state.authToken; },
+    lock(state) { return state.lock; },
+    loginError(state) { return state.loginError; },
+    profile(state) { return state.profile; },
+    userFullName(state) { return state.profile.name; },
+    userEmailAddress(state) { return state.profile.email; },
   },
 
   mutations: {
     /* eslint-disable no-param-reassign */
-    AUTH_TOKEN: (state, authToken) => { state.authToken = authToken; },
-    LOGIN_ERROR: (state, loginError) => { state.loginError = loginError; },
-    USER: (state, user) => { state.user = user; },
+    AUTHENTICATED(state, { authenticated }) { state.authenticated = authenticated; },
+    AUTH_TOKEN(state, { authToken, remove }) {
+      if (remove) {
+        deleteCookie('authToken');
+        return;
+      } else if (authToken) {
+        storeCookie('authToken', authToken);
+        state.authToken = authToken;
+      }
+    },
+    LOGIN_ERROR(state, { loginError }) { state.loginError = loginError; },
+    PROFILE(state, { profile, remove }) {
+      if (remove) {
+        deleteCookie('profile');
+        return;
+      } else if (profile) {
+        storeCookie('profile', JSON.stringify(profile));
+        state.profile = profile;
+      }
+    },
     /* eslint-enable no-param-reassign */
   },
 
   state: {
+    auth0: createAuth0Client(),
     authToken: null,
+    authenticated: false,
+    lock: new Auth0Lock(clientID, 'strothj.auth0.com'),
     loginError: '',
-    user: { fullName: '', emailAddress: '' },
+    profile: { name: '', email: '' },
   },
 };

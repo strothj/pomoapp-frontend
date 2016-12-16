@@ -7,7 +7,7 @@
         <md-toolbar>
           <h2 class="md-title" style="flex: 1">pomoapp</h2>
 
-          <router-link tag="md-button" :to="{ name: 'LoginView' }">Sign in</router-link>
+          <md-button @click="signIn">Sign in</md-button>
           <!-- <router-link tag="md-button" :to="{ name: 'SignupView' }" >Sign in</router-link> -->
           <md-button class="md-raised" disabled>Sign up</md-button>
         </md-toolbar>
@@ -29,7 +29,7 @@
       <div class="col-6" v-html="featureText"></div>
 
       <div class="col-6">
-        <img src="https://placehold.it/400x400?text=Sign+up+Component" alt="Sign in box">
+        <img src="https://placehold.it/400x400?text=Sign+up+Component" alt="Sign up box">
       </div>
 
     </div>
@@ -73,6 +73,9 @@ export default {
   },
 
   methods: {
+    signIn() {
+      this.$store.getters.lock.show();
+    },
   },
 };
 </script>

@@ -3,29 +3,29 @@
 // we are also using it with karma-webpack
 //   https://github.com/webpack/karma-webpack
 
-var path = require('path');
-var merge = require('webpack-merge');
-var baseConfig = require('../../build/webpack.base.conf');
-var utils = require('../../build/utils');
-var webpack = require('webpack');
-var projectRoot = path.resolve(__dirname, '../../');
+const path = require('path');
+const merge = require('webpack-merge');
+const baseConfig = require('../../build/webpack.base.conf');
+const utils = require('../../build/utils');
+const webpack = require('webpack');
+const projectRoot = path.resolve(__dirname, '../../');
 
-var webpackConfig = merge(baseConfig, {
+const webpackConfig = merge(baseConfig, {
   // use inline sourcemap for karma-sourcemap-loader
   module: {
-    loaders: utils.styleLoaders()
+    loaders: utils.styleLoaders(),
   },
   devtool: '#inline-source-map',
   vue: {
     loaders: {
-      js: 'isparta'
-    }
+      js: 'isparta',
+    },
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': require('../../config/test.env')
-    })
-  ]
+      'process.env': require('../../config/test.env'),
+    }),
+  ],
 });
 
 // no need for app entry during tests
@@ -40,7 +40,7 @@ webpackConfig.module.preLoaders.unshift({
 });
 
 // only apply babel for test files when using isparta
-webpackConfig.module.loaders.some(function (loader, i) {
+webpackConfig.module.loaders.some((loader, i) => {
   if (loader.loader === 'babel') {
     loader.include = path.resolve(projectRoot, 'test/unit');
     return true;
@@ -56,9 +56,13 @@ module.exports = function (config) {
     browsers: ['PhantomJS'],
     frameworks: ['mocha', 'sinon-chai'],
     reporters: ['spec', 'coverage'],
-    files: ['./index.js'],
+    files: [
+      'https://cdn.auth0.com/w2/auth0-7.4.min.js',
+      'https://cdn.auth0.com/js/lock/10.6/lock.min.js',
+      './index.js',
+    ],
     preprocessors: {
-      './index.js': ['webpack', 'sourcemap']
+      './index.js': ['webpack', 'sourcemap'],
     },
     webpack: webpackConfig,
     webpackMiddleware: {
@@ -69,7 +73,7 @@ module.exports = function (config) {
       reporters: [
         { type: 'lcov', subdir: '.' },
         { type: 'text-summary' },
-      ]
+      ],
     },
   });
 };

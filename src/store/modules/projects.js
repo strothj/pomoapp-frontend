@@ -11,8 +11,9 @@ export default {
     FETCH_PROJECTS({ commit }) {
       request.get(`${apiUrl}/projects`).end((err, res) => {
         if (err) return;
-        console.log(res.body); // eslint-disable-line
-        commit('PROJECTS', res.body);
+        let items = res.body;
+        items = items.map(item => ({ href: `/projects/${item.id}`, ...item }));
+        commit('PROJECTS', items);
       });
     },
 
@@ -27,7 +28,8 @@ export default {
         if (err) return;
         item = res.body;
         item.href = `/projects/${item.id}`;
-        const projects = getters.projects;
+        let projects = getters.projects;
+        projects = projects.slice(0, projects.length);
         projects.push(item);
         commit('PROJECTS', projects);
         getters.router.push(item.href);

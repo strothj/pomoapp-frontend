@@ -1,4 +1,6 @@
+import request from 'superagent';
 import latency from '../latency';
+import apiUrl from '../api';
 
 let nextId = 126;
 
@@ -8,13 +10,11 @@ export default {
       dispatch('FETCH_PROJECTS');
     },
 
-    async FETCH_PROJECTS({ commit }) {
-      await latency();
-      commit('PROJECTS', [
-        { id: '123', name: 'Capstone Project', favorited: true, archived: false, href: '/projects/123' },
-        { id: '124', name: 'Portfolio Website', favorited: false, archived: false, href: '/projects/124' },
-        { id: '125', name: 'Emails', favorited: false, archived: true, href: '/projects/125' },
-      ]);
+    FETCH_PROJECTS({ commit }) {
+      request.get(`${apiUrl}/projects`).end((err, res) => {
+        console.log(res.body); // eslint-disable-line
+        commit('PROJECTS', res.body);
+      });
     },
 
     async ITEM_ADDED({ commit, getters, state }, { category, name }) {

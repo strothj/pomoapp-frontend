@@ -3,7 +3,7 @@ export default {
     if (state.router.currentRoute.name === 'Root' ||
       state.router.currentRoute.name === 'LoginView') {
       // FIXME: Pick default project/empty text
-      state.router.push('/projects/123');
+      state.router.push('/projects');
     }
   },
 

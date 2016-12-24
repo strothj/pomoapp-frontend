@@ -124,10 +124,11 @@ export default {
     },
 
     projectName(item) {
-      return this.$store.getters.projects.find((element) => {
+      const project = this.$store.getters.projects.find((element) => {
         if (element.id !== item.projectId) return false;
         return true;
-      }).name;
+      });
+      return project ? project.name : '';
     },
   },
 

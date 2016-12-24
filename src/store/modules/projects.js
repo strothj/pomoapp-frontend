@@ -2,8 +2,6 @@ import request from 'superagent';
 import latency from '../latency';
 import apiUrl from '../api';
 
-let nextId = 126;
-
 export default {
   actions: {
     LOGGED_IN({ dispatch }) {
@@ -12,26 +10,28 @@ export default {
 
     FETCH_PROJECTS({ commit }) {
       request.get(`${apiUrl}/projects`).end((err, res) => {
+        if (err) return;
         console.log(res.body); // eslint-disable-line
         commit('PROJECTS', res.body);
       });
     },
 
-    async ITEM_ADDED({ commit, getters, state }, { category, name }) {
+    ITEM_ADDED({ commit, getters, state }, { category, name }) {
       if (category !== 'projects') return;
-      await latency();
-      const item = {
-        id: String(nextId),
+      let item = {
         name,
         favorited: false,
         archived: false,
-        href: `/projects/${String(nextId)}`,
       };
-      nextId += 1;
-      const projects = state.projects.slice(0, state.projects.length);
-      projects.push(item);
-      commit('PROJECTS', projects);
-      getters.router.push(item.href);
+      request.post(`${apiUrl}/projects`).send(item).end((err, res) => {
+        if (err) return;
+        item = res.body;
+        item.href = `/projects/${item.id}`;
+        const projects = getters.projects;
+        projects.push(item);
+        commit('PROJECTS', projects);
+        getters.router.push(item.href);
+      });
     },
 
     async ITEM_EDITED({ commit, state }, { category, item }) {

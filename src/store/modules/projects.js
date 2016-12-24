@@ -36,17 +36,19 @@ export default {
       });
     },
 
-    async ITEM_EDITED({ commit, state }, { category, item }) {
+    ITEM_EDITED({ commit, state }, { category, item }) {
       if (category !== 'projects') return;
-      await latency();
-      let projects = state.projects;
-      projects = projects.slice(0, projects.length);
-      const itemIndex = projects.findIndex((element) => {
-        if (element.id !== item.id) return false;
-        return true;
+      request.put(`${apiUrl}/projects/${item.id}`).send(item).end((err) => {
+        if (err) return;
+        let projects = state.projects;
+        projects = projects.slice(0, projects.length);
+        const itemIndex = projects.findIndex((element) => {
+          if (element.id !== item.id) return false;
+          return true;
+        });
+        projects[itemIndex] = item;
+        commit('PROJECTS', projects);
       });
-      projects[itemIndex] = item;
-      commit('PROJECTS', projects);
     },
 
     async ITEM_DELETE({ commit, state }, { category, item }) {

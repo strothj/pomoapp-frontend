@@ -1,5 +1,4 @@
 import request from 'superagent';
-import latency from '../latency';
 import apiUrl from '../api';
 
 export default {
@@ -53,16 +52,18 @@ export default {
 
     async ITEM_DELETE({ commit, state }, { category, item }) {
       if (category !== 'projects') return;
-      await latency();
-      let { projects } = state;
-      const itemIndex = projects.findIndex((element) => {
-        if (element.id !== item.id) return false;
-        return true;
+      request.delete(`${apiUrl}/projects/${item.id}`).end((err) => {
+        if (err) return;
+        let { projects } = state;
+        const itemIndex = projects.findIndex((element) => {
+          if (element.id !== item.id) return false;
+          return true;
+        });
+        if (itemIndex < 0) { return; }
+        projects = projects.slice();
+        projects.splice(itemIndex, 1);
+        commit('PROJECTS', projects);
       });
-      if (itemIndex < 0) { return; }
-      projects = projects.slice();
-      projects.splice(itemIndex, 1);
-      commit('PROJECTS', projects);
     },
   },
 

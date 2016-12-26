@@ -1,5 +1,9 @@
 <template>
 <div class="list-container">
+  <md-list class="list-container__title md-transparent md-dense">
+    <md-subheader>{{ title }}</md-subheader>
+  </md-list>
+
   <sortable-list
     handle=".drag-handle"
     data-id-attr="sorting-id"
@@ -7,11 +11,10 @@
     @sortChanged="onSortChanged"
     class="md-double-line">
 
-    <md-subheader>{{ title }}</md-subheader>
-
     <md-list-item
       v-for="item in items"
       v-if="Boolean(archiveView) === item.archived"
+      :key="item.id"
       :sorting-id="item.id"
       @click="onItemClicked(item)">
 
@@ -140,8 +143,9 @@ export default {
 </script>
 
 <style lang="less">
-.list-container__list-item > span {
-  // overflow: auto;
-  // text-overflow: ellipsis !important;
+.list-container {
+  &__title > li {
+    padding-top: 25px;
+  }
 }
 </style>

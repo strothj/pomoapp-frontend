@@ -3,9 +3,7 @@
 </template>
 
 <script>
-/* eslint-disable */
 import Sortable from 'sortablejs';
-import uniqueId from 'lodash.uniqueid';
 
 export default {
   mixins: ['md-list'],
@@ -14,13 +12,7 @@ export default {
 
   data() {
     return {
-      // sortablejs instance
-      sortableJs: null,
-      /**
-       * create a unique element id to be used by this list instance of the form
-       * "sortable-list-0"
-       **/
-      sortableId: uniqueId('sortable-list-'),
+      sortableJs: null, // sortablejs instance
     };
   },
 
@@ -30,12 +22,17 @@ export default {
   methods: {
   },
 
+  updated() {
+    this.$nextTick(() => {
+      this.sortableJs.sort(this.sortOrder);
+    });
+  },
+
   mounted() {
     this.sortableJs = new Sortable(this.$refs.list.$el, {
       handle: this.handle,
       dataIdAttr: this.dataIdAttr,
-      draggable: '.md-list-item',
-      forceFallback: true,
+      // forceFallback: true,
       store: {
         get: () => (this.sortOrder),
         set: (sortable) => {

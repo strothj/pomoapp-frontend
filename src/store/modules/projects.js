@@ -39,12 +39,8 @@ export default {
       if (category !== 'projects') return;
       request.put(`${apiUrl}/projects/${item.id}`).send(item).end((err) => {
         if (err) return;
-        let projects = state.projects;
-        projects = projects.slice(0, projects.length);
-        const itemIndex = projects.findIndex((element) => {
-          if (element.id !== item.id) return false;
-          return true;
-        });
+        const projects = state.projects.slice(0, state.projects.length);
+        const itemIndex = projects.findIndex(element => (element.id === item.id));
         projects[itemIndex] = item;
         commit('PROJECTS', projects);
       });
@@ -54,11 +50,8 @@ export default {
       if (category !== 'projects') return;
       request.delete(`${apiUrl}/projects/${item.id}`).end((err) => {
         if (err) return;
-        let { projects } = state;
-        const itemIndex = projects.findIndex((element) => {
-          if (element.id !== item.id) return false;
-          return true;
-        });
+        let projects = state.projects;
+        const itemIndex = projects.findIndex(element => (element.id === item.id));
         if (itemIndex < 0) { return; }
         projects = projects.slice();
         projects.splice(itemIndex, 1);

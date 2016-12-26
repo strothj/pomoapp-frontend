@@ -90,6 +90,7 @@ export default {
     profile(state) { return state.profile; },
     userFullName(state) { return state.profile.name; },
     userEmailAddress(state) { return state.profile.email; },
+    jwtHeader(state) { return { Authorization: `Bearer ${state.authToken}` }; },
   },
 
   mutations: {

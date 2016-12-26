@@ -1,6 +1,5 @@
-import latency from '../latency';
-
-let nextId = 126;
+import request from 'superagent';
+import apiUrl from '../api';
 
 export default {
   actions: {
@@ -8,57 +7,56 @@ export default {
       dispatch('FETCH_PROJECTS');
     },
 
-    async FETCH_PROJECTS({ commit }) {
-      await latency();
-      commit('PROJECTS', [
-        { id: '123', name: 'Capstone Project', favorited: true, archived: false, href: '/projects/123' },
-        { id: '124', name: 'Portfolio Website', favorited: false, archived: false, href: '/projects/124' },
-        { id: '125', name: 'Emails', favorited: false, archived: true, href: '/projects/125' },
-      ]);
+    FETCH_PROJECTS({ commit }) {
+      request.get(`${apiUrl}/projects`).end((err, res) => {
+        if (err) return;
+        let items = res.body;
+        items = items.map(item => ({ href: `/projects/${item.id}`, ...item }));
+        commit('PROJECTS', items);
+      });
     },
 
-    async ITEM_ADDED({ commit, getters, state }, { category, name }) {
+    ITEM_ADDED({ commit, getters, state }, { category, name }) {
       if (category !== 'projects') return;
-      await latency();
-      const item = {
-        id: String(nextId),
+      let item = {
         name,
         favorited: false,
         archived: false,
-        href: `/projects/${String(nextId)}`,
       };
-      nextId += 1;
-      const projects = state.projects.slice(0, state.projects.length);
-      projects.push(item);
-      commit('PROJECTS', projects);
-      getters.router.push(item.href);
+      request.post(`${apiUrl}/projects`).send(item).end((err, res) => {
+        if (err) return;
+        item = res.body;
+        item.href = `/projects/${item.id}`;
+        let projects = getters.projects;
+        projects = projects.slice(0, projects.length);
+        projects.push(item);
+        commit('PROJECTS', projects);
+        getters.router.push(item.href);
+      });
     },
 
-    async ITEM_EDITED({ commit, state }, { category, item }) {
+    ITEM_EDITED({ commit, state }, { category, item }) {
       if (category !== 'projects') return;
-      await latency();
-      let projects = state.projects;
-      projects = projects.slice(0, projects.length);
-      const itemIndex = projects.findIndex((element) => {
-        if (element.id !== item.id) return false;
-        return true;
+      request.put(`${apiUrl}/projects/${item.id}`).send(item).end((err) => {
+        if (err) return;
+        const projects = state.projects.slice(0, state.projects.length);
+        const itemIndex = projects.findIndex(element => (element.id === item.id));
+        projects[itemIndex] = item;
+        commit('PROJECTS', projects);
       });
-      projects[itemIndex] = item;
-      commit('PROJECTS', projects);
     },
 
     async ITEM_DELETE({ commit, state }, { category, item }) {
       if (category !== 'projects') return;
-      await latency();
-      let { projects } = state;
-      const itemIndex = projects.findIndex((element) => {
-        if (element.id !== item.id) return false;
-        return true;
+      request.delete(`${apiUrl}/projects/${item.id}`).end((err) => {
+        if (err) return;
+        let projects = state.projects;
+        const itemIndex = projects.findIndex(element => (element.id === item.id));
+        if (itemIndex < 0) { return; }
+        projects = projects.slice();
+        projects.splice(itemIndex, 1);
+        commit('PROJECTS', projects);
       });
-      if (itemIndex < 0) { return; }
-      projects = projects.slice();
-      projects.splice(itemIndex, 1);
-      commit('PROJECTS', projects);
     },
   },
 

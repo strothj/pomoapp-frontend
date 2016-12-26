@@ -1,6 +1,5 @@
-import latency from '../latency';
-
-let nextId = 128;
+import request from 'superagent';
+import apiUrl from '../api';
 
 export default {
   actions: {
@@ -8,63 +7,63 @@ export default {
       dispatch('FETCH_TASKS');
     },
 
-    async FETCH_TASKS({ commit }) {
-      await latency();
-      commit('TASKS', [
-        { id: '123', projectId: '123', name: 'Create README.md', favorited: true, archived: false, href: '/projects/123/123' },
-        { id: '124', projectId: '123', name: 'Fix Fivbar', favorited: false, archived: true, href: '/projects/123/124' },
-        { id: '125', projectId: '124', name: 'Create MVP', favorited: false, archived: false, href: '/projects/124/125' },
-        { id: '126', projectId: '124', name: 'Choose frontend framework', favorited: false, archived: false, href: '/projects/124/126' },
-        { id: '127', projectId: '125', name: 'Respond to personal emails', favorited: false, archived: false, href: '/projects/125/127' },
-      ]);
+    FETCH_TASKS({ commit }) {
+      request.get(`${apiUrl}/tasks`).end((err, res) => {
+        if (err) return;
+        let items = res.body;
+        items = items.map(item => ({ href: `/projects/${item.projectId}/${item.id}`, ...item }));
+        commit('TASKS', items);
+      });
     },
 
-    async ITEM_ADDED({ commit, getters, state }, { category, name }) {
+    ITEM_ADDED({ commit, getters, state }, { category, name }) {
       if (category !== 'tasks') return;
-      await latency();
       const selectedProject = getters.selectedProject;
-      if (!selectedProject) return;
-      const item = {
-        id: String(nextId),
+      let item = {
         projectId: selectedProject,
         name,
         favorited: false,
         archived: false,
-        href: `/projects/${String(selectedProject)}/${nextId}`,
       };
-      nextId += 1;
-      const tasks = state.tasks.slice(0, state.tasks.length);
-      tasks.push(item);
-      commit('TASKS', tasks);
-    },
-
-    async ITEM_EDITED({ commit, getters, state }, { category, item }) {
-      if (category !== 'tasks') return;
-      await latency();
-      let tasks = state.tasks;
-      tasks = tasks.slice(0, tasks.length);
-      const itemIndex = tasks.findIndex((element) => {
-        if (element.id !== item.id) return false;
-        return true;
-      });
-      tasks[itemIndex] = item;
-      commit('TASKS', tasks);
-    },
-
-    async ITEM_DELETE({ commit, state }, { category, item }) {
-      if (category === 'tasks') {
-        await latency();
-        let { tasks } = state;
-        const itemIndex = tasks.findIndex((element) => {
-          if (element.id !== item.id) return false;
-          return true;
-        });
-        if (itemIndex < 0) return;
-        tasks = tasks.slice();
-        tasks.splice(itemIndex, 1);
+      request.post(`${apiUrl}/tasks`).send(item).end((err, res) => {
+        if (err) return;
+        item = res.body;
+        item.href = `/projects/${selectedProject}/${item.id}`;
+        const tasks = state.tasks.slice(0, state.tasks.length);
+        tasks.push(item);
         commit('TASKS', tasks);
-      } else if (category === 'projects') {
-        // TODO: Remove tasks that used to belong to delete project
+      });
+    },
+
+    ITEM_EDITED({ commit, getters, state }, { category, item }) {
+      if (category !== 'tasks') return;
+      request.put(`${apiUrl}/tasks/${item.id}`).send(item).end((err) => {
+        if (err) return;
+        const tasks = state.tasks.slice(0, state.tasks.length);
+        const itemIndex = tasks.findIndex(element => (element.id === item.id));
+        tasks[itemIndex] = item;
+        commit('TASKS', tasks);
+      });
+    },
+
+    ITEM_DELETE({ commit, state }, { category, item }) {
+      if (category === 'tasks') {
+        request.delete(`${apiUrl}/tasks/${item.id}`).end((err) => {
+          if (err) return;
+          let tasks = state.tasks;
+          const itemIndex = tasks.findIndex(element => (element.id === item.id));
+          if (itemIndex < 0) return;
+          tasks = tasks.slice();
+          tasks.splice(itemIndex, 1);
+          commit('TASKS', tasks);
+        });
+      }
+
+      // When a project is deleted, remove all tasks belonging to it.
+      if (category === 'projects') {
+        let tasks = state.tasks.slice();
+        tasks = tasks.filter(element => (element.projectId !== item.id));
+        commit('TASKS', tasks);
       }
     },
   },

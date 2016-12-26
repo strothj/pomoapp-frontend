@@ -1,4 +1,5 @@
-import latency from '../latency';
+import request from 'superagent';
+import apiUrl from '../api';
 
 export default {
   actions: {
@@ -6,54 +7,68 @@ export default {
       dispatch('FETCH_SORTS');
     },
 
-    async FETCH_SORTS({ commit }) {
-      await latency();
-      commit('FAVORITES_SORT_ORDER', 'p124|p123');
-      commit('PROJECTS_SORT_ORDER', '124|125|123');
+    FETCH_SORTS({ commit }) {
+      request.get(`${apiUrl}/sorts`).end((err, res) => {
+        if (err) return;
+        const sorts = {};
+        res.body.forEach((element) => {
+          sorts[element.target] = { order: element.sort, id: element.id };
+        });
+        commit('SORTS', { sorts });
+      });
     },
 
-    async UPDATE_SORT({ commit, getters, state }, { category, order }) {
-      await latency();
-      if (category === 'favorites') commit('FAVORITES_SORT_ORDER', order);
-      if (category === 'projects') commit('PROJECTS_SORT_ORDER', order);
-      if (category === 'tasks') {
-        commit('TASKS_SORT_ORDER', {
-          order,
-          selectedProject: getters.selectedProject,
-        });
+    UPDATE_SORT({ commit, getters, state }, { category, order }) {
+      const sorts = state.sorts;
+      const key = category === 'favorites' || category === 'projects' ? category : getters.selectedProject;
+      if (!sorts[key]) {
+        request
+          .post(`${apiUrl}/sorts`)
+          .send({ target: key, sort: order })
+          .end((err, res) => {
+            if (err) {
+              console.log('UPDATE_SORT POST', err); // eslint-disable-line
+              return;
+            }
+            sorts[key] = { order: res.body.sort, id: res.body.id };
+            commit('SORTS', { sorts });
+          });
+      } else {
+        request
+          .put(`${apiUrl}/sorts/${sorts[key].id}`)
+          .send({ target: key, sort: order })
+          .end((err) => {
+            if (err) {
+              console.log('UPDATE_SORT PUT', err); // eslint-disable-line
+            }
+            sorts[key].order = order;
+            commit('SORTS', { sorts });
+          });
       }
-      console.log('UPDATE_SORT', 'category', category, 'order', order); // eslint-disable-line
     },
   },
 
   getters: {
-    favoritesSortOrder(state) { return state.favoritesSortOrder; },
-    projectsSortOrder(state) { return state.projectsSortOrder; },
+    favoritesSortOrder(state) { return state.sorts.favorites ? state.sorts.favorites.order : ''; },
+    projectsSortOrder(state) { return state.sorts.projects ? state.sorts.projects.order : ''; },
 
     tasksSortOrder(state, getters) {
-      if (!state.tasksSortOrder) return '';
-      const { selectedProject } = getters;
+      const selectedProject = getters.selectedProject;
       if (!selectedProject) return '';
-      const order = state.tasksSortOrder[selectedProject];
-      return order;
+
+      return state.sorts[selectedProject] ? state.sorts[selectedProject].order : '';
     },
+
+    sorts(state) { return state.sorts; },
   },
 
   mutations: {
     /* eslint-disable no-param-reassign */
-    FAVORITES_SORT_ORDER(state, order) { state.favoritesSortOrder = order; },
-    PROJECTS_SORT_ORDER(state, order) { state.projectsSortOrder = order; },
-
-    TASKS_SORT_ORDER(state, { order, selectedProject }) {
-      if (!state.tasksSortOrder) state.tasksSortOrder = [];
-      state.tasksSortOrder[selectedProject] = order;
-    },
+    SORTS(state, { sorts }) { state.sorts = sorts; },
     /* eslint-enable no-param-reassign */
   },
 
   state: {
-    favoritesSortOrder: null,
-    projectsSortOrder: null,
-    tasksSortOrder: null,
+    sorts: {},
   },
 };

@@ -1,5 +1,9 @@
 <template>
 <div class="list-container">
+  <md-list class="list-container__title md-transparent md-dense">
+    <md-subheader>{{ title }}</md-subheader>
+  </md-list>
+
   <sortable-list
     handle=".drag-handle"
     data-id-attr="sorting-id"
@@ -7,11 +11,10 @@
     @sortChanged="onSortChanged"
     class="md-double-line">
 
-    <md-subheader>{{ title }}</md-subheader>
-
     <md-list-item
       v-for="item in items"
       v-if="Boolean(archiveView) === item.archived"
+      :key="item.id"
       :sorting-id="item.id"
       @click="onItemClicked(item)">
 
@@ -124,10 +127,11 @@ export default {
     },
 
     projectName(item) {
-      return this.$store.getters.projects.find((element) => {
+      const project = this.$store.getters.projects.find((element) => {
         if (element.id !== item.projectId) return false;
         return true;
-      }).name;
+      });
+      return project ? project.name : '';
     },
   },
 
@@ -139,8 +143,9 @@ export default {
 </script>
 
 <style lang="less">
-.list-container__list-item > span {
-  // overflow: auto;
-  // text-overflow: ellipsis !important;
+.list-container {
+  &__title > li {
+    padding-top: 25px;
+  }
 }
 </style>

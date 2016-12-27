@@ -7,13 +7,16 @@ export default {
       dispatch('FETCH_PROJECTS');
     },
 
-    FETCH_PROJECTS({ commit }) {
-      request.get(`${apiUrl}/projects`).end((err, res) => {
-        if (err) return;
-        let items = res.body;
-        items = items.map(item => ({ href: `/projects/${item.id}`, ...item }));
-        commit('PROJECTS', items);
-      });
+    FETCH_PROJECTS({ commit, getters }) {
+      request
+        .get(`${apiUrl}/projects`)
+        .set('Authorization', getters.jwtHeader)
+        .end((err, res) => {
+          if (err) return;
+          let items = res.body;
+          items = items.map(item => ({ href: `/projects/${item.id}`, ...item }));
+          commit('PROJECTS', items);
+        });
     },
 
     ITEM_ADDED({ commit, getters, state }, { category, name }) {
@@ -23,40 +26,51 @@ export default {
         favorited: false,
         archived: false,
       };
-      request.post(`${apiUrl}/projects`).send(item).end((err, res) => {
-        if (err) return;
-        item = res.body;
-        item.href = `/projects/${item.id}`;
-        let projects = getters.projects;
-        projects = projects.slice(0, projects.length);
-        projects.push(item);
-        commit('PROJECTS', projects);
-        getters.router.push(item.href);
-      });
+      request
+        .post(`${apiUrl}/projects`)
+        .set('Authorization', getters.jwtHeader)
+        .send(item)
+        .end((err, res) => {
+          if (err) return;
+          item = res.body;
+          item.href = `/projects/${item.id}`;
+          let projects = getters.projects;
+          projects = projects.slice(0, projects.length);
+          projects.push(item);
+          commit('PROJECTS', projects);
+          getters.router.push(item.href);
+        });
     },
 
-    ITEM_EDITED({ commit, state }, { category, item }) {
+    ITEM_EDITED({ commit, getters, state }, { category, item }) {
       if (category !== 'projects') return;
-      request.put(`${apiUrl}/projects/${item.id}`).send(item).end((err) => {
-        if (err) return;
-        const projects = state.projects.slice(0, state.projects.length);
-        const itemIndex = projects.findIndex(element => (element.id === item.id));
-        projects[itemIndex] = item;
-        commit('PROJECTS', projects);
-      });
+      request
+        .put(`${apiUrl}/projects/${item.id}`)
+        .set('Authorization', getters.jwtHeader)
+        .send(item)
+        .end((err) => {
+          if (err) return;
+          const projects = state.projects.slice(0, state.projects.length);
+          const itemIndex = projects.findIndex(element => (element.id === item.id));
+          projects[itemIndex] = item;
+          commit('PROJECTS', projects);
+        });
     },
 
-    async ITEM_DELETE({ commit, state }, { category, item }) {
+    ITEM_DELETE({ commit, getters, state }, { category, item }) {
       if (category !== 'projects') return;
-      request.delete(`${apiUrl}/projects/${item.id}`).end((err) => {
-        if (err) return;
-        let projects = state.projects;
-        const itemIndex = projects.findIndex(element => (element.id === item.id));
-        if (itemIndex < 0) { return; }
-        projects = projects.slice();
-        projects.splice(itemIndex, 1);
-        commit('PROJECTS', projects);
-      });
+      request
+        .delete(`${apiUrl}/projects/${item.id}`)
+        .set('Authorization', getters.jwtHeader)
+        .end((err) => {
+          if (err) return;
+          let projects = state.projects;
+          const itemIndex = projects.findIndex(element => (element.id === item.id));
+          if (itemIndex < 0) { return; }
+          projects = projects.slice();
+          projects.splice(itemIndex, 1);
+          commit('PROJECTS', projects);
+        });
     },
   },
 

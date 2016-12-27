@@ -1,5 +1,5 @@
 const clientID = 'HwPnluOgfWiaUSQ24lS41dUW0bdQDCD9';
-const rootURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : 'https://pomoapp.site/';
+const rootURL = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://pomoapp.site/';
 
 function createAuth0Client() {
   return new Auth0({
@@ -69,7 +69,7 @@ export default {
             handleAuthenticationError(err);
             return;
           }
-          setLoggedInState(authResult.accessToken, profile);
+          setLoggedInState(authResult.idToken, profile);
         });
       });
 
@@ -90,7 +90,7 @@ export default {
     profile(state) { return state.profile; },
     userFullName(state) { return state.profile.name; },
     userEmailAddress(state) { return state.profile.email; },
-    jwtHeader(state) { return { Authorization: `Bearer ${state.authToken}` }; },
+    jwtHeader(state) { return `Bearer ${state.authToken}`; },
   },
 
   mutations: {

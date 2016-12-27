@@ -32,7 +32,7 @@ export default {
     this.sortableJs = new Sortable(this.$refs.list.$el, {
       handle: this.handle,
       dataIdAttr: this.dataIdAttr,
-      // forceFallback: true,
+      forceFallback: true,
       store: {
         get: () => (this.sortOrder),
         set: (sortable) => {

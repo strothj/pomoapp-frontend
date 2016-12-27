@@ -7,15 +7,18 @@ export default {
       dispatch('FETCH_SORTS');
     },
 
-    FETCH_SORTS({ commit }) {
-      request.get(`${apiUrl}/sorts`).end((err, res) => {
-        if (err) return;
-        const sorts = {};
-        res.body.forEach((element) => {
-          sorts[element.target] = { order: element.sort, id: element.id };
+    FETCH_SORTS({ commit, getters }) {
+      request
+        .get(`${apiUrl}/sorts`)
+        .set('Authorization', getters.jwtHeader)
+        .end((err, res) => {
+          if (err) return;
+          const sorts = {};
+          res.body.forEach((element) => {
+            sorts[element.target] = { order: element.sort, id: element.id };
+          });
+          commit('SORTS', { sorts });
         });
-        commit('SORTS', { sorts });
-      });
     },
 
     UPDATE_SORT({ commit, getters, state }, { category, order }) {
@@ -24,6 +27,7 @@ export default {
       if (!sorts[key]) {
         request
           .post(`${apiUrl}/sorts`)
+          .set('Authorization', getters.jwtHeader)
           .send({ target: key, sort: order })
           .end((err, res) => {
             if (err) {
@@ -36,6 +40,7 @@ export default {
       } else {
         request
           .put(`${apiUrl}/sorts/${sorts[key].id}`)
+          .set('Authorization', getters.jwtHeader)
           .send({ target: key, sort: order })
           .end((err) => {
             if (err) {

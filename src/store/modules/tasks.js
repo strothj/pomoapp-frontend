@@ -7,13 +7,16 @@ export default {
       dispatch('FETCH_TASKS');
     },
 
-    FETCH_TASKS({ commit }) {
-      request.get(`${apiUrl}/tasks`).end((err, res) => {
-        if (err) return;
-        let items = res.body;
-        items = items.map(item => ({ href: `/projects/${item.projectId}/${item.id}`, ...item }));
-        commit('TASKS', items);
-      });
+    FETCH_TASKS({ commit, getters }) {
+      request
+        .get(`${apiUrl}/tasks`)
+        .set('Authorization', getters.jwtHeader)
+        .end((err, res) => {
+          if (err) return;
+          let items = res.body;
+          items = items.map(item => ({ href: `/projects/${item.projectId}/${item.id}`, ...item }));
+          commit('TASKS', items);
+        });
     },
 
     ITEM_ADDED({ commit, getters, state }, { category, name }) {
@@ -25,38 +28,49 @@ export default {
         favorited: false,
         archived: false,
       };
-      request.post(`${apiUrl}/tasks`).send(item).end((err, res) => {
-        if (err) return;
-        item = res.body;
-        item.href = `/projects/${selectedProject}/${item.id}`;
-        const tasks = state.tasks.slice(0, state.tasks.length);
-        tasks.push(item);
-        commit('TASKS', tasks);
-      });
+      request
+        .post(`${apiUrl}/tasks`)
+        .set('Authorization', getters.jwtHeader)
+        .send(item)
+        .end((err, res) => {
+          if (err) return;
+          item = res.body;
+          item.href = `/projects/${selectedProject}/${item.id}`;
+          const tasks = state.tasks.slice(0, state.tasks.length);
+          tasks.push(item);
+          commit('TASKS', tasks);
+        });
     },
 
     ITEM_EDITED({ commit, getters, state }, { category, item }) {
       if (category !== 'tasks') return;
-      request.put(`${apiUrl}/tasks/${item.id}`).send(item).end((err) => {
-        if (err) return;
-        const tasks = state.tasks.slice(0, state.tasks.length);
-        const itemIndex = tasks.findIndex(element => (element.id === item.id));
-        tasks[itemIndex] = item;
-        commit('TASKS', tasks);
-      });
-    },
-
-    ITEM_DELETE({ commit, state }, { category, item }) {
-      if (category === 'tasks') {
-        request.delete(`${apiUrl}/tasks/${item.id}`).end((err) => {
+      request
+        .put(`${apiUrl}/tasks/${item.id}`)
+        .set('Authorization', getters.jwtHeader)
+        .send(item)
+        .end((err) => {
           if (err) return;
-          let tasks = state.tasks;
+          const tasks = state.tasks.slice(0, state.tasks.length);
           const itemIndex = tasks.findIndex(element => (element.id === item.id));
-          if (itemIndex < 0) return;
-          tasks = tasks.slice();
-          tasks.splice(itemIndex, 1);
+          tasks[itemIndex] = item;
           commit('TASKS', tasks);
         });
+    },
+
+    ITEM_DELETE({ commit, getters, state }, { category, item }) {
+      if (category === 'tasks') {
+        request
+          .delete(`${apiUrl}/tasks/${item.id}`)
+          .set('Authorization', getters.jwtHeader)
+          .end((err) => {
+            if (err) return;
+            let tasks = state.tasks;
+            const itemIndex = tasks.findIndex(element => (element.id === item.id));
+            if (itemIndex < 0) return;
+            tasks = tasks.slice();
+            tasks.splice(itemIndex, 1);
+            commit('TASKS', tasks);
+          });
       }
 
       // When a project is deleted, remove all tasks belonging to it.

@@ -1,7 +1,7 @@
 <template>
 <div class="list-container">
   <md-list class="list-container__title md-transparent md-dense">
-    <md-subheader>{{ title }}</md-subheader>
+    <md-subheader v-if="title">{{ title }}</md-subheader>
   </md-list>
 
   <sortable-list
@@ -14,11 +14,11 @@
     <md-list-item
       v-for="item in items"
       v-if="Boolean(archiveView) === item.archived"
-      :key="item.id"
+      :key="item.id + archiveView"
       :sorting-id="item.id"
       @click="onItemClicked(item)">
 
-      <md-icon class="drag-handle">drag_handle</md-icon>
+      <md-icon class="drag-handle" v-if="sortable">drag_handle</md-icon>
       <div class="list-container__list-item md-list-text-container">
         <span>{{ item.name }}</span>
         <span v-if="item.projectId && category === 'favorites'">{{ projectName(item) }}</span>
@@ -69,7 +69,7 @@ import SortableList from './SortableList';
 
 export default {
   name: 'list-control',
-  props: ['editable', 'title', 'category', 'archiveView'],
+  props: ['editable', 'title', 'category', 'archiveView', 'sortable'],
 
   data() {
     return {
@@ -147,5 +147,10 @@ export default {
   &__title > li {
     padding-top: 25px;
   }
+}
+
+.drag-handle {
+  margin-right: 10px !important;
+  color: rgba(0, 0, 0, 0.35);
 }
 </style>

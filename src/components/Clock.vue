@@ -1,14 +1,23 @@
 <template>
-<canvas width="300" height="300" ref="clock"></canvas>
+<canvas class="clock" ref="clock"></canvas>
 </template>
 
 <script>
 // Offset so that angles start from the top instead of the right.
 const angleOrigin = (Math.PI / 2) * -1;
 
+function calculateRadius(canvas) {
+  const radius = canvas.width < canvas.height ? canvas.width : canvas.height;
+  return radius / 2;
+}
+
+function centerRendering(canvas, ctx) {
+  ctx.translate((canvas.width / 2) - (canvas.height / 2), 0);
+}
+
 /* eslint-disable no-param-reassign */
 function drawWorkArc({ canvas, ctx, lengthWork }, length) {
-  const radius = canvas.height / 2;
+  const radius = calculateRadius(canvas);
   ctx.beginPath();
   ctx.lineWidth = 10;
   ctx.lineCap = 'round';
@@ -20,6 +29,10 @@ function drawWorkArc({ canvas, ctx, lengthWork }, length) {
 /* eslint-disable */
 function renderClock(state) {
   const { canvas, ctx, lengthWork, lengthBreak, workSeconds } = state;
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+  centerRendering(canvas, ctx);
+
   const anglePerSecond = Math.PI * 2 / (lengthWork + lengthBreak + 10);
   // console.log(anglePerSecond);
   const angleWork = Math.PI * 2
@@ -62,3 +75,11 @@ export default {
   },
 };
 </script>
+
+<style language="less">
+.clock {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+</style>

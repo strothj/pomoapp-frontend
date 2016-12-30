@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 import IndexView from 'components/IndexView';
 import LayeredLayout from 'components/LayeredLayout';
+import PomodoroView from 'components/PomodoroView';
 
 const routes = [
   {
@@ -23,7 +24,7 @@ const routes = [
   {
     path: '/projects/:projectId/:taskId',
     name: 'PomodoroView',
-    component: LayeredLayout,
+    component: PomodoroView,
     meta: { requiresAuth: true },
   },
 ];

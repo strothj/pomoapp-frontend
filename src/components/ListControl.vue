@@ -151,6 +151,6 @@ export default {
 
 .drag-handle {
   margin-right: 10px !important;
-  color: rgba(0, 0, 0, 0.35);
+  color: rgba(0, 0, 0, 0.30) !important;
 }
 </style>

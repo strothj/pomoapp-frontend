@@ -15,13 +15,11 @@ Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMaterial);
 
-Vue.material.theme.registerAll({
-  default: {
-    primary: 'indigo',
-    accent: 'pink',
-    warn: 'deep-orange',
-    background: 'grey',
-  },
+Vue.material.registerTheme('default', {
+  primary: 'indigo',
+  accent: 'pink',
+  warn: 'deep-orange',
+  background: 'white',
 });
 
 const router = createRouter();
@@ -49,6 +47,8 @@ new Vue({
   router,
   render: h => h(App),
 });
+
+Vue.material.setCurrentTheme('default');
 
 // Bootstrap auth0.com library in user store module.
 store.dispatch('BOOTSTRAP_LOGIN');

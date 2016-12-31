@@ -14,9 +14,11 @@
     </md-whiteframe>
 
   </header>
-  <main class="pomodoro-container__main pomodoro-main">
-    <div class="pomodoro-main__clock-container clock-container">
-      <clock class="clock-container__clock"></clock>
+  <main class="pomodoro-container__main pomodoro-main container">
+    <div class="pomodoro-main__clock-container clock-container row">
+      <div class="clock-container__col col-6">
+        <clock class="clock-container__clock"></clock>
+      </div>
     </div>
   </main>
 
@@ -77,23 +79,18 @@ export default {
   }
 
   &__main {
-    width: 100%;
-    height: 100vh;
-    padding-top: @navbar-height + 20;
-    position: relative;
-    // text-align: center;
-    .large-screen({
-      max-width: @breakpoint-large-screen;
-      margin: 0 auto;
-    });
+    padding: 0;
+    padding-top: @navbar-height;
   }
 }
 
 .clock-container {
-  height: 0;
-  position: relative;
-  height: 80%;
-  padding-bottom: 25%;
-  // margin: 0 auto;
+  &__col {
+    padding: 0;
+    .large-screen({
+      margin-top: 50px;
+      margin-left: 25%;
+    });
+  }
 }
 </style>

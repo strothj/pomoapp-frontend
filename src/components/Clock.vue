@@ -1,85 +1,54 @@
 <template>
-<canvas class="clock" ref="clock"></canvas>
+<md-card class="md-primary">
+  <md-card-area>
+    <md-card-content>
+      <div id="timer"></div>
+    </md-card-content>
+
+  </md-card-area>
+
+    <md-card-header>
+      <div class="md-title">{{ selectedProjectName }}</div>
+    </md-card-header>
+</md-card>
 </template>
 
 <script>
-// Offset so that angles start from the top instead of the right.
-const angleOrigin = (Math.PI / 2) * -1;
-
-function calculateRadius(canvas) {
-  const radius = canvas.width < canvas.height ? canvas.width : canvas.height;
-  return radius / 2;
-}
-
-function centerRendering(canvas, ctx) {
-  ctx.translate((canvas.width / 2) - (canvas.height / 2), 0);
-}
-
-/* eslint-disable no-param-reassign */
-function drawWorkArc({ canvas, ctx, lengthWork }, length) {
-  const radius = calculateRadius(canvas);
-  ctx.beginPath();
-  ctx.lineWidth = 10;
-  ctx.lineCap = 'round';
-  ctx.strokeStyle = '#039BE5';
-  ctx.arc(radius, radius, radius - 10, angleOrigin, length + angleOrigin);
-  ctx.stroke();
-}
-
-/* eslint-disable */
-function renderClock(state) {
-  const { canvas, ctx, lengthWork, lengthBreak, workSeconds } = state;
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
-  centerRendering(canvas, ctx);
-
-  const anglePerSecond = Math.PI * 2 / (lengthWork + lengthBreak + 10);
-  // console.log(anglePerSecond);
-  const angleWork = Math.PI * 2
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawWorkArc(state, anglePerSecond * workSeconds);
-}
+import { mapGetters } from 'vuex';
+import { Circle } from 'progressbar.js';
 
 export default {
   props: [],
 
   data() {
     return {
-      state: null,
+      progressCircle: null,
     };
   },
 
   computed: {
+    ...mapGetters(['selectedProjectName']),
   },
 
   methods: {
   },
 
   mounted() {
-    const canvas = this.$refs.clock;
-    const ctx = canvas.getContext('2d');
-    this.state = {
-      canvas,
-      ctx,
-      lengthWork: 1500,
-      lengthBreak: 300,
-    };
-    let seconds = 0;
-    setInterval(() => {
-      const state = Object.assign({}, this.state);
-      state.workSeconds = seconds;
-      renderClock(state);
-      seconds += 1;
-      if (seconds > 1500) seconds = 0;
-    }, 1);
+    this.progressCircle = new Circle('#timer', {
+      text: {
+        value: 'test',
+      },
+    });
+    this.progressCircle.animate(1, {
+      duration: 800,
+    });
   },
+
 };
 </script>
 
-<style language="less">
-.clock {
-  height: 100%;
-  width: 100%;
-  position: absolute;
+<style lang="less">
+#timer {
+  // height: 200px;
 }
 </style>

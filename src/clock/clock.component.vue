@@ -5,7 +5,7 @@
 
     <md-card class="clock-card md-primary">
       <md-card-header>
-        <md-button class="md-icon-button"><md-icon>arrow_back</md-icon></md-button>
+        <md-button class="md-icon-button" @click="onBackClicked"><md-icon>arrow_back</md-icon></md-button>
 
         <md-card-header-text>
           <div class="md-title">{{ selectedTaskName }}</div>
@@ -29,9 +29,9 @@
           <md-icon>refresh</md-icon>
           {{ clock.currentCycle + 1 }} / {{ clock.settings.workCycles }}
         </span>
-        <md-button>Switch Task</md-button>
+        <md-button disabled>Switch Task</md-button>
         <md-button @click="onStartClicked">{{ clock.startButtonText }}</md-button>
-        <md-button>Done</md-button>
+        <md-button @click="onDoneClicked">Done</md-button>
       </md-card-actions>
 
     </md-card>
@@ -63,7 +63,22 @@ export default {
   },
 
   methods: {
+    navigateToProjectsList() {
+      this.$router.push(`/projects/${this.$route.params.projectId}`);
+    },
     onStartClicked() { this.$store.dispatch('CLOCK_START_CLICKED'); },
+    onBackClicked() {
+      this.navigateToProjectsList();
+    },
+    onDoneClicked() {
+      this.$store.dispatch('CLOCK_DONE_CLICKED', { taskId: this.$route.params.taskId });
+      this.navigateToProjectsList();
+    },
+  },
+
+  beforeRouteLeave(to, from, next) {
+    this.clock.pause();
+    next();
   },
 };
 </script>

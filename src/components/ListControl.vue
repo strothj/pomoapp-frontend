@@ -14,7 +14,7 @@
     <md-list-item
       v-for="item in items"
       v-if="Boolean(archiveView) === item.archived"
-      :key="item.id + archiveView"
+      :key="item.id + '' + archiveView"
       :sorting-id="item.id"
       @click="onItemClicked(item)">
 

@@ -55,7 +55,7 @@ class Clock {
   }
 
   pause() {
-    this.message = `${this.message} - Paused`;
+    if (this.message !== 'Ready') this.message = `${this.message} - Paused`;
     clearInterval(this.intervalId);
     this.intervalId = null;
   }
@@ -74,9 +74,19 @@ class Clock {
 
 export default {
   actions: {
-    CLOCK_START_CLICKED(context) {
-      const { state } = context;
+    CLOCK_START_CLICKED({ state }) {
       state.clock.toggleStart();
+    },
+
+    CLOCK_DONE_CLICKED({ dispatch, rootState }, { taskId }) {
+      const task = rootState.tasks.tasks.find(item => item.id === taskId);
+      if (!task) return;
+      const editedTask = Object.assign({}, task);
+      editedTask.archived = true;
+      dispatch('ITEM_EDITED', {
+        category: 'tasks',
+        item: editedTask,
+      });
     },
   },
 

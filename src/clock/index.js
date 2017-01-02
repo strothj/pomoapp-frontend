@@ -1,7 +1,7 @@
-import ClockComponent from './clock.component';
+import clockRoute from './clock.route';
 import clockStore from './clock.store';
 
 export {
-  ClockComponent,
+  clockRoute,
   clockStore,
 };

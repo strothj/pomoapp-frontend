@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router';
 import IndexView from 'components/IndexView';
 import LayeredLayout from 'components/LayeredLayout';
-import { ClockComponent } from 'src/clock';
+import { clockRoute } from 'src/clock';
 
 const routes = [
   {
@@ -21,12 +21,7 @@ const routes = [
     component: LayeredLayout,
     meta: { requiresAuth: true },
   },
-  {
-    path: '/projects/:projectId/:taskId',
-    name: 'ClockView',
-    component: ClockComponent,
-    meta: { requiresAuth: true },
-  },
+  clockRoute,
 ];
 
 const routerFactory = () => new VueRouter({

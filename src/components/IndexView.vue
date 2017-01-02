@@ -7,9 +7,11 @@
         <md-toolbar>
           <h2 class="md-title" style="flex: 1">pomoapp</h2>
 
-          <md-button @click="signIn">Sign in</md-button>
+          <md-button @click="signIn">Sign in / Sign up</md-button>
           <!-- <router-link tag="md-button" :to="{ name: 'SignupView' }" >Sign in</router-link> -->
+          <!--
           <md-button class="md-raised" disabled>Sign up</md-button>
+          -->
         </md-toolbar>
 
       </md-whiteframe>

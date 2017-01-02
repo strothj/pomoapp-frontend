@@ -9,6 +9,7 @@ import projects from './modules/projects';
 import sorts from './modules/sorts';
 import tasks from './modules/tasks';
 import user from './modules/user';
+import { clockStore } from '../clock';
 
 export default ({ router }) => {
   state.router = router;
@@ -23,6 +24,7 @@ export default ({ router }) => {
       sorts,
       tasks,
       user,
+      clock: clockStore,
     },
   });
 };

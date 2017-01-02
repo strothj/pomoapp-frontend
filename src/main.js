@@ -48,7 +48,5 @@ new Vue({
   render: h => h(App),
 });
 
-Vue.material.setCurrentTheme('default');
-
 // Bootstrap auth0.com library in user store module.
 store.dispatch('BOOTSTRAP_LOGIN');

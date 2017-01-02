@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router';
 import IndexView from 'components/IndexView';
 import LayeredLayout from 'components/LayeredLayout';
-import PomodoroView from 'components/PomodoroView';
+import { ClockComponent } from 'src/clock';
 
 const routes = [
   {
@@ -23,8 +23,8 @@ const routes = [
   },
   {
     path: '/projects/:projectId/:taskId',
-    name: 'PomodoroView',
-    component: PomodoroView,
+    name: 'ClockView',
+    component: ClockComponent,
     meta: { requiresAuth: true },
   },
 ];

@@ -20,13 +20,17 @@
       </md-card-media>
       -->
       <md-card-content style="flex: 1">
-        <p class="md-headline">{{ clockState.timeRemaining }}</p>
-        <p class="md-subheading">{{ clockMessage }}</p>
+        <p class="md-headline">{{ clock.timeRemaining }}</p>
+        <p class="md-subheading">{{ clock.message }}</p>
       </md-card-content>
 
       <md-card-actions>
+        <span class="clock-card__cycle">
+          <md-icon>refresh</md-icon>
+          {{ clock.currentCycle + 1 }} / {{ clock.settings.workCycles }}
+        </span>
         <md-button>Switch Task</md-button>
-        <md-button>{{ clockStartButtonText }}</md-button>
+        <md-button @click="onStartClicked">{{ clock.startButtonText }}</md-button>
         <md-button>Done</md-button>
       </md-card-actions>
 
@@ -50,17 +54,16 @@ export default {
 
   computed: {
     ...mapGetters([
-      'clockStartButtonText',
-      'clockMessage',
       'selectedTaskName',
       'selectedProjectName',
     ]),
     ...mapState({
-      clockState: state => state.clock,
+      clock: state => state.clock.clock,
     }),
   },
 
   methods: {
+    onStartClicked() { this.$store.dispatch('CLOCK_START_CLICKED'); },
   },
 };
 </script>
@@ -70,10 +73,26 @@ export default {
   width: 100vw;
   height: 100vh;
 
-  @media only screen and (min-width: 600px) {
+  @media only screen and (min-width: 600px) and (min-height: 420px) {
     width: 600px;
     height: 600px;
     margin-top: 50px;
+  }
+
+  &__cycle {
+    flex: 1;
+    padding-left: 16px;
+
+    // Move cycle count up a line on thin display
+    position: fixed;
+    bottom: 48px;
+    left: 4px;
+
+    @media only screen and (min-width: 400px) {
+      position: inherit;
+      bottom: inherit;
+      left: inherit;
+    }
   }
 }
 </style>

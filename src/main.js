@@ -9,6 +9,7 @@ import 'vue-material/dist/vue-material.css';
 
 import App from './App';
 import { LandingComponent } from './landing';
+import { globalStore } from './core';
 // import createStore from './store';
 // import createRouter from './router';
 
@@ -24,19 +25,6 @@ Vue.material.registerTheme('default', {
   accent: 'cyan',
   warn: 'deep-orange',
   background: 'white',
-});
-Vue.material.registerTheme('darkBackground', {
-  primary: 'white',
-  // primary: {
-  //   color: 'blue-grey',
-  //   hue: '900',
-  // },
-  accent: 'cyan',
-  warn: 'deep-orange',
-  background: {
-    color: 'blue-grey',
-    hue: '900',
-  },
 });
 
 // const router = createRouter();
@@ -67,10 +55,12 @@ const router = new VueRouter({
   ],
 });
 
+const store = new Vuex.Store(globalStore);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  // store,
+  store,
   router,
   render: h => h(App),
 });

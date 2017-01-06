@@ -1,5 +1,8 @@
 <template>
 <div>
+  <md-dialog-alert
+    :md-content="signupError"
+    ref="signupError"></md-dialog-alert>
 
   <!-- Start appbar section -->
   <md-whiteframe class="appbar" md-elevation="4" md-tag="nav">
@@ -30,15 +33,15 @@
 
         <!-- Start signup box -->
         <md-layout>
-          <form>
+          <form @submit.prevent="onSignupSubmit">
             <div class="md-title">Sign Up</div>
             <md-input-container>
               <label>Email address</label>
-              <md-input type="email"></md-input>
+              <md-input v-model="signupEmail" type="email"></md-input>
             </md-input-container>
             <md-input-container>
               <label>Password</label>
-              <md-input type="password"></md-input>
+              <md-input v-model="signupPassword" type="password"></md-input>
             </md-input-container>
             <md-button class="md-raised md-primary md-dense" type="submit">Create an account</md-button>
             <md-button class="md-raised md-dense">Sign in with Google</md-button>
@@ -56,18 +59,43 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   props: [],
 
   data() {
     return {
+      signupEmail: null,
+      signupPassword: null,
+      signupError: ' ', // md-dialog-alert requires field not be empty
     };
   },
 
   computed: {
+    ...mapState({
+      signupErrorStore: 'signupError',
+    }),
+  },
+
+  watch: {
+    signupErrorStore(message) {
+      if (message) {
+        this.signupError = message;
+        this.$refs.signupError.open();
+        this.$store.dispatch('SIGNUP_ERROR_DISPLAYED');
+      }
+    },
   },
 
   methods: {
+    onSignupSubmit() {
+      this.$store.dispatch('SUBMIT_SIGNUP', {
+        email: this.signupEmail,
+        password: this.signupPassword,
+      });
+      this.signupPassword = null;
+    },
   },
 };
 </script>

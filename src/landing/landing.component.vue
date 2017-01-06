@@ -12,6 +12,7 @@
         <h2 class="appbar__title md-title">Pomoapp</h2>
 
         <md-button class="appbar__login-button">Sign In</md-button>
+        <md-button class="appbar__login-button md-raised">Sign Up</md-button>
       </md-toolbar>
     </div>
   </md-whiteframe>
@@ -22,13 +23,30 @@
     <div class="page-content">
       <md-layout md-gutter="24">
         <md-layout md-flex="5"></md-layout>
-        <md-layout md-tag="article">
+        <md-layout md-tag="article" md-flex="50">
           <p class="md-display-3">It's time to get productive.</p>
           <p class="md-body-1">Productivity management made simple using a proven time management technique.</p>
         </md-layout>
-        <md-layout md-flex="10"></md-layout>
-        <md-layout><p class="md-display-2">test</p>
+
+        <!-- Start signup box -->
+        <md-layout>
+          <form>
+            <div class="md-title">Sign Up</div>
+            <md-input-container>
+              <label>Email address</label>
+              <md-input type="email"></md-input>
+            </md-input-container>
+            <md-input-container>
+              <label>Password</label>
+              <md-input type="password"></md-input>
+            </md-input-container>
+            <md-button class="md-raised md-primary md-dense" type="submit">Create an account</md-button>
+            <md-button class="md-raised md-dense">Sign in with Google</md-button>
+          </form>
         </md-layout>
+        <!-- End signup box -->
+
+        <md-layout md-flex="15"></md-layout>
       </md-layout>
     </div>
   </div>
@@ -87,11 +105,15 @@ export default {
 .cta-section {
   padding-top: 64px;
   min-height: 500px;
-  background-color: @blue-grey-900;
-  box-shadow: inset 0 -8px 8px -6px black;
 
-  p {
-    color: rgba(255, 255, 255, .57) !important;
+  form {
+    width: 100%;
+    margin-top: 60px;
+  }
+
+  button {
+    margin-left: 0;
+    width: 100%;
   }
 }
 </style>

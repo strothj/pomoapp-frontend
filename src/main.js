@@ -26,10 +26,11 @@ Vue.material.registerTheme('default', {
   background: 'white',
 });
 Vue.material.registerTheme('darkBackground', {
-  primary: {
-    color: 'blue-grey',
-    hue: '900',
-  },
+  primary: 'white',
+  // primary: {
+  //   color: 'blue-grey',
+  //   hue: '900',
+  // },
   accent: 'cyan',
   warn: 'deep-orange',
   background: {

@@ -1,6 +1,6 @@
 import { AuthenticationService } from './authentication.service';
 
-const globalStore = {
+export default {
   actions: {
     async SUBMIT_SIGNUP({ commit, dispatch, state }, { email, password }) {
       try {
@@ -9,17 +9,22 @@ const globalStore = {
           email, password,
         });
       } catch (err) {
-        commit('signupError', err);
+        commit('authError', err);
       }
     },
 
     SIGNUP_ERROR_DISPLAYED({ commit }) {
-      commit('signupError', null);
+      commit('authError', null);
     },
 
-    // LOGIN_WITH_PASSWORD({ commit }) {
-
-    // },
+    async LOGIN_WITH_PASSWORD({ commit, state }, { email, password }) {
+      try {
+        const profile = await state.authenticationService.signin(email, password);
+        commit('profile', profile);
+      } catch (err) {
+        commit('authError', err);
+      }
+    },
   },
 
   getters: {
@@ -27,16 +32,14 @@ const globalStore = {
 
   mutations: {
     /* eslint-disable no-param-reassign */
-    signupError(state, message) {
-      state.signupError = message;
-    },
+    profile(state, profile) { state.profile = profile; },
+    authError(state, message) { state.authError = message; },
     /* eslint-enable no-param-reassign */
   },
 
   state: {
     authenticationService: new AuthenticationService(),
-    signupError: null,
+    profile: null,
+    authError: null,
   },
 };
-
-export { globalStore };

@@ -8,8 +8,10 @@ import 'vue-material/dist/vue-material.css';
 // import 'assets/css/styles.less';
 
 import App from './App';
-import { LandingComponent } from './landing';
-import { globalStore } from './core';
+import LandingComponent from './landing/landing.component';
+import ProjectManagerComponent from './projects/project-manager.component';
+import accountRoutes from './accounts/accounts.routes';
+import globalStore from './core/global.store';
 // import createStore from './store';
 // import createRouter from './router';
 
@@ -52,6 +54,12 @@ const router = new VueRouter({
       name: 'Landing',
       component: LandingComponent,
     },
+    {
+      path: '/projects',
+      name: 'ProjectManager',
+      component: ProjectManagerComponent,
+    },
+    ...accountRoutes,
   ],
 });
 

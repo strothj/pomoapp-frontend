@@ -27,7 +27,7 @@ export default {
       if (message) {
         this.authError = message;
         this.$refs.errorDialog.open();
-        this.$store.dispatch('SIGNUP_ERROR_DISPLAYED');
+        this.$store.dispatch('DISMISS_AUTH_ERROR');
       }
     },
   },

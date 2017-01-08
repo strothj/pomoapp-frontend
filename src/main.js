@@ -32,20 +32,6 @@ Vue.material.registerTheme('default', {
 // const router = createRouter();
 // const store = createStore({ router });
 
-// Redirect user from areas of the program which require authentication.
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (!store.getters.authenticated) {
-//       next({
-//         path: '/',
-//         // query: { redirect: to.fullPath }
-//       });
-//     } else {
-//       next();
-//     }
-//   } else next();
-// });
-
 const router = new VueRouter({
   mode: 'history',
   routes: [
@@ -58,12 +44,29 @@ const router = new VueRouter({
       path: '/projects',
       name: 'ProjectManager',
       component: ProjectManagerComponent,
+      meta: { requiresAuth: true },
     },
     ...accountRoutes,
   ],
 });
 
+globalStore.state.router = router;
 const store = new Vuex.Store(globalStore);
+
+// Redirect user from areas of the program which require authentication.
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.state.authenticated) {
+      next({
+        path: '/signin',
+        // TODO: Add redirect to page user was trying to access.
+        // query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else next();
+});
 
 /* eslint-disable no-new */
 new Vue({
@@ -73,5 +76,5 @@ new Vue({
   render: h => h(App),
 });
 
-// Bootstrap auth0.com library in user store module.
-// store.dispatch('BOOTSTRAP_LOGIN');
+// Attempt automatic login
+store.dispatch('SIGNIN_WITH_COOKIE');

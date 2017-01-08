@@ -16,16 +16,18 @@
           <md-card-content>
             <md-input-container>
               <label>Email address</label>
-              <md-input v-model="email"></md-input>
+              <md-input v-model="email" required></md-input>
             </md-input-container>
             <md-input-container>
               <label>Password</label>
-              <md-input v-model="password"></md-input>
+              <md-input v-model="password" required></md-input>
             </md-input-container>
           </md-card-content>
 
           <md-card-actions>
+            <!--
             <md-button class="md-raised md-primary">Sign in with Google</md-button>
+            -->
             <md-button class="md-primary" type="submit">{{ actionText }}</md-button>
           </md-card-actions>
 

@@ -8,18 +8,18 @@
 
     <md-input-container>
       <label>Email address</label>
-      <md-input v-model="signupEmail" type="email"></md-input>
+      <md-input v-model="signupEmail" type="email" required></md-input>
     </md-input-container>
 
     <md-input-container>
       <label>Password</label>
-      <md-input v-model="signupPassword" type="password"></md-input>
+      <md-input v-model="signupPassword" type="password" required></md-input>
     </md-input-container>
 
     <md-button
       class="md-raised md-primary md-dense"
       type="submit">Create an account</md-button>
-    <md-button class="md-raised md-dense">Sign in with Google</md-button>
+    <!-- <md-button class="md-raised md-dense">Sign in with Google</md-button> -->
 
   </form>
 </div>
@@ -63,6 +63,8 @@ export default {
 
 <style lang="less">
 .signup-box {
+  width: 100%;
+
   button {
     margin-left: 0;
     width: 100%;

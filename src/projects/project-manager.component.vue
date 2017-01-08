@@ -1,5 +1,8 @@
 <template>
+<div>
   <span>Logged in</span>
+  <md-button @click="signOut">Sign out</md-button>
+</div>
 </template>
 
 <script>
@@ -15,6 +18,9 @@ export default {
   },
 
   methods: {
+    signOut() {
+      this.$store.dispatch('SIGN_OUT');
+    },
   },
 };
 </script>

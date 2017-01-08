@@ -3,22 +3,29 @@ import axios from 'axios';
 
 const clientID = 'HwPnluOgfWiaUSQ24lS41dUW0bdQDCD9';
 const connection = 'Username-Password-Authentication';
+const rootUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://pomoapp.site/';
 
 const config = {
   domain: 'strothj.auth0.com',
   clientID,
-  callbackURL: process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://pomoapp.site/',
+  callbackURL: rootUrl,
   responseType: 'token',
 };
 
 function parseApiError(err, reject) {
-  console.log('err', err); // eslint-disable-line
-  if (!err.description) {
-    reject('An unexpected error occurred.');
-    console.log(err); // eslint-disable-line
-    return;
+  console.log('AuthenticationService: ', err); // eslint-disable-line
+  if (err.response) {
+    if (err.response.status === 401) {
+      reject('Email or password is incorrect');
+      return;
+    }
+    if (err.description) {
+      reject(err.description);
+      return;
+    }
   }
-  reject(err.description);
+
+  reject('An unexpected error occurred.');
 }
 
 class AuthenticationService {
@@ -28,18 +35,37 @@ class AuthenticationService {
       domain: config.domain,
       clientID: config.clientID,
     });
+    this.idToken = null; // JWT token
   }
 
-  getProfile(authResult) {
-    return new Promise((resolve, reject) => {
-      this.auth0.userInfo(authResult.access_token, (err, profile) => {
-        if (err) {
-          parseApiError(err, reject);
-          return;
-        }
-        resolve(profile);
-      });
+  storeToken() {
+    const security = process.env.NODE_ENV === 'development' ? '' : ';secure';
+    const encodedData = encodeURIComponent(this.idToken);
+    const cookie = `auth=${encodedData};path=/;max-age=7776000${security}`;
+    document.cookie = cookie;
+  }
+
+  loadToken() {
+    const value = `; ${document.cookie}`;
+    const parts = value.split('; auth=');
+    if (parts.length === 2) {
+      const cookie = parts.pop().split(';').shift();
+      this.idToken = decodeURIComponent(cookie);
+      return;
+    }
+    this.clearToken();
+  }
+
+  clearToken() {
+    document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+    this.idToken = null;
+  }
+
+  async getProfile() {
+    const res = await axios.post(`https://${config.domain}/tokeninfo`, {
+      id_token: this.idToken,
     });
+    return res.data;
   }
 
   signin(email, password) {
@@ -53,12 +79,29 @@ class AuthenticationService {
           password,
           scope: 'openid',
         });
-        console.log('response', res); // eslint-disable-line
-        resolve(await this.getProfile(res.data));
+        this.idToken = res.data.id_token;
+        this.storeToken();
+        resolve(await this.getProfile());
       } catch (err) {
         parseApiError(err, reject);
       }
     });
+  }
+
+  async signinWithCookie() {
+    this.loadToken();
+    if (!this.idToken) return null;
+    try {
+      const profile = await this.getProfile();
+      return profile;
+    } catch (err) {
+      // Login expired, ignoring error.
+    }
+    return null;
+  }
+
+  signOut() {
+    this.clearToken();
   }
 
   signup(email, password) {

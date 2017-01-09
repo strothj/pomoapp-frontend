@@ -8,12 +8,10 @@
 
       <h2 class="appbar__title md-title">Pomoapp</h2>
 
-      <div v-if="!authenticated">
-        <router-link class="appbar__login-button" tag="md-button" to="/signin">Sign in</router-link>
-        <router-link class="appbar__login-button md-raised" tag="md-button" to="/signup">Sign up</router-link>
-      </div>
+      <router-link v-if="!authenticated" class="appbar__login-button" tag="md-button" to="/signin">Sign in</router-link>
+      <router-link v-if="!authenticated" class="appbar__login-button md-raised" tag="md-button" to="/signup">Sign up</router-link>
 
-      <md-button class="appbar__signout-button" @click="signOut">
+      <md-button v-if="authenticated" class="appbar__signout-button" @click="signOut">
         <md-icon>exit_to_app</md-icon>
         <md-tooltip>Sign out</md-tooltip>
       </md-button>

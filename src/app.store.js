@@ -1,4 +1,4 @@
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from './core/authentication.service';
 
 export default {
   actions: {

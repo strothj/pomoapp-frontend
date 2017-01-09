@@ -16,6 +16,12 @@
   }
 }
 
+.mobile(@rules) {
+  @media only screen and (max-width: 749px) {
+    @rules();
+  }
+}
+
 // .large-screen(@rules) {
 //   @media only screen and (min-width: @breakpoint-large-screen) {
 //     @rules();

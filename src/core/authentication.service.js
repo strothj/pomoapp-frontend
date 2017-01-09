@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const clientID = 'HwPnluOgfWiaUSQ24lS41dUW0bdQDCD9';
 const connection = 'Username-Password-Authentication';
-const rootUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://pomoapp.site/';
+const rootUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'https://pomoapp.site';
 
 const config = {
   domain: 'strothj.auth0.com',
@@ -117,6 +117,15 @@ class AuthenticationService {
         }
         resolve();
       });
+    });
+  }
+
+  authenticatedClient() {
+    return axios.create({
+      baseURL: '/api/v1/',
+      headers: {
+        Authorization: `Bearer ${this.idToken}`,
+      },
     });
   }
 }

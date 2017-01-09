@@ -20,7 +20,7 @@
             </md-input-container>
             <md-input-container>
               <label>Password</label>
-              <md-input v-model="password" required></md-input>
+              <md-input v-model="password" type="password" required></md-input>
             </md-input-container>
           </md-card-content>
 

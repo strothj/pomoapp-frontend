@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import ItemManager from './shared/item-manager.component';
 
 export default {
@@ -22,24 +21,30 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      tasks: state => state.projects.tasks,
-    }),
+    tasks() {
+      const tasks = this.$store.state.projects.tasks;
+      if (!tasks) return [];
+      return tasks.filter(item => item.projectId === this.projectId);
+    },
+
+    projectId() {
+      return this.$route.params.projectId;
+    },
   },
 
   methods: {
-    addItem() {
-      //
+    addItem({ name }) {
+      this.$store.dispatch('ADD_TASK', {
+        name, favorited: false, archived: false, projectId: this.projectId,
+      });
     },
 
     editItems(tasks) {
-      //
-      this.tasks = tasks;
+      this.$store.dispatch('UPDATE_TASKS', tasks);
     },
 
     deleteItems(tasks) {
-      //
-      this.tasks = tasks;
+      this.$store.dispatch('DELETE_TASKS', tasks);
     },
 
     itemClicked(task) {

@@ -2,13 +2,12 @@ import ApiClient from './projects.service';
 
 export default {
   actions: {
-    async AUTHENTICATED({ commit, rootState, state }) {
+    async AUTHENTICATED({ commit, rootState }) {
       const client = new ApiClient(rootState.authenticationService);
       commit('apiClient', client);
       commit('projects', await client.get('projects'));
       commit('tasks', await client.get('tasks'));
       commit('sorts', await client.get('sorts'));
-      console.log('projects', state.projects); // eslint-disable-line
     },
 
     async ADD_PROJECT({ commit, rootState, state }, newProject) {
@@ -17,16 +16,34 @@ export default {
       commit('addProject', addedProject);
     },
 
+    async ADD_TASK({ commit, rootState, state }, newTask) {
+      const client = new ApiClient(rootState.authenticationService);
+      const addedTask = await client.create('tasks', newTask);
+      commit('addTask', addedTask);
+    },
+
     async UPDATE_PROJECTS({ commit, rootState, state }, projects) {
       const client = new ApiClient(rootState.authenticationService);
       await client.update('projects', projects);
       commit('updateProjects', projects);
     },
 
+    async UPDATE_TASKS({ commit, rootState, state }, tasks) {
+      const client = new ApiClient(rootState.authenticationService);
+      await client.update('tasks', tasks);
+      commit('updateTasks', tasks);
+    },
+
     async DELETE_PROJECTS({ commit, rootState, state }, projects) {
       const client = new ApiClient(rootState.authenticationService);
       await client.del('projects', projects);
       commit('deleteProjects', projects);
+    },
+
+    async DELETE_TASKS({ commit, rootState, state }, tasks) {
+      const client = new ApiClient(rootState.authenticationService);
+      await client.del('tasks', tasks);
+      commit('deleteTasks', tasks);
     },
   },
 
@@ -41,6 +58,8 @@ export default {
 
     addProject(state, newProject) { state.projects.push(newProject); },
 
+    addTask(state, newTask) { state.tasks.push(newTask); },
+
     updateProjects(state, updatedProjects) {
       updatedProjects.forEach((item) => {
         const itemIndex = state.projects.findIndex(project => project.id === item.id);
@@ -49,11 +68,27 @@ export default {
       });
     },
 
+    updateTasks(state, updatedTasks) {
+      updatedTasks.forEach((item) => {
+        const itemIndex = state.tasks.findIndex(task => task.id === item.id);
+        if (itemIndex === -1) return;
+        state.tasks.splice(itemIndex, 1, item);
+      });
+    },
+
     deleteProjects(state, deletedProjects) {
       deletedProjects.forEach((item) => {
         const itemIndex = state.projects.findIndex(project => project.id === item.id);
         if (itemIndex === -1) return;
         state.projects.splice(itemIndex, 1);
+      });
+    },
+
+    deleteTasks(state, deletedTasks) {
+      deletedTasks.forEach((item) => {
+        const itemIndex = state.tasks.findIndex(task => task.id === item.id);
+        if (itemIndex === -1) return;
+        state.tasks.splice(itemIndex, 1);
       });
     },
 

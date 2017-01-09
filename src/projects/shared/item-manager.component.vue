@@ -75,10 +75,10 @@
               :md-item="item"
               md-selection>
 
-              <md-table-cell :key="item.id + 'cell'">
+              <md-table-cell class="list-card__list-item" :key="item.id + 'cell'" @click.native="onItemClick(item)">
                 <span>{{ item.name }}</span>
 
-                <md-button class="md-icon-button" @click="onEditItemClicked(item)">
+                <md-button class="md-icon-button" @click.stop="onEditItemClicked(item)">
                   <md-icon>edit</md-icon>
                 </md-button>
               </md-table-cell>
@@ -115,22 +115,26 @@ export default {
   },
 
   watch: {
-    // Work around for bug in md-table. The row count keeps doubles when
-    // archive view is toggled. Issue is slated to be fixed in vue-material
-    // v6.0
-    // TODO: Remove fix when issue is fixed in vue-material.
     list() {
-      this.$refs.mdtable.numberOfRows = 0;
-      this.currentList = this.list.filter(item => item.archived === this.archiveView);
+      this.pre06VueMaterialWorkAround();
     },
 
     archiveView() {
-      this.$refs.mdtable.numberOfRows = 0;
-      this.currentList = this.list.filter(item => item.archived === this.archiveView);
+      this.pre06VueMaterialWorkAround();
     },
   },
 
   methods: {
+    pre06VueMaterialWorkAround() {
+      // Work around for bug in md-table. The row count keeps doubles when
+      // archive view is toggled. Issue is slated to be fixed in vue-material
+      // v0.6
+      // TODO: Remove fix when issue is fixed in vue-material.
+      this.$refs.mdtable.numberOfRows = 0;
+      if (!this.list) return;
+      this.currentList = this.list.filter(item => item.archived === this.archiveView);
+    },
+
     onAddItemClicked() {
       this.$refs.addItemDialog.open();
     },
@@ -186,6 +190,14 @@ export default {
       this.$emit('deleteItems', deletedItems);
       this.resetMdTableState();
     },
+
+    onItemClick(item) {
+      this.$emit('itemClicked', item);
+    },
+  },
+
+  mounted() {
+    this.pre06VueMaterialWorkAround();
   },
 
   components: {
@@ -213,5 +225,8 @@ export default {
   // Fix sorting icon spacing when there is only a single column
   .md-table-head-text { padding-right: 28px !important };
 
+  &__list-item {
+    cursor: pointer;
+  }
 }
 </style>

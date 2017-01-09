@@ -9,8 +9,8 @@ import 'vue-material/dist/vue-material.css';
 
 import App from './app.component';
 import LandingComponent from './landing/landing.component';
-import ProjectManagerComponent from './projects/project-manager.component';
 import accountRoutes from './accounts/accounts.routes';
+import projectsRoutes from './projects/projects.routes';
 import appStore from './app.store';
 import projectsStore from './projects/projects.store';
 // import createStore from './store';
@@ -43,12 +43,7 @@ const router = new VueRouter({
       name: 'Landing',
       component: LandingComponent,
     },
-    {
-      path: '/projects',
-      name: 'ProjectManager',
-      component: ProjectManagerComponent,
-      meta: { requiresAuth: true },
-    },
+    ...projectsRoutes,
     ...accountRoutes,
   ],
 });

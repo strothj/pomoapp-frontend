@@ -5,7 +5,8 @@
   itemType="project"
   @addItem="addItem"
   @editItems="editItems"
-  @deleteItems="deleteItems"></item-manager>
+  @deleteItems="deleteItems"
+  @itemClicked="itemClicked"></item-manager>
 </template>
 
 <script>
@@ -39,6 +40,10 @@ export default {
 
     deleteItems(projects) {
       this.$store.dispatch('DELETE_PROJECTS', projects);
+    },
+
+    itemClicked(project) {
+      this.$router.push(`/projects/${project.id}`);
     },
   },
 

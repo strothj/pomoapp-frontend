@@ -34,16 +34,16 @@
           <h1 class="md-title" v-if="!archiveView">{{ title }}</h1>
           <h1 class="md-title" v-else>Archived {{ itemType }}s</h1>
 
+          <md-button class="md-icon-button" v-if="!archiveView" @click="onAddItemClicked">
+            <md-icon>add</md-icon>
+            <md-tooltip>Add new {{ itemType }}</md-tooltip>
+          </md-button>
+
           <md-button-toggle class="md-primary">
           <md-button class="md-icon-button" @click="onToggleArchiveViewClicked">
             <md-icon>archive</md-icon>
             <md-tooltip>Toogle archive view</md-tooltip>
           </md-button></md-button-toggle>
-
-          <md-button class="md-icon-button" @click="onAddItemClicked">
-            <md-icon>add</md-icon>
-            <md-tooltip>Add new {{ itemType }}</md-tooltip>
-          </md-button>
         </md-toolbar>
         <!-- End toolbar -->
 

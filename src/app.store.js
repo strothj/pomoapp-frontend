@@ -44,6 +44,15 @@ export default {
       commit('authError', null);
     },
 
+    SHOW_SERVICE_ERROR({ commit }, err) {
+      console.error(err); // eslint-disable-line no-console
+      commit('serviceError', true);
+    },
+
+    DISMISS_SERVICE_ERROR() {
+      window.location.href = '/signin';
+    },
+
     AUTHENTICATED({ commit, state }, { profile }) {
       commit('profile', profile);
       commit('authenticated', true);
@@ -59,6 +68,7 @@ export default {
     authenticated(state, status) { state.authenticated = status; },
     profile(state, profile) { state.profile = profile; },
     authError(state, message) { state.authError = message; },
+    serviceError(state, status) { state.serviceError = status; },
     /* eslint-enable no-param-reassign */
   },
 
@@ -67,6 +77,7 @@ export default {
     authenticated: false,
     profile: null,
     authError: null,
+    serviceError: false,
     router: null,
   },
 };

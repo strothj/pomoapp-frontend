@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
-
 export default {
   props: [],
 
@@ -53,13 +51,26 @@ export default {
   },
 
   computed: {
-    ...mapGetters([
-      'selectedTaskName',
-      'selectedProjectName',
-    ]),
-    ...mapState({
-      clock: state => state.clock.clock,
-    }),
+    clock() {
+      return this.$store.state.clock.clock;
+    },
+
+    selectedProject() {
+      const projects = this.$store.state.projects.projects;
+      return projects.find(item => item.id === this.$route.params.projectId);
+    },
+
+    selectedProjectName() {
+      return this.selectedProject.name;
+    },
+
+    selectedTask() {
+      return this.$store.state.projects.tasks.find(item => item.id === this.$route.params.taskId);
+    },
+
+    selectedTaskName() {
+      return this.selectedTask.name;
+    },
   },
 
   methods: {

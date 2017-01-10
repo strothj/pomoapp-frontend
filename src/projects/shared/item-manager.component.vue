@@ -1,5 +1,7 @@
 <template>
 <div>
+  <service-error></service-error>
+
   <!-- Start add new item prompt -->
   <md-dialog-prompt
     :md-title="'Add new ' + this.itemType"
@@ -96,6 +98,7 @@
 </template>
 
 <script>
+import ServiceError from '../../shared/service-error.component';
 import AppBar from '../../shared/app-bar.component';
 
 export default {
@@ -202,6 +205,7 @@ export default {
 
   components: {
     AppBar,
+    ServiceError,
   },
 };
 </script>

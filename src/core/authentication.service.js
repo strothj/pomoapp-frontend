@@ -95,7 +95,8 @@ class AuthenticationService {
       const profile = await this.getProfile();
       return profile;
     } catch (err) {
-      // Login expired, ignoring error.
+      // Login expired/error, clear cookie
+      this.clearToken();
     }
     return null;
   }

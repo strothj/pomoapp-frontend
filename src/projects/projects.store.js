@@ -2,8 +2,12 @@ import ApiClient from './projects.service';
 
 export default {
   actions: {
-    async AUTHENTICATED({ commit, rootState }) {
+    async AUTHENTICATED({ commit, dispatch, rootState }) {
       const client = new ApiClient(rootState.authenticationService);
+      client.on('error', async (err) => {
+        await rootState.authenticationService.signOut();
+        dispatch('SHOW_SERVICE_ERROR', err);
+      });
       commit('apiClient', client);
       commit('projects', await client.get('projects'));
       commit('tasks', await client.get('tasks'));

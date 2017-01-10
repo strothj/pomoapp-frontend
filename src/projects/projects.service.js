@@ -1,34 +1,37 @@
-export default class {
+import EventEmitter from 'events';
+
+export default class extends EventEmitter {
   constructor(authenticationService) {
-    this.authenticationService = authenticationService;
+    super();
+    this.request = authenticationService.authenticatedClient();
+    this.request.interceptors.response.use(response => response, (err) => {
+      this.emit('error', err);
+      return Promise.reject(err);
+    });
   }
 
   async get(resourceType) {
-    const request = this.authenticationService.authenticatedClient();
-    const res = await request.get(resourceType);
+    const res = await this.request.get(resourceType);
     return res.data;
   }
 
   async create(resourceType, item) {
-    const request = this.authenticationService.authenticatedClient();
-    const res = await request.post(resourceType, item);
+    const res = await this.request.post(resourceType, item);
     return res.data;
   }
 
   async update(resourceType, items) {
-    const request = this.authenticationService.authenticatedClient();
     const reqs = [];
     items.forEach((item) => {
-      reqs.push(request.put(`${resourceType}/${item.id}`, item));
+      reqs.push(this.request.put(`${resourceType}/${item.id}`, item));
     });
     await Promise.all(reqs);
   }
 
   async del(resourceType, items) {
-    const request = this.authenticationService.authenticatedClient();
     const reqs = [];
     items.forEach((item) => {
-      reqs.push(request.delete(`${resourceType}/${item.id}`));
+      reqs.push(this.request.delete(`${resourceType}/${item.id}`));
     });
     await Promise.all(reqs);
   }

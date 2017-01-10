@@ -12,9 +12,11 @@ import appThemes from './app.themes';
 import landingRoutes from './landing/landing.routes';
 import accountRoutes from './accounts/accounts.routes';
 import projectsRoutes from './projects/projects.routes';
+import clockRoutes from './clock/clock.routes';
 
 import appStore from './app.store';
 import projectsStore from './projects/projects.store';
+import clockStore from './clock/clock.store';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
@@ -28,12 +30,14 @@ const router = new VueRouter({
     ...landingRoutes,
     ...projectsRoutes,
     ...accountRoutes,
+    ...clockRoutes,
   ],
 });
 
 appStore.state.router = router;
 appStore.modules = {
   projects: projectsStore,
+  clock: clockStore,
 };
 const store = new Vuex.Store(appStore);
 

@@ -69,6 +69,8 @@ export default {
     profile(state, profile) { state.profile = profile; },
     authError(state, message) { state.authError = message; },
     serviceError(state, status) { state.serviceError = status; },
+
+    demoMode(state, status) { state.demoMode = status; },
     /* eslint-enable no-param-reassign */
   },
 
@@ -79,5 +81,7 @@ export default {
     authError: null,
     serviceError: false,
     router: null,
+    // Demo mode flag, used to reduce clock timers for demonstration purposes.
+    demoMode: false,
   },
 };

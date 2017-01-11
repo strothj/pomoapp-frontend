@@ -149,6 +149,10 @@ export default {
 
   watch: {
     progress(progress) {
+      if (progress === 0) {
+        this.progressCircle.set(progress);
+        return;
+      }
       this.progressCircle.animate(progress);
     },
 

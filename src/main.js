@@ -62,5 +62,12 @@ new Vue({
   render: h => h(App),
 });
 
+// If the url contains the query parameter "?speedRacer=1" then enable reduced
+// clock timers for demonstration purposes.
+if (router.currentRoute.query.speedRacer) {
+  console.log('Demo mode: Reduced clock timers enabled.'); // eslint-disable-line no-console
+  store.commit('demoMode', true);
+}
+
 // Attempt automatic login
 store.dispatch('SIGNIN_WITH_COOKIE');

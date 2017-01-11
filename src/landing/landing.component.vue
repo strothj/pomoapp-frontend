@@ -9,7 +9,7 @@
         <md-layout md-flex="5" md-hide-xsmall md-hide-small></md-layout>
         <md-layout md-tag="article" md-flex="50" md-flex-xsmall="100">
           <p class="cta-section__title md-display-3">It's time to get productive.</p>
-          <p class="md-body-1">Stay on task. Get your projects done by dividing your time between work and breaks.</p>
+          <p class="md-body-1">Stay on task. Divide tasks into manageable portions.</p>
         </md-layout>
 
         <!-- Start signup box -->
@@ -60,7 +60,7 @@ export default {
   min-height: 500px;
 
   &__title {
-    margin-top: 16px;
+    margin-top: 24px;
 
     .not-mobile({
       margin-top: 56px;

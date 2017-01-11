@@ -1,10 +1,11 @@
-import { ClockService } from './clock.service';
+import { ClockService, demoSettings } from './clock.service';
 
 export default {
   actions: {
-    AUTHENTICATED({ commit, state }) {
+    AUTHENTICATED({ commit, state, rootState }) {
       if (state.clock) state.clock.destroy();
-      const clock = new ClockService();
+      const settings = rootState.demoMode ? demoSettings : null;
+      const clock = new ClockService(settings);
       commit('clock', clock);
     },
 

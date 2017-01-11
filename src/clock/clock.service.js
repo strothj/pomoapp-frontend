@@ -11,6 +11,11 @@ export const defaultSettings = {
   playAudio: true,
 };
 
+export const demoSettings = Object.assign({}, defaultSettings);
+demoSettings.workDuration = 5;
+demoSettings.breakDuration = 6;
+demoSettings.longBreakDuration = 7;
+
 export const STAGES = {
   WORK: 'Work',
   BREAK: 'Break',

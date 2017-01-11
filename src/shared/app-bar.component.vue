@@ -6,7 +6,8 @@
         <md-icon>menu</md-icon>
       </md-button>
 
-      <h2 class="appbar__title md-title">Pomoapp</h2>
+      <router-link tag="h2" class="appbar__title md-title" :to="homePath" style="cursor: pointer">Pomoapp</h2></router-link>
+      <div class="appbar__spacer"></div>
 
       <router-link v-if="!authenticated" class="appbar__login-button" tag="md-button" to="/signin">Sign in</router-link>
       <router-link v-if="!authenticated" class="appbar__login-button md-raised" tag="md-button" to="/signup">Sign up</router-link>
@@ -32,6 +33,10 @@ export default {
 
   computed: {
     authenticated() { return this.$store.state.authenticated; },
+
+    homePath() {
+      return this.$store.state.authenticated ? '/projects' : '/';
+    },
   },
 
   methods: {
@@ -55,6 +60,9 @@ export default {
 
   & &__title {
     margin-left: 8px;
+  }
+
+  &__spacer {
     flex: 1;
   }
 

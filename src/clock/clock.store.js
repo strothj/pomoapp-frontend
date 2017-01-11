@@ -8,15 +8,8 @@ export default {
       commit('clock', clock);
     },
 
-    CLOCK_DONE_CLICKED({ dispatch, rootState }, { taskId }) {
-      const task = rootState.tasks.tasks.find(item => item.id === taskId);
-      if (!task) return;
-      const editedTask = Object.assign({}, task);
-      editedTask.archived = true;
-      dispatch('ITEM_EDITED', {
-        category: 'tasks',
-        item: editedTask,
-      });
+    CLOCK_DONE_CLICKED({ dispatch }, { taskId }) {
+      dispatch('MARK_TASK_DONE', { taskId });
     },
   },
 

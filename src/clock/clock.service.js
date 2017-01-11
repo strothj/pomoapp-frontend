@@ -11,11 +11,6 @@ export const defaultSettings = {
   playAudio: true,
 };
 
-const testSettings = Object.assign({}, defaultSettings);
-testSettings.workDuration = 5;
-testSettings.breakDuration = 6;
-testSettings.longBreakDuration = 7;
-
 export const STAGES = {
   WORK: 'Work',
   BREAK: 'Break',
@@ -30,8 +25,7 @@ export const STATES = {
 
 export class ClockService {
   constructor(settings) {
-    // TODO: Remove testSettings and replace with defaultSettings.
-    this.settings = settings || Object.assign({}, testSettings);
+    this.settings = settings || Object.assign({}, defaultSettings);
     this.reset();
     this.tickSound = new Audio(tick);
     this.dongSound = new Audio(dong);
@@ -63,7 +57,6 @@ export class ClockService {
   // tick() lacks the correct context for 'this' because it is called from a timer.
   // eslint-disable-next-line class-methods-use-this
   tick(self) {
-    console.log(self); // eslint-disable-line no-console
     if (self.timeRemaining === 0) {
       switch (self.stage) {
         case STAGES.WORK: { self.onWorkCycleDone.bind(self)(); return; }
@@ -88,7 +81,6 @@ export class ClockService {
       if (this.timer) clearInterval(this.timer);
     }
     if (state === STATES.STARTED) this.timer = setInterval(this.tick, 1000, this);
-    console.log(state); // eslint-disable-line
   }
 
   changeTime(time) {

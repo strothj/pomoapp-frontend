@@ -49,6 +49,15 @@ export default {
       await client.del('tasks', tasks);
       commit('deleteTasks', tasks);
     },
+
+    async MARK_TASK_DONE({ dispatch, state }, { taskId }) {
+      const task = state.tasks.find(item => item.id === taskId);
+      if (task) {
+        const editedTask = Object.assign({}, task);
+        editedTask.archived = true;
+        dispatch('UPDATE_TASKS', [editedTask]);
+      }
+    },
   },
 
   getters: {

@@ -4,9 +4,7 @@ export default {
       color: 'blue-grey',
       hue: '800',
     },
-    accent: {
-      color: 'blue',
-    },
+    accent: 'blue',
     warn: 'deep-orange',
     background: 'white',
   },

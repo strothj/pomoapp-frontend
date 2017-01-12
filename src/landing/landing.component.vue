@@ -2,27 +2,32 @@
 <div>
   <app-bar></app-bar>
 
+  <div class="landing-page">
+
   <!-- Start call to action section -->
+  <div style="height: 64px"></div><!-- Spacer -->
   <header class="cta-section">
     <div class="page-content">
-      <md-layout md-gutter="24">
-        <md-layout md-flex="5" md-hide-xsmall md-hide-small></md-layout>
-        <md-layout md-tag="article" md-flex="50" md-flex-xsmall="100">
+      <md-layout md-gutter="24" md-tag="article">
+        <md-layout md-flex="100">
           <p class="cta-section__title md-display-3">It's time to get productive.</p>
-          <p class="md-body-1">Stay on task. Divide tasks into manageable portions.</p>
         </md-layout>
-
-        <!-- Start signup box -->
-        <md-layout md-tag="article" class="cta-section__signup-box">
-          <signup-box></signup-box>
+        <md-layout md-flex="100">
+        <p class="md-body-1">Stay on task. Divide tasks into manageable portions.</p>
         </md-layout>
-        <!-- End signup box -->
-
-        <md-layout md-flex="15" md-hide-xsmall md-hide-small></md-layout>
       </md-layout>
-    </header>
-  </div>
+
+      <md-layout md-gutter="24">
+        <md-layout md-flex="75" md-flex-xsmall="100">
+          <md-card-media>
+          </md-card-media>
+        </md-layout>
+      </md-layout>
+    </div>
+  </header>
   <!-- End call to action section -->
+
+  </div>
 
 </div>
 </template>
@@ -55,12 +60,22 @@ export default {
 <style lang="less">
 @import "../assets/layout.less";
 
+.landing-page {
+  color: white !important;
+  p { color: white !important; }
+}
+
 .cta-section {
-  padding-top: 64px;
-  min-height: 500px;
+  background: linear-gradient( rgba(69,90,100,.9), rgba(69,90,100,.9) ),
+    url(alarm-background.png) center right / cover no-repeat #0079bf;
+
+  // background-image: url("pexels-photo.png");
+  // background-size: cover;
+
+  padding-top: 16px;
+  height: 500px;
 
   &__title {
-    margin-top: 24px;
 
     .not-mobile({
       margin-top: 56px;

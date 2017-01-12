@@ -6,7 +6,9 @@
         <md-icon>menu</md-icon>
       </md-button>
 
-      <router-link tag="h2" class="appbar__title md-title" :to="homePath" style="cursor: pointer">Pomoapp</h2></router-link>
+      <router-link tag="h2" class="appbar__title md-title" :to="homePath" style="cursor: pointer">
+        <img src="./site-logo.png" alt="Pomoapp Logo" style="height: 48px">
+      </router-link>
       <div class="appbar__spacer"></div>
 
       <router-link v-if="!authenticated" class="appbar__login-button" tag="md-button" to="/signin">Sign in</router-link>

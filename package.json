@@ -20,11 +20,13 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
+    "auth0-js": "^8.0.2",
+    "axios": "^0.15.3",
+    "es6-promise": "^4.0.5",
+    "lodash.padstart": "^4.6.1",
     "progressbar.js": "^1.0.1",
-    "sortablejs": "^1.5.0-rc1",
-    "superagent": "^3.3.1",
     "vue": "^2.1.0",
-    "vue-material": "^0.5.2",
+    "vue-material": "^0.6.3",
     "vue-router": "^2.0.3",
     "vuex": "^2.0.0"
   },

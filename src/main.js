@@ -5,40 +5,56 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.css';
-import 'assets/css/styles.less';
 
-import App from './App';
-import createStore from './store';
-import createRouter from './router';
+import App from './app.component';
+import appThemes from './app.themes';
+
+import landingRoutes from './landing/landing.routes';
+import accountRoutes from './accounts/accounts.routes';
+import projectsRoutes from './projects/projects.routes';
+import clockRoutes from './clock/clock.routes';
+
+import appStore from './app.store';
+import projectsStore from './projects/projects.store';
+import clockStore from './clock/clock.store';
+
+require('es6-promise').polyfill();
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMaterial);
 
-Vue.material.registerTheme('default', {
-  primary: 'indigo',
-  accent: 'pink',
-  warn: 'deep-orange',
-  background: 'white',
+Vue.material.registerTheme(appThemes);
+
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    ...landingRoutes,
+    ...projectsRoutes,
+    ...accountRoutes,
+    ...clockRoutes,
+  ],
 });
 
-const router = createRouter();
-const store = createStore({ router });
+appStore.state.router = router;
+appStore.modules = {
+  projects: projectsStore,
+  clock: clockStore,
+};
+const store = new Vuex.Store(appStore);
 
 // Redirect user from areas of the program which require authentication.
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!store.getters.authenticated) {
+    if (!store.state.authenticated) {
       next({
-        path: '/',
-        // query: { redirect: to.fullPath }
+        path: '/signin',
       });
     } else {
       next();
     }
   } else next();
 });
-
 
 /* eslint-disable no-new */
 new Vue({
@@ -48,5 +64,12 @@ new Vue({
   render: h => h(App),
 });
 
-// Bootstrap auth0.com library in user store module.
-store.dispatch('BOOTSTRAP_LOGIN');
+// If the url contains the query parameter "?speedRacer=1" then enable reduced
+// clock timers for demonstration purposes.
+if (router.currentRoute.query.speedRacer) {
+  console.log('Demo mode: Reduced clock timers enabled.'); // eslint-disable-line no-console
+  store.commit('demoMode', true);
+}
+
+// Attempt automatic login
+store.dispatch('SIGNIN_WITH_COOKIE');

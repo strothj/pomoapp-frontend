@@ -210,6 +210,7 @@ export default {
 
 <style lang="less">
 .clock-card {
+  margin-top: -64px;
   width: 100vw;
   height: 100vh;
 

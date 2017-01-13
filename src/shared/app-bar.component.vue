@@ -16,7 +16,7 @@
         <div class="appbar__spacer"></div>
 
         <router-link v-if="!authenticated" class="appbar__login-button" tag="md-button" to="/signin">Sign in</router-link>
-        <router-link v-if="!authenticated" class="appbar__login-button md-raised" tag="md-button" to="/signup">Sign up</router-link>
+        <router-link v-if="!authenticated" class="appbar__login-button md-raised md-accent" tag="md-button" to="/signup">Sign up</router-link>
 
         <profile class="appbar__profile" v-if="authenticated"></profile>
 

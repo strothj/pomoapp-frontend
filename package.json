@@ -22,6 +22,7 @@
   "dependencies": {
     "auth0-js": "^8.0.2",
     "axios": "^0.15.3",
+    "es6-promise": "^4.0.5",
     "lodash.padstart": "^4.6.1",
     "progressbar.js": "^1.0.1",
     "vue": "^2.1.0",

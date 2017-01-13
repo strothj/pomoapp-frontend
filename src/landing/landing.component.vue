@@ -1,11 +1,8 @@
 <template>
-<div>
-  <app-bar></app-bar>
-
+<page-frame>
   <div class="landing-page">
 
   <!-- Start call to action section -->
-  <div style="height: 64px"></div><!-- Spacer -->
   <header class="cta-section">
     <div class="page-content">
       <md-layout md-gutter="24" md-tag="article">
@@ -29,11 +26,11 @@
 
   </div>
 
-</div>
+</page-frame>
 </template>
 
 <script>
-import AppBar from '../shared/app-bar.component';
+import PageFrame from '../shared/page-frame.component';
 import SignupBox from '../accounts/signup-box.component';
 
 export default {
@@ -51,7 +48,7 @@ export default {
   },
 
   components: {
-    AppBar,
+    PageFrame,
     SignupBox,
   },
 };

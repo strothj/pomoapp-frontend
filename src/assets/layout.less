@@ -11,19 +11,13 @@
 }
 
 .not-mobile(@rules) {
-  @media only screen and (min-width: 750px) {
+  @media only screen and (min-width: 945px) {
     @rules();
   }
 }
 
 .mobile(@rules) {
-  @media only screen and (max-width: 749px) {
+  @media only screen and (max-width: 944px) {
     @rules();
   }
 }
-
-// .large-screen(@rules) {
-//   @media only screen and (min-width: @breakpoint-large-screen) {
-//     @rules();
-//   }
-// }

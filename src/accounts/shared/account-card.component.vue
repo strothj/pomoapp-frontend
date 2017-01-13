@@ -77,7 +77,18 @@ export default {
 
 .account-card {
   form {
-    width: 100vw;
+    .mobile({
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      left: 0;
+      top: 0;
+    });
+
+    .not-mobile({
+      margin-top: 100px;
+      width: 500px;
+    });
   }
 
   .md-card-content { flex: 1; }
@@ -87,11 +98,6 @@ export default {
   &__google-button { width: 95%; }
 
   .not-mobile({
-    form {
-      margin-top: 100px;
-      width: 500px;
-    }
-
     &__card { height: 400px; }
 
     &__google-button { width: 450px; }

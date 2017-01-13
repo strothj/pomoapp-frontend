@@ -213,6 +213,10 @@ export default {
   width: 100vw;
   height: 100vh;
 
+  button i {
+    color: white !important;
+  }
+
   &__back-button {
     margin-right: 15px !important;
     margin-top: 10px !important;

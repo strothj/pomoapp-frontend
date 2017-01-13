@@ -18,8 +18,6 @@ import appStore from './app.store';
 import projectsStore from './projects/projects.store';
 import clockStore from './clock/clock.store';
 
-require('es6-promise').polyfill();
-
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMaterial);

@@ -2,7 +2,7 @@
 <item-manager
   title="Tasks"
   :list="tasks"
-  itemType="items"
+  itemType="task"
   @addItem="addItem"
   @editItems="editItems"
   @deleteItems="deleteItems"

@@ -4,7 +4,9 @@
     <slot name="sidenav"></slot>
   </app-bar>
 
-  <slot></slot>
+  <div class="page-frame__contents">
+    <slot></slot>
+  </div>
 </div>
 </template>
 
@@ -34,16 +36,16 @@ export default {
 <style lang="less">
 @appbar-height: 64px;
 
-body {
-  padding-top: @appbar-height;
-}
-
 .page-frame {
   &__appbar {
     position: fixed;
     z-index: 100;
     top: 0;
     width: 100%;
+  }
+
+  &__contents {
+    padding-top: 64px;
   }
 }
 </style>

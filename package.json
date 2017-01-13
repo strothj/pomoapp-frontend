@@ -22,7 +22,6 @@
   "dependencies": {
     "auth0-js": "^8.0.2",
     "axios": "^0.15.3",
-    "es6-promise": "^4.0.5",
     "lodash.padstart": "^4.6.1",
     "progressbar.js": "^1.0.1",
     "vue": "^2.1.0",
@@ -38,6 +37,7 @@
     "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "babel-plugin-transform-object-rest-spread": "^6.20.2",
     "babel-plugin-transform-runtime": "^6.0.0",
+    "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "^6.0.0",
     "babel-preset-stage-2": "^6.0.0",
     "babel-register": "^6.0.0",

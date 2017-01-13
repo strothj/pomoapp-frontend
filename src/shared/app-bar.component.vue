@@ -87,7 +87,7 @@ export default {
     cursor: pointer;
 
     img {
-      height: 48px;
+      height: 48px !important;
     }
   }
 

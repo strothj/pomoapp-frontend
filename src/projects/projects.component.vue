@@ -1,8 +1,7 @@
 <template>
 <page-frame>
 
-  <div class="centered-content">
-  <md-layout>
+  <md-layout class="centered-content" md-tag="main">
     <md-layout md-column md-flex="40" md-flex-small="100" :md-hide-small="projectsSmallHide">
       <project-manager></project-manager>
     </md-layout>
@@ -13,10 +12,20 @@
       <task-manager v-if="$route.params.projectId"></task-manager>
     </md-layout>
 
-  </md-layout></div>
+  </md-layout>
 
   <md-list slot="sidenav">
-    <md-list-item v-for="project in $store.state.projects.projects">
+
+    <md-list-item
+      @click="$store.state.router.push('/projects')">
+      <md-icon>view_list</md-icon>
+      <span>Projects</span>
+      <md-divider></md-divider>
+    </md-list-item>
+
+    <md-list-item
+      v-for="project in $store.state.projects.projects"
+      @click="$store.state.router.push(`/projects/${project.id}`)">
       <span>{{ project.name }}</span>
     </md-list-item>
   </md-list>

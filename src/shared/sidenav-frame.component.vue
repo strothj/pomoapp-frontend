@@ -1,11 +1,14 @@
 <template>
 <md-sidenav class="md-left md-fixed" ref="sidenav">
+  <!-- Show user profile -->
   <md-toolbar v-if="$store.state.authenticated">
     <profile></profile>
   </md-toolbar>
 
+  <!-- Inject contents relevant to the current page -->
   <slot></slot>
 
+  <!-- Show signin/signout button -->
   <md-list>
     <md-list-item v-if="$store.state.authenticated" @click="$store.dispatch('SIGN_OUT')">
       <md-icon>exit_to_app</md-icon>
@@ -43,6 +46,14 @@ export default {
 
   components: {
     Profile,
+  },
+
+  mounted() {
+    // Close sidenav when user clicks a link and page navigates
+    this.$store.state.router.beforeEach((to, from, next) => {
+      if (this.$refs.sidenav && this.$refs.sidenav.mdVisible) this.$refs.sidenav.close();
+      next();
+    });
   },
 };
 </script>

@@ -20,7 +20,7 @@
   </md-dialog-prompt>
   <!-- End edit item prompt -->
 
-  <main class="manager-main">
+  <article class="manager-main">
     <!-- Start items list -->
     <md-table-card class="list-card">
 
@@ -88,7 +88,7 @@
     </md-table-card>
     <!-- End items list -->
 
-  </main>
+  </article>
 </div>
 </template>
 

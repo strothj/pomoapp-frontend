@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import AppBar from './app-bar.component';
+import AppBar from './appbar.component';
 
 export default {
   props: [],

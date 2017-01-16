@@ -18,6 +18,9 @@ import appStore from './app.store';
 import projectsStore from './projects/projects.store';
 import clockStore from './clock/clock.store';
 
+import './assets/layout.less';
+import './assets/typography.less';
+
 Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(VueMaterial);

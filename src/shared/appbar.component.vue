@@ -13,7 +13,9 @@
         <md-icon md-src="static/github-circle.svg"></md-icon>
         <md-tooltip>See source code on Github</md-tooltip>
       </md-button>
-      <md-button class="appbar__account-button">Sign in</md-button>
+      <md-button
+        class="appbar__account-button"
+        @click="$emit('signinClicked')">Sign in</md-button>
       <md-button :class="styles.signup">Sign up</md-button>
     </md-toolbar>
   </md-theme>

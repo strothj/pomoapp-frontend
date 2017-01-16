@@ -1,6 +1,15 @@
 <template>
 <div>
-  <appbar :transparent="true"></appbar>
+  <md-dialog ref="signinDialog">
+    <md-dialog-title>Sign in</md-dialog-title>
+    <md-dialog-content>
+      <sign-in></sign-in>
+    </md-dialog-content>
+  </md-dialog>
+
+  <appbar
+    :transparent="true"
+    @signinClicked="$refs.signinDialog.open()"></appbar>
 
   <hero-section class="landing-section landing-section--hero"></hero-section>
 
@@ -53,6 +62,7 @@ import HeroSection from './hero-section.component';
 import SplitSection from './split-section.component';
 import ResponsiveImage from './responsive-image.component';
 import FooterSection from './footer-section.component';
+import SignIn from '../accounts/signin.component';
 
 export default {
   props: [],
@@ -79,6 +89,7 @@ export default {
     ResponsiveImage,
     SplitSection,
     FooterSection,
+    SignIn,
   },
 };
 </script>

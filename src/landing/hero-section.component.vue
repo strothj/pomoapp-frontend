@@ -9,7 +9,7 @@
 
   <md-button class="hero-section__sign-up-button md-raised" href="/signup">Sign up free</md-button>
 
-  <p class="hero-section__sign-in small-text">Already use Pomoapp? <a href="#">Sign in</p>
+  <p class="hero-section__sign-in small-text">Already use Pomoapp? <a href="#" @click.prevent="$emit('signinClicked')">Sign in</p>
 
   </div>
 

@@ -1,149 +1,97 @@
 <template>
-<page-frame>
-  <div class="landing-page">
+<div>
+  <appbar :transparent="true"></appbar>
 
-    <!-- Start call to action section -->
-    <header class="landing-page--centered landing-page--white-text cta-section">
-      <div class="page-content">
-        <md-layout md-gutter="24" md-tag="article">
-          <p class="cta-section__title md-display-1">Pomoapp helps you stay productive.</p>
-          <p class="md-headline">
-            Pomoapp's project manager helps you organize.<br>
-            The timer makes you productive.
-          </p>
-          <p>
-            <md-button class="md-raised md-accent" style="padding: 12px 84px" @click="$router.push('/signup')">Sign up free</md-button>
-          </p>
-          <p>
-            Already use Pomoapp? <a href="/signin" @click.prevent="$router.push('/signin')">Sign in</a>
-          </p>
-        </md-layout>
-    </header>
-    <!-- End call to action section -->
+  <hero-section class="landing-section landing-section--hero"></hero-section>
 
-    <article class="landing-page__section landing-page--centered landing-page--white-text background-blue-grey-800">
-      <div class="page-content">
-        <p class="md-title">The project manager organizes your work into projects and tasks.</p>
-        <picture>
-          <source srcset="/static/screenshots/desktop1.png" media="(min-width: 945px)">
-          <source srcset="/static/screenshots/mobile1.png">
-          <img src="/static/screenshots/desktop1.png" alt="Project Manager screenshot">
-        </picture>
-      </div>
-    </article>
+  <split-section class="landing-section" padding="left">
+    <h1 slot="title">Get productive</h1>
+    <div slot="left">
+      <p>Organize your work into easy to finish goals using the project manager.</p>
+    </div>
+    <responsive-image
+      :images="projectManagerImages"
+      slot="right"></responsive-image>
+  </split-section>
 
-    <article class="landing-page__section landing-page--centered landing-page--white-text background-blue-700">
-      <div class="page-content">
-        <p class="md-title">Use the Pomodoro clock to split time between work and breaks.</p>
-        <p class="md-subheading">Work for 25 minutes and then take a 5 minute break.</p>
-        <p class="md-subheading">The timer will buzz letting you know it's break time.</p>
-        <p class="md-subheading">Take a 30 minute break every four cycles!</p>
-        <picture>
-          <source srcset="/static/screenshots/desktop2.png" media="(min-width: 945px)">
-          <source srcset="/static/screenshots/mobile2.png">
-          <img src="/static/screenshots/desktop2.png" alt="Pomodoro clock screenshot">
-        </picture>
-      </div>
-    </article>
+  <split-section class="landing-section" padding="right">
+    <h1 slot="title">Balance work and everything else.</h1>
+    <responsive-image
+      :images="pomodoroImages"
+      slot="left"></responsive-image>
+    <div slot="right">
+      <p>Start a task.</p>
+      <p>Work for 25 minutes.</p>
+      <p>When you hear the buzzer, take a break.</p>
+      <p>After four cycles, take a long 30 minute break.</p>
+    </div>
+  </split-section>
 
-    <article class="landing-page__section landing-page--centered landing-page--footer">
-      <div class="page-content">
-        <p class="md-title">
-          Ready to go?<br>
-          <br>
-          <strong>Sign up for free</strong>
-        </p>
-        <p>
-          <md-button class="md-raised md-accent" style="padding: 12px 84px" @click="$router.push('/signup')">Sign up free</md-button>
-        </p>
-        <p>
-          Already use Pomoapp? <a href="/signin" @click.prevent="$router.push('/signin')">Sign in</a>
-        </p>
-      </div>
-    </article>
-
+  <div class="landing-section container">
+    <div class="layout-centered">
+      <h1>The Pomodoro Technique</h1>
+    </div>
+      <p>Pomoapp makes it easy to use the Pomodoro technique.</p>
+      <blockquote>
+      The Pomodoro Technique is a time management method developed by Francesco
+      Cirillo in the late 1980s. The technique uses a timer to break down
+      work into intervals, traditionally 25 minutes in length, separated by
+      short breaks. These intervals are named pomodoros, the plural in English
+      of the Italian word pomodoro (tomato), after the tomato-shaped kitchen
+      timer that Cirillo used as a university student. -
+      <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique">Wikipedia</a>
+      </blockquote>
   </div>
-</page-frame>
+
+  <footer-section></footer-section>
+</div>
 </template>
 
 <script>
-import PageFrame from '../shared/page-frame.component';
-import SignupBox from '../accounts/signup-box.component';
+import Appbar from '../shared/appbar.component';
+import HeroSection from './hero-section.component';
+import SplitSection from './split-section.component';
+import ResponsiveImage from './responsive-image.component';
+import FooterSection from './footer-section.component';
 
 export default {
   props: [],
 
   data() {
     return {
+      projectManagerImages: {
+        desktop: '/static/screenshots/desktop1.png',
+        mobile: '/static/screenshots/mobile1.png',
+        alt: 'Project manager screenshot',
+      },
+
+      pomodoroImages: {
+        desktop: '/static/screenshots/desktop2.png',
+        mobile: '/static/screenshots/mobile2.png',
+        alt: 'Pomodoro clock screenshot',
+      },
     };
   },
 
-  computed: {
-  },
-
-  methods: {
-  },
-
   components: {
-    PageFrame,
-    SignupBox,
+    Appbar,
+    HeroSection,
+    ResponsiveImage,
+    SplitSection,
+    FooterSection,
   },
 };
 </script>
 
 <style lang="less">
-@import "../assets/layout.less";
+@import "../assets/keylines.less";
 
-.section() {
-  min-height: 500px;
-  padding-top: 48px;
-}
+.landing-section {
+  padding: 16px;
+  .not-mobile({ padding: 60px 20px; });
 
-.landing-page {
-  p {
-    padding-left: 20px;
-    padding-right: 20px;
-    font-weight: normal !important;
-  }
-
-  img {
-    padding-top: 48px;
-  }
-
-  &__section {
-    .section();
-  }
-
-  &--white-text {
-    color: white !important;
-    p { color: white !important; }
-  }
-
-  &--centered {
-    text-align: center;
-
-    p { width: 100%; }
-  }
-
-  &--footer {
-    min-height: 400px;
-  }
-}
-
-.cta-section {
-  background: linear-gradient( rgba(69,90,100,.9), rgba(69,90,100,.9) ),
-    url(alarm-background.png) center right / cover no-repeat #0079bf;
-  p {
-    font-weight: 500 !important;
-  }
-
-  .section();
-}
-
-.background {
-  &-blue-grey-800 { background-color: #263238; }
-  &-blue-700 {
-    background: linear-gradient( rgba(40,53,147,1), rgba(40,53,147,.8) )
+  &--hero {
+    margin-top: -64px; // Overlap appbar.
   }
 }
 </style>

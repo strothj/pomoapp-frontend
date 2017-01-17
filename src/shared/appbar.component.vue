@@ -16,7 +16,9 @@
       <md-button
         class="appbar__account-button"
         @click="$emit('signinClicked')">Sign in</md-button>
-      <md-button :class="styles.signup">Sign up</md-button>
+      <md-button
+        :class="styles.signup"
+        @click="$emit('signupClicked')">Sign up</md-button>
     </md-toolbar>
   </md-theme>
 
@@ -24,8 +26,6 @@
 </template>
 
 <script>
-import Vue from 'vue';
-
 // Normal style with primary background color and box shadow.
 const stylesStandard = {
   whiteframe: ['appbar md-toolbar md-theme-default'],
@@ -39,7 +39,7 @@ const stylesStandard = {
 const stylesTransparent = {
   whiteframe: ['appbar md-toolbar'],
   elevation: 0,
-  theme: 'appbarTransparent',
+  theme: 'transparent',
   toolbar: ['appbar__toolbar container', 'md-transparent'],
   signup: ['appbar__account-button'],
 };
@@ -53,21 +53,8 @@ export default {
     },
   },
 
-  data() {
-    return {
-      themeRegistered: false,
-    };
-  },
-
   computed: {
     styles() { return this.transparent ? stylesTransparent : stylesStandard; },
-  },
-
-  mounted() {
-    // Register a theme with a black background so that the Vue Material theme
-    // engine will set text to white.
-    Vue.material.registerTheme('appbarTransparent', { background: 'black' });
-    this.themeRegistered = true;
   },
 };
 </script>

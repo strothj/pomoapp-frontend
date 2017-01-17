@@ -18,23 +18,11 @@
 
 <script>
 export default {
-  props: [],
-
-  data() {
-    return {
-    };
-  },
-
-  computed: {
-  },
-
-  methods: {
-  },
 };
 </script>
 
 <style lang="less">
-@import "../assets/keylines.less";
+@import "~assets/keylines.less";
 
 @material-design__light-blue-900: #01579B;
 @hero-color-overlay: fade(@material-design__light-blue-900, 90%);
@@ -42,7 +30,7 @@ export default {
 .hero-section {
   background:
     linear-gradient(@hero-color-overlay, @hero-color-overlay),
-    url(./images/hero-background.png)
+    url(../images/hero-background.png)
     center / cover no-repeat;
 
   h1 {

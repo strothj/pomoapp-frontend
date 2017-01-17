@@ -2,36 +2,47 @@
 <div>
   <error-dialog></error-dialog>
 
-      <form @submit.prevent="onFormSubmit">
+  <md-dialog ref="accountDialog">
+    <form @submit.prevent="onFormSubmit">
 
-            <md-input-container>
-              <label>Email address</label>
-              <md-input v-model="email" required></md-input>
-            </md-input-container>
-            <md-input-container>
-              <label>Password</label>
-              <md-input v-model="password" type="password" required></md-input>
-            </md-input-container>
+      <md-dialog-title>{{ title }}</md-dialog-title>
 
-            <!--
-            <md-button class="md-raised md-primary">Sign in with Google</md-button>
-            -->
-            <md-button class="md-primary" type="submit">{{ actionText }}</md-button>
+      <md-dialog-content>
 
-      </form>
+        <md-input-container>
+          <label>Email address</label>
+          <md-input v-model="email" v-focus.lazy="focused" @blur.native="focused = false" required></md-input>
+        </md-input-container>
+        <md-input-container>
+          <label>Password</label>
+          <md-input v-model="password" type="password" required></md-input>
+        </md-input-container>
+
+      </md-dialog-content>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" type="submit">{{ actionText }}</md-button>
+      </md-dialog-actions>
+
+    </form>
+  </md-dialog>
 </div>
 </template>
 
 <script>
+import { focus } from 'vue-focus';
 import ErrorDialog from './error-dialog.component';
 
 export default {
   props: ['actionText', 'title'],
 
+  directives: { focus },
+
   data() {
     return {
       email: null,
       password: null,
+      focused: false,
     };
   },
 
@@ -46,6 +57,11 @@ export default {
       });
       this.password = null;
     },
+
+    open() {
+      this.$refs.accountDialog.open();
+      setTimeout(() => { this.focused = true; }, 100);
+    },
   },
 
   components: {
@@ -53,26 +69,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less">
-@import "~assets/layout.less";
-
-.account-card {
-  form {
-    .mobile({
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      left: 0;
-      top: 0;
-    });
-
-    .not-mobile({
-      margin-top: 100px;
-      width: 500px;
-    });
-  }
-
-  .md-card-content { flex: 1; }
-}
-</style>

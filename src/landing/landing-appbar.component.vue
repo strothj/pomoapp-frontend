@@ -3,6 +3,7 @@
     class="landing-appbar"
     :transparent="transparent"
     ref="appbar"
+    @onMenuClicked="$emit('onMenuClicked')"
     @signinClicked="$refs.signinDialog.open()"
     @signupClicked="$refs.signupDialog.open()"></appbar>
 </template>

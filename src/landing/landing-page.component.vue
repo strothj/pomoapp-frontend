@@ -1,42 +1,39 @@
 <template>
 <div>
-  <sign-in ref="signinDialog"></sign-in>
-  <sign-up ref="signupDialog"></sign-up>
+  <landing-sidenav ref="sidenav"></landing-sidenav>
 
-  <landing-appbar></landing-appbar>
+  <landing-appbar @onMenuClicked="$refs.sidenav.open()"></landing-appbar>
 
-  <hero-section class="landing-section landing-section--hero"></hero-section>
+  <hero-section class="landing-section landing-section--hero" id="pomoapp"></hero-section>
 
-  <get-productive-section class="landing-section"></get-productive-section>
+  <get-productive-section class="landing-section" id="productive"></get-productive-section>
 
-  <clock-section class="landing-section"></clock-section>
+  <clock-section class="landing-section" id="pomodoro-clock"></clock-section>
 
-  <pomodoro-technique-section class="landing-section"></pomodoro-technique-section>
+  <pomodoro-technique-section class="landing-section" id="pomodoro-technique"></pomodoro-technique-section>
 
   <footer-section></footer-section>
 </div>
 </template>
 
 <script>
+import LandingSidenav from './landing-sidenav.component';
 import LandingAppbar from './landing-appbar.component';
 import HeroSection from './sections/hero-section.component';
 import GetProductiveSection from './sections/get-productive-section.component';
 import ClockSection from './sections/clock-section.component';
 import PomodoroTechniqueSection from './sections/pomodoro-technique-section.component';
 import FooterSection from './sections/footer-section.component';
-import SignIn from '../accounts/signin.component';
-import SignUp from '../accounts/signup.component';
 
 export default {
   components: {
+    LandingSidenav,
     LandingAppbar,
     HeroSection,
     GetProductiveSection,
     ClockSection,
     PomodoroTechniqueSection,
     FooterSection,
-    SignIn,
-    SignUp,
   },
 };
 </script>

@@ -5,7 +5,9 @@
   <!-- Use alternate theme when transparent so text is white -->
   <md-theme :md-name="styles.theme">
     <md-toolbar :class="styles.toolbar">
-      <md-button class="appbar__menu md-icon-button">
+      <md-button
+        class="appbar__menu md-icon-button"
+        @click="$emit('onMenuClicked')">
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="appbar__title md-title">Pomoapp</h2>
@@ -15,10 +17,10 @@
       </md-button>
       <md-button
         class="appbar__account-button"
-        @click="$emit('signinClicked')">Sign in</md-button>
+        @click="$router.push({ path: '/signin' })">Sign in</md-button>
       <md-button
         :class="styles.signup"
-        @click="$emit('signupClicked')">Sign up</md-button>
+        @click="$router.push({ path: '/signup' })">Sign up</md-button>
     </md-toolbar>
   </md-theme>
 
@@ -32,7 +34,7 @@ const stylesStandard = {
   elevation: 4,
   theme: 'default',
   toolbar: ['appbar__toolbar container'],
-  signup: ['appbar__account-button', 'md-raised', 'md-accent'],
+  signup: ['appbar__account-button', 'md-raised'],
 };
 
 // Transparent background and no shadow for use on top of landing page.

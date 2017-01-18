@@ -15,10 +15,10 @@
       <md-divider></md-divider>
     </md-list-item>
 
-    <md-list-item @click="$router.push({ path: '/signin '})">
+    <md-list-item @click="navigateRouter('/signin')">
       <span>Sign in</span>
     </md-list-item>
-    <md-list-item @click="$router.push({ path: '/signup '})">
+    <md-list-item @click="navigateRouter('/signup')">
       <span>Sign up</span>
     </md-list-item>
   </md-list>
@@ -45,6 +45,11 @@ export default {
     navigate(path) {
       this.$refs.sidenav.close();
       window.location = path;
+    },
+
+    navigateRouter(path) {
+      this.$refs.sidenav.close();
+      this.$router.push({ path });
     },
   },
 };

@@ -1,17 +1,21 @@
 <template>
 <div class="page-frame">
-  <app-bar class="page-frame__appbar">
-    <slot name="sidenav"></slot>
+  <app-bar
+    class="page-frame__appbar"
+    @onMenuClicked="$refs.sidenav.open()">
   </app-bar>
 
+  <sidenav ref="sidenav"></sidenav>
+
   <div class="page-frame__contents">
-    <slot></slot>
+    <router-view></router-view>
   </div>
 </div>
 </template>
 
 <script>
 import AppBar from './appbar.component';
+import Sidenav from './sidenav.component';
 
 export default {
   props: [],
@@ -29,6 +33,7 @@ export default {
 
   components: {
     AppBar,
+    Sidenav,
   },
 };
 </script>
@@ -45,7 +50,7 @@ export default {
   }
 
   &__contents {
-    padding-top: 64px;
+    padding-top: 84px;
   }
 }
 </style>

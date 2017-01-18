@@ -9,6 +9,7 @@ import 'vue-material/dist/vue-material.css';
 import App from './app.component';
 import appThemes from './app.themes';
 
+import PageLayout from './shared/page-layout.component';
 import landingRoutes from './landing/landing.routes';
 import accountRoutes from './accounts/accounts.routes';
 import projectsRoutes from './projects/projects.routes';
@@ -32,9 +33,15 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     ...landingRoutes,
-    ...projectsRoutes,
     ...accountRoutes,
-    ...clockRoutes,
+    {
+      path: '/projects',
+      component: PageLayout,
+      children: [
+        ...projectsRoutes,
+        ...clockRoutes,
+      ],
+    },
   ],
 });
 

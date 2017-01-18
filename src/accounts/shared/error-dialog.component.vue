@@ -8,8 +8,6 @@
 import { mapState } from 'vuex';
 
 export default {
-  props: [],
-
   data() {
     return {
       authError: ' ', // md-dialog-alert requires field not be empty
@@ -30,9 +28,6 @@ export default {
         this.$store.dispatch('DISMISS_AUTH_ERROR');
       }
     },
-  },
-
-  methods: {
   },
 };
 </script>

@@ -14,13 +14,6 @@
 <script>
 
 export default {
-  props: [],
-
-  data() {
-    return {
-    };
-  },
-
   computed: {
     profileName() {
       if (!this.$store.state.profile) return '';
@@ -30,9 +23,8 @@ export default {
 
   methods: {
     onMenuLostFocus() {
-      // // Close menu on lost focus so clicks outside of sidenav properly close the
-      // // popup menu.
-      // this.$refs.menu.close();
+      // Close menu on lost focus so clicks outside of sidenav properly close the
+      // popup menu.
       if (this.$refs.menuContent.$el.classList.contains('md-active')) {
         this.$refs.menu.close();
       }

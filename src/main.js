@@ -9,6 +9,7 @@ import 'vue-material/dist/vue-material.css';
 import App from './app.component';
 import appThemes from './app.themes';
 
+import PageLayout from './shared/page-layout.component';
 import landingRoutes from './landing/landing.routes';
 import accountRoutes from './accounts/accounts.routes';
 import projectsRoutes from './projects/projects.routes';
@@ -20,6 +21,7 @@ import clockStore from './clock/clock.store';
 
 import './assets/layout.less';
 import './assets/typography.less';
+import './assets/transitions.less';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
@@ -31,9 +33,17 @@ const router = new VueRouter({
   mode: 'history',
   routes: [
     ...landingRoutes,
-    ...projectsRoutes,
     ...accountRoutes,
-    ...clockRoutes,
+    // Create a subroute so the main portion of the application does not have
+    // page transitions.
+    {
+      path: '/projects',
+      component: PageLayout,
+      children: [
+        ...projectsRoutes,
+        ...clockRoutes,
+      ],
+    },
   ],
 });
 

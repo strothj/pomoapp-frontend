@@ -1,10 +1,10 @@
-import ClockComponent from './clock.component';
+import ClockPageComponent from './clock-page.component';
 
 export default [
   {
-    path: '/projects/:projectId/:taskId',
+    path: ':projectId/:taskId',
     name: 'ClockView',
-    component: ClockComponent,
+    component: ClockPageComponent,
     meta: { requiresAuth: true },
   },
 ];

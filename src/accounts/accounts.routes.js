@@ -1,15 +1,15 @@
-import SignupComponent from './signup.component';
-import SigninComponent from './signin.component';
+import SignupPageComponent from './signup-page.component';
+import SigninPageComponent from './signin-page.component';
 
 export default [
   {
     path: '/signup',
     name: 'Signup',
-    component: SignupComponent,
+    component: SignupPageComponent,
   },
   {
     path: '/signin',
     name: 'Signin',
-    component: SigninComponent,
+    component: SigninPageComponent,
   },
 ];

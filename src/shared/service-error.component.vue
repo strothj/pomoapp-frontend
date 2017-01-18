@@ -8,8 +8,6 @@
 
 <script>
 export default {
-  props: [],
-
   data() {
     return {
       serviceError: `There was a problem with the service.<br>

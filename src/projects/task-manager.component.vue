@@ -13,13 +13,6 @@
 import ItemManager from './shared/item-manager.component';
 
 export default {
-  props: [],
-
-  data() {
-    return {
-    };
-  },
-
   computed: {
     tasks() {
       const tasks = this.$store.state.projects.tasks;

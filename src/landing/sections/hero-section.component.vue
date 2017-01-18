@@ -7,9 +7,12 @@
 
   <p>Pomoapp's projects, tasks, and clock allow you to stay on task and be productive.</p>
 
-  <md-button class="hero-section__sign-up-button md-raised" href="/signup">Sign up free</md-button>
+  <router-link tag="md-button" class="hero-section__sign-up-button md-raised" to="/signup">Sign up free</router-link>
 
-  <p class="hero-section__sign-in small-text">Already use Pomoapp? <a href="#" @click.prevent="$emit('signinClicked')">Sign in</p>
+  <p class="hero-section__sign-in small-text">
+    Already use Pomoapp?
+    <router-link tag="a" to="/signin">Sign in</router-link>
+  </p>
 
   </div>
 
@@ -18,23 +21,11 @@
 
 <script>
 export default {
-  props: [],
-
-  data() {
-    return {
-    };
-  },
-
-  computed: {
-  },
-
-  methods: {
-  },
 };
 </script>
 
 <style lang="less">
-@import "../assets/keylines.less";
+@import "~assets/keylines.less";
 
 @material-design__light-blue-900: #01579B;
 @hero-color-overlay: fade(@material-design__light-blue-900, 90%);
@@ -42,7 +33,7 @@ export default {
 .hero-section {
   background:
     linear-gradient(@hero-color-overlay, @hero-color-overlay),
-    url(./images/hero-background.png)
+    url(../images/hero-background.png)
     center / cover no-repeat;
 
   h1 {

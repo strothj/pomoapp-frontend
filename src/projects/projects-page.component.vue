@@ -1,7 +1,7 @@
 <template>
-<page-frame>
+<div>
 
-  <md-layout class="centered-content" md-tag="main">
+  <md-layout class="container" md-tag="main">
     <md-layout md-column md-flex="40" md-flex-small="100" :md-hide-small="projectsSmallHide">
       <project-manager></project-manager>
     </md-layout>
@@ -14,40 +14,17 @@
 
   </md-layout>
 
-  <md-list slot="sidenav">
-
-    <md-list-item
-      @click="$store.state.router.push('/projects')">
-      <md-icon>view_list</md-icon>
-      <span>Projects</span>
-      <md-divider></md-divider>
-    </md-list-item>
-
-    <md-list-item
-      v-for="project in $store.state.projects.projects"
-      @click="$store.state.router.push(`/projects/${project.id}`)">
-      <span>{{ project.name }}</span>
-    </md-list-item>
-  </md-list>
-
-</page-frame>
+</div>
 </template>
 
 <script>
-import PageFrame from '../shared/page-frame.component';
+import PageLayout from '../shared/page-layout.component';
 import ProjectManager from './project-manager.component';
 import TaskManager from './task-manager.component';
 
 export default {
-  props: [],
-
-  data() {
-    return {
-    };
-  },
-
   computed: {
-    // Hide projects list if a project is select on small resolution so tasks
+    // Hide projects list if a project is selected on small resolution so tasks
     // list takes up the entire display. Users can navigate back or use the menu
     // button to switch projects.
     projectsSmallHide() {
@@ -62,11 +39,8 @@ export default {
     },
   },
 
-  methods: {
-  },
-
   components: {
-    PageFrame,
+    PageLayout,
     ProjectManager,
     TaskManager,
   },

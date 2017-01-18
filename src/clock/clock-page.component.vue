@@ -1,70 +1,70 @@
 <template>
-<md-layout md-gutter>
-  <md-layout md-hide-xsmall></md-layout><!-- Spacer -->
-  <md-layout>
+<div>
+  <div class="container">
+    <div class="clock-container">
 
-    <md-card class="clock-card md-primary">
-      <md-card-header>
-        <md-button class="clock-card__back-button md-icon-button" @click="onBackClicked"><md-icon>arrow_back</md-icon></md-button>
+      <md-card class="clock-card md-primary">
+        <md-card-header>
+          <md-button class="clock-card__back-button md-icon-button" @click="onBackClicked"><md-icon>arrow_back</md-icon></md-button>
 
-        <md-card-header-text>
-          <div class="md-title">{{ selectedTaskName }}</div>
-          <div class="md-subhead">{{ selectedProjectName }}</div>
-        </md-card-header-text>
-      </md-card-header>
+          <md-card-header-text>
+            <div class="md-title">{{ selectedTaskName }}</div>
+            <div class="md-subhead">{{ selectedProjectName }}</div>
+          </md-card-header-text>
+        </md-card-header>
 
-      <!-- Clock face, rendered by 'progressbar.js' -->
-      <md-card-media style="flex: 1; display: inline-flex" id="clock">
-      </md-card-media>
+        <!-- Clock face, rendered by 'progressbar.js' -->
+        <md-card-media style="flex: 1; display: inline-flex" id="clock">
+        </md-card-media>
 
-      <md-card-actions>
-        <span class="clock-card__cycle">
-          <md-button class="md-icon-button" @click="onResetCycleClicked">
-            <md-icon>refresh</md-icon>
-            <md-tooltip>Reset clock</md-tooltip>
-          </md-button>
-          {{ clock.currentCycle + 1 }} / {{ clock.settings.workCycles }}
-        </span>
-        <md-button @click="onSwitchTaskClicked" id="switchTaskButton">Switch Task</md-button>
-        <md-button @click="onStartClicked">{{ clock.state === '' ? 'Pause' : 'Start' }}</md-button>
-        <md-button @click="onDoneClicked">Done</md-button>
-      </md-card-actions>
+        <md-card-actions>
+          <span class="clock-card__cycle">
+            <md-button class="md-icon-button" @click="onResetCycleClicked">
+              <md-icon>refresh</md-icon>
+              <md-tooltip>Reset clock</md-tooltip>
+            </md-button>
+            {{ clock.currentCycle + 1 }} / {{ clock.settings.workCycles }}
+          </span>
+          <md-button @click="onSwitchTaskClicked" id="switchTaskButton">Switch Task</md-button>
+          <md-button @click="onStartClicked">{{ clock.state === '' ? 'Pause' : 'Start' }}</md-button>
+          <md-button @click="onDoneClicked">Done</md-button>
+        </md-card-actions>
 
-    </md-card>
+      </md-card>
 
+    <!-- Start switch task dialog -->
+    <md-dialog
+      md-open-from="#switchTaskButton"
+      md-close-to="#switchTaskButton"
+      ref="switchTaskDialog">
+      <md-dialog-title>Switch task</md-dialog-title>
+
+      <md-dialog-content>
+        <md-list>
+          <md-list-item v-for="task in tasks" @click="navigateToTask(task)">
+            <span>{{ task.name }}</span>
+          </md-list-item>
+        </md-list>
+      </md-dialog-content>
+
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="onCloseSwitchTaskDialogClicked">Cancel</md-button>
+      </md-dialog-actions>
+    </md-dialog>
+    <!-- End switch task dialog -->
   </md-layout>
-  <md-layout md-hide-xsmall></md-layout><!-- Spacer -->
 
-  <!-- Start switch task dialog -->
-  <md-dialog
-    md-open-from="#switchTaskButton"
-    md-close-to="#switchTaskButton"
-    ref="switchTaskDialog">
-    <md-dialog-title>Switch task</md-dialog-title>
-
-    <md-dialog-content>
-      <md-list>
-        <md-list-item v-for="task in tasks" @click="navigateToTask(task)">
-          <span>{{ task.name }}</span>
-        </md-list-item>
-      </md-list>
-    </md-dialog-content>
-
-    <md-dialog-actions>
-      <md-button class="md-primary" @click="onCloseSwitchTaskDialogClicked">Cancel</md-button>
-    </md-dialog-actions>
-  </md-dialog>
-  <!-- End switch task dialog -->
-</md-layout>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
 import { Circle } from 'progressbar.js';
 import padStart from 'lodash.padstart';
+import PageLayout from '../shared/page-layout.component';
 
 export default {
-  props: [],
-
   data() {
     return {
       progressCircle: null,
@@ -73,7 +73,7 @@ export default {
 
   mounted() {
     this.progressCircle = new Circle('#clock', {
-      color: '#448AFF', // Blue progress bar color.
+      color: '#FF9800', // Orange progress bar color.
       svgStyle: {
         width: '100%',
         height: '100%',
@@ -205,13 +205,31 @@ export default {
     this.clock.pause();
     next();
   },
+
+  components: {
+    PageLayout,
+  },
 };
 </script>
 
 <style lang="less">
+@import "~assets/keylines.less";
+
+.clock-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+}
+
 .clock-card {
   width: 100vw;
   height: 100vh;
+  z-index: 100;
+
+  .mobile({
+    position: fixed;
+    top: 0;
+  });
 
   button i {
     color: white !important;

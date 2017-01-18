@@ -204,16 +204,6 @@ export default {
 </script>
 
 <style lang="less">
-@import "~assets/layout.less";
-
-.manager-main {
-  .not-mobile({ padding-top: 50px; });
-
-  .page-content {
-    .mobile({ padding: 0; });
-  }
-}
-
 .list-card {
   box-shadow: inherit;
 

@@ -1,16 +1,16 @@
-import ProjectsComponent from './projects.component';
+import ProjectsPageComponent from './projects-page.component';
 
 export default [
   {
-    path: '/projects',
+    path: '/',
     name: 'ProjectManager',
-    component: ProjectsComponent,
+    component: ProjectsPageComponent,
     meta: { requiresAuth: true },
   },
   {
-    path: '/projects/:projectId',
+    path: ':projectId',
     name: 'TaskManager',
-    component: ProjectsComponent,
+    component: ProjectsPageComponent,
     meta: { requiresAuth: true },
   },
 ];

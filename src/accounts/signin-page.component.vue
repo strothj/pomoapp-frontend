@@ -1,24 +1,14 @@
 <template>
-  <account-card
+  <page-base
     actionText="Sign in"
-    title="Sign in"
-    @submit="onFormSubmit"></account-card>
+    @submit="onFormSubmit"
+    ref="accountDialog"></page-base>
 </template>
 
 <script>
-import AccountCard from './shared/account-card.component';
+import PageBase from './shared/page-base.component';
 
 export default {
-  props: [],
-
-  data() {
-    return {
-    };
-  },
-
-  computed: {
-  },
-
   methods: {
     onFormSubmit({ email, password }) {
       this.$store.dispatch('SUBMIT_SIGNIN', {
@@ -28,7 +18,7 @@ export default {
   },
 
   components: {
-    AccountCard,
+    PageBase,
   },
 };
 </script>

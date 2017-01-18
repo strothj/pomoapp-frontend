@@ -34,14 +34,10 @@ export default {
   },
 
   watch: {
-    // Apply transition animations going from root to subroot or vise vera.
-    // Do not apply transition between pages at the same depth.
     $route: function routeTransition(to, from) {
-      if (to.path.length > 1 && from.path.length > 1) {
-        this.transitionName = null;
-        return;
-      }
-      this.transitionName = from.path.length > 1 ? 'slide-right' : 'slide-left';
+      const toDepth = to.path.length;
+      const fromDepth = from.path.length;
+      this.transitionName = fromDepth > toDepth ? 'slide-right' : 'slide-left';
     },
   },
 };

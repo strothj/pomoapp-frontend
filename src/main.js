@@ -20,6 +20,7 @@ import clockStore from './clock/clock.store';
 
 import './assets/layout.less';
 import './assets/typography.less';
+import './assets/transitions.less';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);

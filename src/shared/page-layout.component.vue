@@ -18,17 +18,9 @@ import AppBar from './appbar.component';
 import Sidenav from './sidenav.component';
 
 export default {
-  props: [],
-
   data() {
     return {
     };
-  },
-
-  computed: {
-  },
-
-  methods: {
   },
 
   components: {

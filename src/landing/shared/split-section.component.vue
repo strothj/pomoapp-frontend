@@ -33,17 +33,6 @@
 <script>
 export default {
   props: ['padding'],
-
-  data() {
-    return {
-    };
-  },
-
-  computed: {
-  },
-
-  methods: {
-  },
 };
 </script>
 

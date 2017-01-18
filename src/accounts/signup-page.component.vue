@@ -1,7 +1,6 @@
 <template>
   <page-base
     actionText="Sign up"
-    title="Sign up"
     @submit="onFormSubmit"
     ref="accountDialog"></page-base>
 </template>
@@ -15,10 +14,6 @@ export default {
       this.$store.dispatch('SUBMIT_SIGNUP', {
         email, password,
       });
-    },
-
-    open() {
-      this.$refs.accountDialog.open();
     },
   },
 

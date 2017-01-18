@@ -34,6 +34,8 @@ const router = new VueRouter({
   routes: [
     ...landingRoutes,
     ...accountRoutes,
+    // Create a subroute so the main portion of the application does not have
+    // page transitions.
     {
       path: '/projects',
       component: PageLayout,

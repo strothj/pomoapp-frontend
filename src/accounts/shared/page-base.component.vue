@@ -53,6 +53,7 @@ import ErrorDialog from './error-dialog.component';
 export default {
   props: ['actionText'],
 
+  // Add focus directive so that email box gains focus when page is loaded.
   directives: { focus },
 
   data() {
@@ -61,9 +62,6 @@ export default {
       password: null,
       focused: true,
     };
-  },
-
-  computed: {
   },
 
   methods: {

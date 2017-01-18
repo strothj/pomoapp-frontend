@@ -23,15 +23,8 @@ import ProjectManager from './project-manager.component';
 import TaskManager from './task-manager.component';
 
 export default {
-  props: [],
-
-  data() {
-    return {
-    };
-  },
-
   computed: {
-    // Hide projects list if a project is select on small resolution so tasks
+    // Hide projects list if a project is selected on small resolution so tasks
     // list takes up the entire display. Users can navigate back or use the menu
     // button to switch projects.
     projectsSmallHide() {
@@ -44,9 +37,6 @@ export default {
       if (this.$route.params.projectId) return false;
       return true;
     },
-  },
-
-  methods: {
   },
 
   components: {

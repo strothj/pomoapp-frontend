@@ -65,8 +65,6 @@ import padStart from 'lodash.padstart';
 import PageLayout from '../shared/page-layout.component';
 
 export default {
-  props: [],
-
   data() {
     return {
       progressCircle: null,

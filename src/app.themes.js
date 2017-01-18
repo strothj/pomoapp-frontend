@@ -1,7 +1,5 @@
 const standard = {
   primary: {
-    // color: 'blue-grey',
-    // hue: '800',
     color: 'blue',
     hue: '600',
   },

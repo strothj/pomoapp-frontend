@@ -1,13 +1,13 @@
 <template>
-  <account-card
+  <page-base
     actionText="Sign in"
     title="Sign in"
     @submit="onFormSubmit"
-    ref="accountDialog"></account-card>
+    ref="accountDialog"></page-base>
 </template>
 
 <script>
-import AccountCard from './shared/account-card.component';
+import PageBase from './shared/page-base.component';
 
 export default {
   methods: {
@@ -23,7 +23,7 @@ export default {
   },
 
   components: {
-    AccountCard,
+    PageBase,
   },
 };
 </script>

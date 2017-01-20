@@ -1,8 +1,8 @@
 <template>
-<main><div class="account-page">
+<div class="account-page">
   <error-dialog></error-dialog>
 
-  <div class="account-page__card account-card">
+  <main class="account-page__card account-card">
     <form @submit.prevent="onFormSubmit">
 
       <h1 class="account-card__title">Pomoapp</h1>
@@ -41,9 +41,9 @@
       </div>
 
     </form>
-  </div>
+  </main>
 
-</div></main>
+</div>
 </template>
 
 <script>
@@ -83,16 +83,7 @@ export default {
 <style lang="less">
 @import "~assets/keylines.less";
 
-@material-design__blue-600: #1E88E5;
-@material-design__blue-900: #0D47A1;
-@light-color: @material-design__blue-600;
-@dark-color: @material-design__blue-900;
-
 .account-page {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(@light-color, @dark-color);
-
   &__card {
     position: fixed;
     width: 100%;

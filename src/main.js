@@ -7,14 +7,9 @@ import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.css';
 
 import App from './app.component';
+
 import appThemes from './app.themes';
-
-import PageLayout from './shared/page-layout.component';
-import landingRoutes from './landing/landing.routes';
-import accountRoutes from './accounts/accounts.routes';
-import projectsRoutes from './projects/projects.routes';
-import clockRoutes from './clock/clock.routes';
-
+import appRouter from './app.router';
 import appStore from './app.store';
 import projectsStore from './projects/projects.store';
 import clockStore from './clock/clock.store';
@@ -29,24 +24,7 @@ Vue.use(VueMaterial);
 
 Vue.material.registerTheme(appThemes);
 
-const router = new VueRouter({
-  mode: 'history',
-  routes: [
-    ...landingRoutes,
-    ...accountRoutes,
-    // Create a subroute so the main portion of the application does not have
-    // page transitions.
-    {
-      path: '/projects',
-      component: PageLayout,
-      children: [
-        ...projectsRoutes,
-        ...clockRoutes,
-      ],
-    },
-  ],
-});
-
+const router = appRouter;
 appStore.state.router = router;
 appStore.modules = {
   projects: projectsStore,
@@ -74,13 +52,6 @@ new Vue({
   router,
   render: h => h(App),
 });
-
-// If the url contains the query parameter "?speedRacer=1" then enable reduced
-// clock timers for demonstration purposes.
-if (router.currentRoute.query.speedRacer) {
-  console.log('Demo mode: Reduced clock timers enabled.'); // eslint-disable-line no-console
-  store.commit('demoMode', true);
-}
 
 // Attempt automatic login
 store.dispatch('SIGNIN_WITH_COOKIE');

@@ -1,7 +1,5 @@
 <template>
 <div>
-  <service-error></service-error>
-
   <!-- Start add new item prompt -->
   <md-dialog-prompt
     :md-title="'Add new ' + this.itemType"
@@ -93,7 +91,6 @@
 </template>
 
 <script>
-import ServiceError from '../../shared/service-error.component';
 
 export default {
   props: ['title', 'list', 'itemType'],
@@ -198,7 +195,6 @@ export default {
   },
 
   components: {
-    ServiceError,
   },
 };
 </script>

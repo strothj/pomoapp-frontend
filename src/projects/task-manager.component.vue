@@ -1,16 +1,16 @@
 <template>
-<item-manager
+<list-card-container
   title="Tasks"
   :list="tasks"
   itemType="task"
   @addItem="addItem"
   @editItems="editItems"
   @deleteItems="deleteItems"
-  @itemClicked="itemClicked"></item-manager>
+  @itemClicked="itemClicked"></list-card-container>
 </template>
 
 <script>
-import ItemManager from './shared/item-manager.component';
+import ListCardContainer from './shared/ListCardContainer';
 
 export default {
   computed: {
@@ -46,7 +46,7 @@ export default {
   },
 
   components: {
-    ItemManager,
+    ListCardContainer,
   },
 };
 </script>

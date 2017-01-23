@@ -5,7 +5,7 @@
 
   <h1>Pomoapp helps you stay productive.</h1>
 
-  <p>Pomoapp's projects, tasks, and clock allow you to stay on task and be productive.</p>
+  <p style="font-weight: 100">Pomoapp's projects, tasks, and clock allow you to stay on task and be productive.</p>
 
   <router-link tag="md-button" class="hero-section__sign-up-button md-raised" to="/signup">Sign up free</router-link>
 

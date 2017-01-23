@@ -8,6 +8,8 @@
 
   <get-productive-section class="landing-section" id="productive"></get-productive-section>
 
+  <demo-section></demo-section>
+
   <clock-section class="landing-section" id="pomodoro-clock"></clock-section>
 
   <pomodoro-technique-section class="landing-section" id="pomodoro-technique"></pomodoro-technique-section>
@@ -20,6 +22,7 @@
 import LandingSidenav from './landing-sidenav.component';
 import LandingAppbar from './landing-appbar.component';
 import HeroSection from './sections/hero-section.component';
+import DemoSection from './demo/demo-section.component';
 import GetProductiveSection from './sections/get-productive-section.component';
 import ClockSection from './sections/clock-section.component';
 import PomodoroTechniqueSection from './sections/pomodoro-technique-section.component';
@@ -30,6 +33,7 @@ export default {
     LandingSidenav,
     LandingAppbar,
     HeroSection,
+    DemoSection,
     GetProductiveSection,
     ClockSection,
     PomodoroTechniqueSection,

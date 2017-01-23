@@ -1,5 +1,6 @@
 <template>
 <div>
+  <service-error></service-error>
 
   <md-layout class="container" md-tag="main">
     <md-layout md-column md-flex="40" md-flex-small="100" :md-hide-small="projectsSmallHide">
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+import ServiceError from '../shared/service-error.component';
 import PageLayout from '../shared/page-layout.component';
 import ProjectManager from './project-manager.component';
 import TaskManager from './task-manager.component';
@@ -40,6 +42,7 @@ export default {
   },
 
   components: {
+    ServiceError,
     PageLayout,
     ProjectManager,
     TaskManager,

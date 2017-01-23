@@ -1,17 +1,17 @@
 <template>
-<item-manager
+<list-card-container
   title="Projects"
   :list="projects"
   itemType="project"
   @addItem="addItem"
   @editItems="editItems"
   @deleteItems="deleteItems"
-  @itemClicked="itemClicked"></item-manager>
+  @itemClicked="itemClicked"></list-card-container>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import ItemManager from './shared/item-manager.component';
+import ListCardContainer from './shared/ListCardContainer';
 
 export default {
   computed: {
@@ -41,7 +41,7 @@ export default {
   },
 
   components: {
-    ItemManager,
+    ListCardContainer,
   },
 };
 </script>

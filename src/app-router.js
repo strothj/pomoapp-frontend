@@ -1,9 +1,13 @@
 import VueRouter from 'vue-router';
 
-import { Landing } from './components/landing';
+import { LandingContainer, landingRoutes } from './components/landing';
 
 const routes = [
-  { path: '/', component: Landing },
+  {
+    path: '/',
+    component: LandingContainer,
+    children: landingRoutes,
+  },
 ];
 
 export default new VueRouter({

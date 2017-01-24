@@ -1,5 +1,5 @@
 <template>
-  <span>Landing placeholder</span>
+  <router-view></router-view>
 </template>
 
 <script>

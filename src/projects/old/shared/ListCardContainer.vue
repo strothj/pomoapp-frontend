@@ -1,21 +1,26 @@
 <template>
 <div>
   <!-- Start add new item prompt -->
-  <md-dialog-prompt
-    :md-title="'Add new ' + this.itemType"
+  <dialog-prompt
+    :title="`Add new ${itemType}`"
     ref="addItemDialog"
-    v-model="addItemValue"
-    @close="addItemDialogClosed">
-  </md-dialog-prompt>
+    :placeholder="addItemPlaceholder"
+    @submit="onAddItemSubmit"></dialog-prompt>
   <!-- End add new item prompt -->
 
   <!-- Start edit item prompt -->
+  <!--
   <md-dialog-prompt
     :md-title="'Edit ' + this.itemType"
     ref="editItemDialog"
     v-model="editItem.value"
     @close="editItemDialogClosed">
   </md-dialog-prompt>
+  -->
+  <dialog-prompt
+    :title="`Edit ${itemType}`"
+    ref="editItemDialog"
+    @submit="onEditItemSubmit"></dialog-prompt>
   <!-- End edit item prompt -->
 
   <article class="manager-main">
@@ -91,6 +96,7 @@
 </template>
 
 <script>
+import DialogPrompt from './DialogPrompt';
 
 export default {
   props: ['title', 'list', 'itemType'],
@@ -106,6 +112,16 @@ export default {
       selected: null,
       currentList: null,
     };
+  },
+
+  computed: {
+    addItemPlaceholder() {
+      const capitalizedItemType = this.itemType
+        .charAt(0)
+        .toUpperCase()
+          .concat(this.itemType.slice(1));
+      return `${capitalizedItemType} name`;
+    },
   },
 
   watch: {
@@ -133,10 +149,8 @@ export default {
       this.$refs.addItemDialog.open();
     },
 
-    addItemDialogClosed(state) {
-      if (state !== 'ok' || this.addItemValue.length === 0) return;
-      this.$emit('addItem', { name: this.addItemValue });
-      this.addItemValue = '';
+    onAddItemSubmit(name) {
+      this.$emit('addItem', { name });
     },
 
     onEditItemClicked(item) {
@@ -177,6 +191,7 @@ export default {
 
     onSelect(items) {
       this.selected = items;
+      console.log(this.selected); // eslint-disable-line no-console
     },
 
     onDeleteClicked() {
@@ -195,6 +210,7 @@ export default {
   },
 
   components: {
+    DialogPrompt,
   },
 };
 </script>

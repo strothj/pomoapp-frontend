@@ -1,7 +1,7 @@
 <template>
   <md-dialog-prompt
     :md-title="title"
-    :md-placeholder="placeholder"
+    :md-input-placeholder="placeholder"
     v-model="value"
     @close="close"
     ref="dialogPrompt">
@@ -31,7 +31,7 @@ export default {
     },
 
     open(startingValue) {
-      this.value = startingValue;
+      this.value = startingValue || '';
       this.startingValue = startingValue;
       this.$refs.dialogPrompt.open();
     },

@@ -1,5 +1,5 @@
 <template>
-  <div>Placeholder</div>
+  <span>Appbar placeholder</span>
 </template>
 
 <script>

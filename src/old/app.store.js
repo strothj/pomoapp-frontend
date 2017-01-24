@@ -81,7 +81,5 @@ export default {
     authError: null,
     serviceError: false,
     router: null,
-    // Demo mode flag, used to reduce clock timers for demonstration purposes.
-    demoMode: false,
   },
 };

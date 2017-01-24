@@ -1,5 +1,7 @@
 <template>
-  <div>Placeholder</div>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

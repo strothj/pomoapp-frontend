@@ -1,15 +1,18 @@
 import Vue from 'vue';
+import VueRouter from 'vue-router';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.css';
 
-import App from './app.component';
+import router from './app-router';
+import App from './App';
 
+Vue.use(VueRouter);
 Vue.use(VueMaterial);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   // store,
-  // router,
+  router,
   render: h => h(App),
 });

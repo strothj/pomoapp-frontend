@@ -3,11 +3,14 @@ import VueRouter from 'vue-router';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.css';
 
-import router from './app-router';
+import themes from './themes';
+import router from './router';
 import App from './App';
+import './assets/css/layout.less';
 
 Vue.use(VueRouter);
 Vue.use(VueMaterial);
+Vue.material.registerTheme(themes);
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,10 +1,16 @@
 <template>
   <div class="hero-section">
-    <span>Test</span>
+    <div class="container">
+      <nav class="hero-section__nav">
+        <navbar></navbar>
+      </nav>
+    </div>
   </div>
 </template>
 
 <script>
+import Navbar from '../Navbar';
+
 export default {
   props: [],
 
@@ -18,6 +24,10 @@ export default {
 
   methods: {
   },
+
+  components: {
+    Navbar,
+  },
 };
 </script>
 
@@ -26,7 +36,13 @@ export default {
 @background-gradient: fade(@material-design-color__light-blue-900, 80%);
 
 .hero-section {
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(@background-gradient, @background-gradient),
-    url("~assets/hero-background.png") center/cover fixed;
+    url("~assets/images/hero-background.png") center/cover fixed;
+
+  &__nav {
+    margin-top: 20px;
+  }
 }
 </style>

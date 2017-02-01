@@ -1,11 +1,9 @@
 <template>
-  <md-toolbar class="md-transparent" md-theme="transparentNavbar">
+  <md-toolbar class="md-transparent" md-theme="transparent">
     <h2 class="md-title" style="flex-grow: 1">pomoapp</h2>
 
     <md-button>Log in</md-button>
-    <md-theme md-name="default">
-      <md-button class="md-raised md-accent">Create Account</md-button>
-    </md-theme>
+    <md-button class="md-raised" md-theme="default">Create Account</md-button>
   </md-toolbar>
 </template>
 

@@ -7,6 +7,7 @@ import themes from './themes';
 import router from './router';
 import App from './App';
 import './assets/css/layout.less';
+import './assets/css/typography.less';
 
 Vue.use(VueRouter);
 Vue.use(VueMaterial);

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import HeroSection from './sections/HeroSection';
+import HeroSection from './HeroSection';
 
 export default {
   props: [],
